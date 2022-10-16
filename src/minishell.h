@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/16 15:59:47 by arouzen          ###   ########.fr       */
+/*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
+/*   Updated: 2022/10/16 14:58:59 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+#define MINISHELL_H
+# define SHELL_NAME "minishell$ "
+# define TRUE 1
+# define FALSe 0
+#include <stdio.h>
+#include <unistd.h>
+#include <readline/readline.h>
+#include "lib/libft/libft.h"
 
-int main(int argc, char *argv[])
-{
-	char *cmd;
+typedef int bool;
 
-	(void) argv;
-	(void) argc;
-	//rl_complete('\t', filename_completion_function);
-	while(TRUE)
-	{
-		cmd  = readline(SHELL_NAME);
-	}
-	printf("line read: _%s_\n", cmd);
-	return (0);
-}
+#endif
