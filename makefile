@@ -4,7 +4,7 @@ NAME = minishell
 CC = gcc
 M_INCL = ./src/minishell.h
 FALGS = $(CPPFLAGS) -Wall -Wextra -g 
-M_SRC_NAME = main
+M_SRC_NAME = main parse_lexer utils
 L_READ_LINE = -lreadline
 BUILD_DIR = build/
 M_SRC_DIR  = src/
@@ -22,7 +22,7 @@ $(NAME) : $(M_OBJ_P) $(M_INCL)
 	$(CC) $(LDFLAGS) $(FALGS) $(L_READ_LINE) $(M_OBJ_P) $(LIBS) -o $(NAME)
 
 $(BUILD_DIR)%.o : $(M_SRC_DIR)%.c $(M_INCL)
-	@make -C $(LIB_FT)
+	@make bonus -C $(LIB_FT)
 	@mkdir -p $(BUILD_DIR)
 	$(CC) $(FALGS) -c $< -o $@
 

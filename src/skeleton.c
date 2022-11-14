@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:52:28 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/16 16:04:37 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/10/19 07:57:26 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 /*		3 => pipe				|					  */
 /*		4 => redirect input		<					  */
 /*		5 => redirect ouput		>					  */
-/*		6 => append input		<<					  */
+/*		6 => heredoc			<<					  */
 /*		7 => append ouput		>>					  */
 /* ************************************************** */
 
-int main()
+int main();
 	// call readline routine
 	// add line to history
 	// parse line routine

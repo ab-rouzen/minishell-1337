@@ -1,0 +1,24 @@
+pipeline ::= 
+	| <command>
+	| <pipeline> '|' <command>
+
+command ::= 
+	| <word>
+	| <redirection-list>
+	| <command> <word>
+	| <command> <redirection-list>
+
+redirection-list ::= 
+	| <redirection>
+	| <redirection-list> <redirection>
+
+redirection ::=
+	| <redirection-sym> <word>
+
+<redirect-sym> ::= 
+	| '>'
+	| '<'
+	| '>>'
+	| '<<'
+
+
