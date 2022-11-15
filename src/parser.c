@@ -1,24 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/15 08:20:51 by arouzen          ###   ########.fr       */
+/*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
+/*   Updated: 2022/11/15 13:56:04 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-t_list	*new_token_lst(enum token tok)
-{
-	enum token *new_tkn;
-
-	new_tkn = (enum token*) malloc(sizeof(enum token));
-	if (new_tkn == NULL)
-		return (NULL);
-	*new_tkn = tok;
-	return (ft_lstnew(new_tkn));
-}
