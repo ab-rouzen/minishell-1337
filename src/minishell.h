@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/15 13:09:04 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/16 12:04:42 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <readline/readline.h>
 #include "../lib/libft/libft.h"
 #include "lexer.h"
+#include "parser.h"
 
 
 enum token {
@@ -28,11 +29,20 @@ enum token {
 	TOK_PIPE, 
 	TOK_REDI_I,
 	TOK_REDI_O,
-	TOK_RED_O_APP,
+	TOK_REDI_O_APP,
 	TOK_HEREDOC,
 	TOK_SQUOTE, 
 	TOK_DQUOTE,
 	TOK_DOLLAR };
+
+enum p_token {
+	PTOK_WORD,
+	PTOK_COMMAD,
+	PTOK_PIPELINE,
+	PTOK_REDI_L,
+	PTOK_REDI,
+	PTOK_REDI_S,
+};
 
 typedef int bool;
 t_list	*new_token_lst(enum token tok);

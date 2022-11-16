@@ -21,4 +21,19 @@ redirection ::=
 	| '>>'
 	| '<<'
 
+<word> :=
+	| <letter>
+	| <number>
+	| <symbol>
+	| <word> <letter>
+	| <word> <number>
+	| <word> <symbol>
 
+<letter> :==
+	| a|b|..|z
+
+<number> :== 
+	| 1|2|..|9
+
+<symbol> :==
+	| %^..

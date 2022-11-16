@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:27:27 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/15 11:48:07 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/15 14:58:54 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	lex_redirection(t_list **tok_l, char *line)
 	{
 		if (line [i] && line[i + 1] == '>')
 		{
-			ft_lstadd_back(tok_l, new_token_lst(TOK_RED_O_APP));
+			ft_lstadd_back(tok_l, new_token_lst(TOK_REDI_O_APP));
 			return (i + 2);
 		}
 		ft_lstadd_back(tok_l, new_token_lst(TOK_REDI_O));

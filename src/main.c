@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/15 13:55:45 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/16 16:51:20 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 {
 	char	*line;
 	t_list	*tok_l;
+	t_list	*tmp;
 
 	(void) argv;
 	(void) argc;
@@ -24,16 +25,22 @@ int main(int argc, char *argv[])
 	{
 		line  = readline(SHELL_PROMPT);
 		tok_l = lexer(line);
-		parser();
 		if (line && *line)
 		{
 			add_history(line);
 		}
-		while (tok_l)
+		tmp = tok_l;
+		while (tmp)
 		{
-			printf("token is %d\n", *(enum token*) tok_l->content);
-			tok_l = tok_l->next;
+			printf("token is %d\n", *(enum token*) tmp->content);
+			tmp = tmp->next;
 		}
+		//printf("%d matched\n", match_redi_list(tok_l));
+		printf("%d matched\n", match_command(tok_l));
+		if (ft_lstsize(tok_l) == match_command(tok_l))
+			printf("All matched: SUCCESS\n");
+		else
+			printf("Parse error: FAILURE\n");
 	}
 	return (0);
 }

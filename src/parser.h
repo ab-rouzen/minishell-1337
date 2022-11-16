@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:53:30 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/15 15:14:57 by arouzen          ###   ########.fr       */
+/*   Created: 2022/11/16 12:02:39 by arouzen           #+#    #+#             */
+/*   Updated: 2022/11/16 15:43:11 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef PARSER_H
+#define PARSER_H
 #include "minishell.h"
-# define TOK_NULL -1
-typedef int bool;
 
-t_list	*lexer(char *line);
-int		lex_pipe(t_list **tok_l, char *line);
-int		lex_word(t_list **tok_l, char *line);
-int		lex_redirection(t_list **tok_l, char *line);
-int		lex_wspaces(t_list **tok_l, char *line);
-int		lex_quote(t_list **tok_l, char *line);
-int		lex_dollar(t_list **tok_l, char *line);
-bool	is_metachar(char tok);
+int	parse_line(t_list *tok_l);
+int	match_word(t_list *tok_l);
+int	match_redirect_sym(t_list *tok_l);
+int	match_redirection(t_list *tok_l);
+int	match_redi_list(t_list *tok_l);
+int	l_match(int tab[], int cases);
+int	match_command(t_list *tok_l);
 
 #endif
