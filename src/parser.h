@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:02:39 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/16 15:43:11 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:15:15 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ int	match_redirection(t_list *tok_l);
 int	match_redi_list(t_list *tok_l);
 int	l_match(int tab[], int cases);
 int	match_command(t_list *tok_l);
+int	match_pipeline(t_list *tok_l);
+int	match_pipe_sym(t_list *tok_l);
 
 #endif
