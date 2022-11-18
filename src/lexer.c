@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:27:27 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/15 14:58:54 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/18 18:15:07 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	lex_quote(t_list **tok_l, char *line)
 {
 	if (line[0] == '\"')
 	{
-		ft_lstadd_back(tok_l, new_token_lst(TOK_DQUOTE));
+		ft_lstadd_back(tok_l, new_token_lst(TOK_DQUOTE, 1));
 		return (1);
 	}
 	else if (line[0] == '\'')
 	{
-		ft_lstadd_back(tok_l, new_token_lst(TOK_SQUOTE));
+		ft_lstadd_back(tok_l, new_token_lst(TOK_SQUOTE, 1));
 		return (1);
 	}
 	return (0);
@@ -50,7 +50,7 @@ int	lex_pipe(t_list **tok_l, char *line)
 {
 	if (line[0] == '|')
 	{
-		ft_lstadd_back(tok_l, new_token_lst(TOK_PIPE));
+		ft_lstadd_back(tok_l, new_token_lst(TOK_PIPE, 1));
 		return (1);
 	}
 	return (0);
@@ -60,7 +60,7 @@ int	lex_dollar(t_list **tok_l, char *line)
 {
 	if (line[0] == '$')
 	{
-		ft_lstadd_back(tok_l, new_token_lst(TOK_DOLLAR));
+		ft_lstadd_back(tok_l, new_token_lst(TOK_DOLLAR, 1));
 		return (1);
 	}
 	return (0);
@@ -74,7 +74,7 @@ int	lex_word(t_list **tok_l, char *line)
 	while (line[i] && !is_metachar(line[i]))
 		i++;
 	if (i)
-		ft_lstadd_back(tok_l, new_token_lst(TOK_WORD));
+		ft_lstadd_back(tok_l, new_token_lst(TOK_WORD, i));
 	return (i);
 }                                                       
 
@@ -96,20 +96,20 @@ int	lex_redirection(t_list **tok_l, char *line)
 	{
 		if (line [i] && line[i + 1] == '>')
 		{
-			ft_lstadd_back(tok_l, new_token_lst(TOK_REDI_O_APP));
+			ft_lstadd_back(tok_l, new_token_lst(TOK_REDI_O_APP, i + 2));
 			return (i + 2);
 		}
-		ft_lstadd_back(tok_l, new_token_lst(TOK_REDI_O));
+		ft_lstadd_back(tok_l, new_token_lst(TOK_REDI_O, i + 1));
 		return (i + 1);
 	}
 	else if (line[i] == '<')	
-	{
+	{ 
 		if (line [i] && line[i + 1] == '<')
 		{
-			ft_lstadd_back(tok_l, new_token_lst(TOK_HEREDOC));
+			ft_lstadd_back(tok_l, new_token_lst(TOK_HEREDOC, i + 2));
 			return (i + 2);
 		}
-		ft_lstadd_back(tok_l, new_token_lst(TOK_REDI_I));
+		ft_lstadd_back(tok_l, new_token_lst(TOK_REDI_I, i + 1));
 		return (i + 1);
 	}
 	return (i);
@@ -123,6 +123,6 @@ int	lex_wspaces(t_list **tok_l, char *line)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (i)
-		ft_lstadd_back(tok_l, new_token_lst(TOK_WHITESPACE));
-	return (i);                                                                                   
+		ft_lstadd_back(tok_l, new_token_lst(TOK_WHITESPACE, i));
+	return (i);
 }

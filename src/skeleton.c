@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:52:28 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/19 07:57:26 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/18 11:19:06 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int main();
 	// parse line routine
 	// send over linked list for execution	
 
-t_list	*parse_input(char *rl_line);
+list_t	*parse_input(char *rl_line);
 	// init linked list 
 	// loop into the line examining each character
 	process_char(char c);

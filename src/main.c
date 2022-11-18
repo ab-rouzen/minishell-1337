@@ -6,13 +6,13 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/17 19:12:09 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/18 22:39:13 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char **environ)
 {
 	char	*line;
 	t_list	*tok_l;
@@ -30,10 +30,11 @@ int main(int argc, char *argv[])
 			add_history(line);
 		}
 		tmp = tok_l;
+		unquote(tok_l, line, environ);
 		printf("token list |");
 		while (tmp)
 		{
-			printf("->%d", *(enum token*) tmp->content);
+			printf("->%d, chars:%d", ((t_token*)tmp->content)->tkn, ((t_token*)tmp->content)->n_char);
 			tmp = tmp->next;
 		}
 		printf("|\n");
