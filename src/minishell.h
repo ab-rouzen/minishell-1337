@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/17 11:48:33 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/20 21:10:46 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 #include "../lib/libft/libft.h"
 #include "lexer.h"
 #include "parser.h"
-
+#include "quoting.h"
+#include "assert.h"
 
 enum token {
 	TOK_WORD,
@@ -33,7 +34,15 @@ enum token {
 	TOK_HEREDOC,
 	TOK_SQUOTE, 
 	TOK_DQUOTE,
-	TOK_DOLLAR };
+	TOK_DOLLAR};
+
+typedef struct s_token_lst
+	{
+		enum token	tkn;
+		int			n_char;
+		int			index;
+		char		*val;
+	} t_token;
 
 enum p_token {
 	PTOK_WORD,
@@ -45,7 +54,15 @@ enum p_token {
 };
 
 typedef int bool;
-t_list	*new_token_lst(enum token tok);
+t_list	*new_token_lst(enum token tok, char *line, int index);
 t_list	*lexer(char *line);
+void	index_token(t_list *tok_lst);
+char	*copy_token_val(char *line, int	size);
+void	delete_token(t_list	*start, t_list *end);
+void	join_token(t_list *start, t_list *end);
+void	*malloca(size_t size);
+void	mfree(void **node);
+void	expand_env_var(t_list **tok_l, char **environ);
+char	*get_env_val(char *environ[], char *var);
 
 #endif
