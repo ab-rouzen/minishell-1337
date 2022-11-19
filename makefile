@@ -3,8 +3,8 @@
 NAME = minishell
 CC = gcc
 M_INCL = ./src/minishell.h
-FALGS = $(CPPFLAGS) -Wall -Wextra -g 
-M_SRC_NAME = main parse_lexer utils parser
+FALGS = $(CPPFLAGS) -Wall -Wextra -g -fsanitize=address
+M_SRC_NAME = parse_lexer utils parser mini_shell
 L_READ_LINE = -lreadline
 BUILD_DIR = build/
 M_SRC_DIR  = src/
