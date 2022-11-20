@@ -47,6 +47,8 @@ void	ft_cd(char **cmd)
 		printf("%s\n", cwd);
 }
 
+
+
 int main()
 {
 	char *str;
