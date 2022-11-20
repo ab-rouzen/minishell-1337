@@ -1,0 +1,13 @@
+Done:      ✅
+Half Done: ⏲
+Not-yet:   ❌
+
+==> builtin cmd::
+
+◦ echo // echo -n : ✅
+◦ pwd : ✅
+◦ cd : => still :"cd(no arg) // "modifying env" ⏲
+◦ export  ❌ with no options
+◦ unset   ❌ with no options
+◦ env     ❌ with no options or arguments
+◦ exit    ❌ with no options

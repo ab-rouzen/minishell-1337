@@ -35,15 +35,14 @@ void	ft_cd(char **cmd)
 {
 	if (chdir(cmd[1]) < 0)
 		printf ("mini_shell: cd: %s: No such file or directory\n", cmd[1]);
-	else
-		chdir(cmd[1]);
 }
 
 void	ft_pwd(char **cmd)
 {
-	char cwd[256];
+	char cwd[100000];
 
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	(void)cmd;
+	if (getcwd(cwd, sizeof(cwd)))
 		printf("%s\n", cwd);
 }
 
@@ -65,10 +64,8 @@ int main()
 		else if (ft_strncmp(cmd[0], "pwd", ft_strlen("pwd")) == 0)
 			ft_pwd(cmd);
 		else
-		{
 			printf("%s: command not found\n", str);
-			free(str);
-		}
+		free(str);
 	}
 	return 0;
 }
