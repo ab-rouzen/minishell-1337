@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/16 12:04:42 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/18 22:27:43 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "../lib/libft/libft.h"
 #include "lexer.h"
 #include "parser.h"
-
+#include "quoting.h"
 
 enum token {
 	TOK_WORD,
@@ -33,7 +33,14 @@ enum token {
 	TOK_HEREDOC,
 	TOK_SQUOTE, 
 	TOK_DQUOTE,
-	TOK_DOLLAR };
+	TOK_DOLLAR};
+
+typedef struct s_token_lst
+	{
+		enum token	tkn;
+		int			n_char;
+		int			index;
+	} t_token;
 
 enum p_token {
 	PTOK_WORD,
@@ -45,7 +52,7 @@ enum p_token {
 };
 
 typedef int bool;
-t_list	*new_token_lst(enum token tok);
+t_list	*new_token_lst(enum token tok, int index);
 t_list	*lexer(char *line);
 
 #endif

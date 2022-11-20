@@ -39,15 +39,13 @@ void	ft_cd(char **cmd)
 		chdir(cmd[1]);
 }
 
-void	ft_cd(char **cmd)
+void	ft_pwd(char **cmd)
 {
 	char cwd[256];
 
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		printf("%s\n", cwd);
 }
-
-
 
 int main()
 {
