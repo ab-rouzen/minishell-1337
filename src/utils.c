@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/20 21:30:13 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/21 10:27:59 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ char	*get_env_val(char *environ[], char *var)
 		//might fail here because of size?
 		//printf("%s\n", environ[i]);
 		//printf("var:%s\n", tmp[0]);
+		//printf("val:%s\n",tmp[1]);
 		//printf("val:%s\n",tmp[1]);
 		if (!ft_strncmp(tmp[0], var, ft_strlen(var)))
 				return (tmp[1]);
