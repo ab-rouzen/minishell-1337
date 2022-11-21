@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/21 10:27:59 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/21 12:32:52 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*copy_token_val(char *line, int	size)
 	return (buff);
 }
 
-void	join_token(t_list *start, t_list *end)
+void	join_token(t_list *start, t_list *end, enum token quote)
 {
 	int	i;
 	t_list	*tmp;
@@ -69,11 +69,11 @@ void	join_token(t_list *start, t_list *end)
 	val = NULL;
 	/*segfaults here?*/
 	//assert(((t_token*)tmp->content)->tkn != TOK_SQUOTE);
-	if (((t_token*)tmp->content)->tkn != TOK_SQUOTE)
+	if (((t_token*)tmp->content)->tkn != quote)
 	{
 		val = ft_strdup(((t_token*)tmp->content)->val);
 		tmp = tmp->next;
-		while (tmp && ((t_token*)tmp->content)->tkn != TOK_SQUOTE)
+		while (tmp && ((t_token*)tmp->content)->tkn != quote)
 		{
 			buff = val;
 			val = ft_strjoin(val, ((t_token*)tmp->content)->val);

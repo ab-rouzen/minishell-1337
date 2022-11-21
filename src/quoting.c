@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/20 21:13:02 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/21 12:33:31 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,23 @@ int	dq_unquote(t_list *tok_l, char *line, char **environ)
 {
 	int	i;
 	t_list	*ltkn;
+	t_list	*tmp;
 
 	i = 0;
-	ltkn  = tok_l;
+	ltkn  = tok_l->next;
 	while (ltkn)
 	{
 		//if (((t_token*)ltkn->content)->tkn == TOK_DOLLAR)
-		if (((t_token*)ltkn->content)->tkn == TOK_SQUOTE)
+		expand_env_var(&ltkn, environ);
+		if (((t_token*)ltkn->content)->tkn == TOK_DQUOTE)
 		{
 			// should free elements here
 			//if (((t_token*)(*tok_l)->next->content)->tkn != TOK_SQUOTE);
 			//{
 				// ((n*)(*tok_l)->next->content)->index = ((t_token*)ltkn->content)->index 
-				tok_l->next = ltkn->next;
+				tmp = ltkn->next;
+				join_token(tok_l, ltkn, TOK_DQUOTE);
+				tok_l->next = tmp;
 				((t_token*)tok_l->content)->tkn = TOK_WORD;
 				return (TRUE);
 			//}
@@ -76,7 +80,7 @@ int	sq_unquote(t_list *tok_l, char *line)
 		{
 			tmp = ltkn->next;
 			//printf("was i here ?\n");
-			join_token(tok_l, ltkn);
+			join_token(tok_l, ltkn, TOK_SQUOTE);
 			tok_l->next = tmp;
 			((t_token*)tok_l->content)->tkn = TOK_WORD;
 			return (TRUE);

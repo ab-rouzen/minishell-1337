@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/20 21:10:46 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/21 12:33:11 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_list	*lexer(char *line);
 void	index_token(t_list *tok_lst);
 char	*copy_token_val(char *line, int	size);
 void	delete_token(t_list	*start, t_list *end);
-void	join_token(t_list *start, t_list *end);
+void	join_token(t_list *start, t_list *end, enum token quote);
 void	*malloca(size_t size);
 void	mfree(void **node);
 void	expand_env_var(t_list **tok_l, char **environ);
