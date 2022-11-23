@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/21 12:32:52 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/22 18:30:29 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,23 @@ void	expand_env_var(t_list **tok_l, char **environ)
 		{
 			tmp = (*tok_l)->next->next;
 			((t_token*)(*tok_l)->content)->val =  get_env_val(environ,  ((t_token*)(*tok_l)->next->content)->val);
-			//not the proper way to free?
 			free ((*tok_l)->next);
-			(*tok_l)->next = tmp;
+			if (((t_token*)(*tok_l)->content)->val == NULL)
+			{
+				printf("was here?\n");
+				(*tok_l) = tmp;
+			}
+			else
+			{
+				(*tok_l)->next = tmp;
+				((t_token*)(*tok_l)->content)->tkn = TOK_WORD;
+			}	
+			//printf("val is:%s\n", ((t_token*)(*tok_l)->content)->val);
+			//not the proper way to free?
+			//assert(!tmp);
 		}
 		else
-			((t_token*)(*tok_l)->content)->val = ft_strdup("\0"); //like this??
-		((t_token*)(*tok_l)->content)->tkn = TOK_WORD;
+			*tok_l = (*tok_l)->next;
 	}
 }
 
@@ -135,10 +145,25 @@ char	*get_env_val(char *environ[], char *var)
 		//printf("%s\n", environ[i]);
 		//printf("var:%s\n", tmp[0]);
 		//printf("val:%s\n",tmp[1]);
-		//printf("val:%s\n",tmp[1]);
-		if (!ft_strncmp(tmp[0], var, ft_strlen(var)))
+		//printf("val:%s\n",tmp[0]);
+		if (!ft_strcmp(tmp[0], var))
 				return (tmp[1]);
 		i++;
 	}
+	//printf("val here:%s\n",tmp[1]);
 	return (NULL);
+}
+
+void	delete_element(t_list **tok_l, enum token token)
+{
+	while (*tok_l)
+	{
+		if (((t_token*)(*tok_l)->content)->tkn == token)
+		{
+			*tok_l = (*tok_l)->next;
+			//should free here
+		}
+		else
+			tok_l = &(*tok_l)->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/21 12:33:11 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/23 18:21:46 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,19 @@ enum p_token {
 	PTOK_REDI_S,
 };
 
+typedef struct	s_redir_list
+{
+	enum token	tok;
+	char		*file;
+}				t_redir_list;
+
+typedef struct	s_cmdline
+{
+	char			*cmd_name;
+	char			**cmd_args;
+	t_redir_list	*redir_lst;
+}				t_cmdline;
+
 typedef int bool;
 t_list	*new_token_lst(enum token tok, char *line, int index);
 t_list	*lexer(char *line);
@@ -64,5 +77,6 @@ void	*malloca(size_t size);
 void	mfree(void **node);
 void	expand_env_var(t_list **tok_l, char **environ);
 char	*get_env_val(char *environ[], char *var);
+void	delete_element(t_list **tok_l, enum token token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/18 09:06:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/22 18:27:40 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	match_word(t_list *tok_l)
 {
 	if (tok_l == NULL)
 		return (0);
-	if (*(enum token*) tok_l->content == TOK_WHITESPACE)
-		return (1);
 	if (*(enum token*) tok_l->content == TOK_WORD)
 		return (1);
 	return (0);
