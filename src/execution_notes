@@ -22,9 +22,11 @@ Not-yet:   ❌
     print the env with "declare -x " at begining;✅
     export with arg :
     {
-        (eg1: [arg=valu || arg=  ]===> added in export with "double_qu" && env with not)⏲
+        (eg1: [arg=valu || arg=  ]===> added in export with "double_qu"  && env with not)✅
         (eg2: [arg ] that===>added in export only && dosent change the value)⏲
-        (ep3: [arg=hello=jjjj] == arg="hello=jjjj" ===> added in export with "double_qu" && env with not)
+        (eg3: [arg=hello=jjjj] == arg="hello=jjjj" ===> added in export with "double_qu" && env with not)✅
+        (eg4: [arg1=hello => arg1=world] ===>arg1=world
+        (e)
     }
 }
 ◦ unset   ❌ with no options

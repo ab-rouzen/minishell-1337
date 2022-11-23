@@ -74,13 +74,8 @@ t_env_list	*ft_lstnew1(void **content)
 	if (!(new_elem = malloc(sizeof(t_env_list))))
 		return (NULL);
 	new_elem->variable = ft_strdup(content[0]);
-	if (content[1] == NULL ) // segfault in that line whene add sgtrcher// find out whene to add "" if 
-
-	{
+	if (content[1] == NULL )
 		content[1] = ft_strdup("");
-		content[1] = ft_strjoin("\"", content[1]);
-		content[1] = ft_strjoin(content[1], "\"");
-	}
 	new_elem->value = ft_strdup(content[1]);
 	new_elem->next = NULL;
 	return (new_elem);
@@ -99,7 +94,7 @@ t_env_list	*ft_env(char **env)
 	{
 		str = ft_split(env[i], '=');
 		if (str[1])
-			str[1] = ft_strjoin("=", str[1]);
+			str[0] = ft_strjoin(str[0], "=");
 		ft_lstadd_back1(&elem, ft_lstnew1((void **)str)); 
 		i++;
 	}
