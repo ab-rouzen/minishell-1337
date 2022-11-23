@@ -55,12 +55,13 @@ void	ft_export(t_env_list *ms_export, char **cmd, t_env_list *ms_env)
 		if (ft_strchr(cmd[1], '='))
 		{
 			if (ft_find_variable(ms_export, str[0], str[1], cmd[1]))
-					if(ft_find_variable(ms_env, str[0], str[1], cmd[1]))
 						return ;
+			if(ft_find_variable(ms_env, str[0], str[1], cmd[1]))
+				return ;
 			ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str));
 			ft_lstadd_back1(&ms_env, ft_lstnew1((void **)str));
 		}
-		else
+		else if (ft_strchr(cmd[1], '=') == 0)
 			if (ft_find_variable(ms_export, str[0], str[1], cmd[1]) == 0)
 				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str));
 	}
