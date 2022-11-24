@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-int	ft_find_variable(t_env_list *ms_list, char *variable, char *new_value, char *cmd)
+int	ft_find_variable(t_env_list *ms_list, char *variable, char *new_value, char *cmd, int i)
 {	
 	if (!ft_strchr(cmd, '='))
 		while (ms_list)
@@ -15,7 +15,19 @@ int	ft_find_variable(t_env_list *ms_list, char *variable, char *new_value, char 
 		{
 			if(ft_strcmp(ms_list->variable, variable) == 0)
 			{
-				ms_list->value = ft_strdup(new_value);
+				if (i)
+					ms_list->value = ft_strdup(new_value);
+				else if (i == 0)
+				{
+					puts("*-*-*-*-*-*-*-**--*-*-*-*-*-*-*-*--*-*-*-*-*-*");
+					memmove(&ms_list->value[0], &ms_list->value[1], ft_strlen(ms_list->value) - 0);
+					memmove(&new_value[0], &new_value[1], ft_strlen(new_value) - 0);
+					ft_strtrim(ms_list->value, "\"");
+					ft_strtrim(new_value, "\"");
+					printf("%s\n", ms_list->value);
+					printf("%s\n", new_value);
+					ms_list->value = ft_strjoin(ms_list->value, new_value);
+				}
 				return (1);
 			}
 			ms_list = ms_list->next;
@@ -50,6 +62,7 @@ void	ft_export(t_env_list *ms_export, char **cmd, t_env_list *ms_env)
 	}
 	if (cmd[1])
 	{
+		
 		if (ft_strchr(cmd[1], '='))
 			env_str[1] = ft_strjoin("=", env_str[1]);
 
@@ -62,11 +75,18 @@ void	ft_export(t_env_list *ms_export, char **cmd, t_env_list *ms_env)
 		int check = 1;
 		if (ft_strchr(cmd[1], '='))
 		{
-			if (str[1][0] == '+')
+			if (str[0][ft_strlen(str[0]) - 1] == '+')
+			{
 				//join the old with new 
-			if (ft_find_variable(ms_export, str[0], str[1], cmd[1]))
+				int j = ft_strlen(str[0]) - 1;
+
+				memmove(&str[0][j], &str[0][ft_strlen(str[0]) + 1], ft_strlen(str[0]) - j);
+				ft_find_variable(ms_export, str[0], str[1], cmd[1], 0);
+
+			}
+			if (ft_find_variable(ms_export, str[0], str[1], cmd[1], 1))
 				check = 0;
-			if(ft_find_variable(ms_env, env_str[0], env_str[1], cmd[1]))
+			if(ft_find_variable(ms_env, env_str[0], env_str[1], cmd[1], 1))
 				return ;
 			if (check)
 			{
@@ -77,7 +97,7 @@ void	ft_export(t_env_list *ms_export, char **cmd, t_env_list *ms_env)
 			ft_lstadd_back1(&ms_env, ft_lstnew1((void **)env_str));
 		}
 		else if (ft_strchr(cmd[1], '=') == 0)
-			if (ft_find_variable(ms_export, str[0], str[1], cmd[1]) == 0)
+			if (ft_find_variable(ms_export, str[0], str[1], cmd[1], 1) == 0)
 				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str));
 	}
 }

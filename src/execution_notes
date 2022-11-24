@@ -6,7 +6,7 @@ Not-yet:   ❌
 
 ◦ echo // echo -n : ✅
 ◦ pwd : ✅
-◦ cd : => still :"cd(no arg) // "modifying env" ⏲
+◦ cd : => still :cd(no arg) // "modifying env" ⏲
 ◦ env      with no options or arguments ⏲
 {
     => copy the env in linked list✅
@@ -32,3 +32,31 @@ Not-yet:   ❌
 }
 ◦ unset   ❌ with no options
 ◦ exit    ❌ with no options
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; char word[] = abcdef;  
+; int idxToDel = 2; 
+; memmove(&word[idxToDel], &word[idxToDel + 1], strlen(word) - idxToDel);
