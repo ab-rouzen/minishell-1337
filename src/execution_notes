@@ -23,10 +23,11 @@ Not-yet:   ❌
     export with arg :
     {
         (eg1: [arg=valu || arg=  ]===> added in export with "double_qu"  && env with not)✅
-        (eg2: [arg ] that===>added in export only && dosent change the value)⏲
+        (eg2: [arg ] that===>added in export only && dosent change the value)✅
         (eg3: [arg=hello=jjjj] == arg="hello=jjjj" ===> added in export with "double_qu" && env with not)✅
-        (eg4: [arg1=hello => arg1=world] ===>arg1=world
-        (e)
+        (eg4: [arg1=hello => arg1=world] ===>arg1=world)✅
+        (eg5: [arg2=hello => ar2+=world ====> arg2=helloworld] )⏲
+        (eg5: [arg2='|=======|' ====> arg2="======="] )⏲
     }
 }
 ◦ unset   ❌ with no options

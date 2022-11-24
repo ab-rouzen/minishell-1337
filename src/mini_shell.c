@@ -27,39 +27,54 @@ int	ft_find_variable(t_env_list *ms_list, char *variable, char *new_value, char 
 void	ft_export(t_env_list *ms_export, char **cmd, t_env_list *ms_env)
 {
 	char **str;
+	char **env_str = NULL;
 	t_env_list *tmp;
 	if (cmd[1])
 	{
 		str = ft_split(cmd[1], '=');
+		env_str = ft_split(cmd[1], '=');
 		int i = 1;
 		while (str[i] && str[i + 1])
 		{
 			str[1] = ft_strjoin(str[1], "=");
 			str[1] = ft_strjoin(str[1], str[i + 1]);
+			env_str[1] = ft_strjoin(env_str[1], "=");
+			env_str[1] = ft_strjoin(env_str[1], env_str[i + 1]);
 			i++;
 		}
 		if (!str[1])
+		{
 			str[1] = ft_strdup("");
+			env_str[1] = ft_strdup("");
+		}
 	}
 	if (cmd[1])
 	{
+		if (ft_strchr(cmd[1], '='))
+			env_str[1] = ft_strjoin("=", env_str[1]);
+
 		if (ft_strchr(cmd[1], '='))
 		{
 			str[1] = ft_strjoin("\"", str[1]);
 			str[1] = ft_strjoin("=", str[1]);
 			str[1] = ft_strjoin(str[1], "\"");
 		}
-		// if (!ft_strchr(cmd[1], '=') && !ft_find_variable(ms_export, str[0], str[1]))
-		// 	ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str));
-
+		int check = 1;
 		if (ft_strchr(cmd[1], '='))
 		{
+			if (str[1][0] == '+')
+				//join the old with new 
 			if (ft_find_variable(ms_export, str[0], str[1], cmd[1]))
-						return ;
-			if(ft_find_variable(ms_env, str[0], str[1], cmd[1]))
+				check = 0;
+			if(ft_find_variable(ms_env, env_str[0], env_str[1], cmd[1]))
 				return ;
-			ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str));
-			ft_lstadd_back1(&ms_env, ft_lstnew1((void **)str));
+			if (check)
+			{
+				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str));
+				ft_lstadd_back1(&ms_env, ft_lstnew1((void **)env_str));
+				return ;
+			}
+			ft_lstadd_back1(&ms_env, ft_lstnew1((void **)env_str));
 		}
 		else if (ft_strchr(cmd[1], '=') == 0)
 			if (ft_find_variable(ms_export, str[0], str[1], cmd[1]) == 0)
