@@ -46,17 +46,15 @@ char	**ft_split_export(char *str)
 		else
 		{
 			expo[0] = ft_substr1(str, 0, x);
-			j = 0;
-			while (str[++i])
-				j++;
-			expo[1] = ft_substr1(str, x+1, j);
+			expo[1] = ft_substr1(str, x+1, ft_strlen(&str[i]));
 			return (expo);
 		}
 	expo[0] = ft_substr1(str, 0, x);
 	return (expo);
 }
 
-int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i)
+
+int	ft_find_variable_norm(t_env_list *ms_list, char **str, char *cmd) // free
 {
 	if (!ft_strchr(cmd, '='))
 	{
@@ -65,7 +63,7 @@ int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i)
 
 			if (!ft_strcmp(ms_list->variable, str[0]))
 			{
-				str[i] = ft_strdup(ms_list->value);
+				str[1] = ft_strdup(ms_list->value);
 				return (1);
 			}
 			ms_list = ms_list->next;
@@ -73,6 +71,13 @@ int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i)
 		ft_lstadd_back1(&ms_list, ft_lstnew1((void **)str, FALSE));
 	}
 	str[0] = ft_strtrim(str[0], "+");
+	return (0);
+}
+
+int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i) // free
+{
+	if (ft_find_variable_norm(ms_list, str, cmd))
+		return (1);
 	if (ft_strchr(cmd, '='))
 	{
 		while (ms_list)
@@ -98,13 +103,9 @@ int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i)
 	return(0);
 }
 
-
-
-
-void	ft_export(t_env_list *ms_export, char **cmd, t_env_list *ms_env)
+void	ft_export(t_env_list *ms_export, char **cmd)
 {
 	char **str;
-	(void)ms_env;
 
 	str = ft_split_export(cmd[1]);
 	if (ft_strchr(cmd[1], '='))
@@ -112,24 +113,15 @@ void	ft_export(t_env_list *ms_export, char **cmd, t_env_list *ms_env)
 		if (str[0][ft_strlen(str[0]) - 1] == '+')
 		{
 			if (ft_find_variable(ms_export, str,cmd[1], 0) == 0)
-			{
 				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, TRUE));
-				return ;
-			}
 		}
 		else
 			if (ft_find_variable(ms_export, str,cmd[1], 1) == 0)
-			{
 				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, TRUE));
-				return ;
-			}
 	}
 	else if (!ft_strchr(cmd[1], '='))
 		if (ft_find_variable(ms_export, str,cmd[1], 1) == 0)
-		{
 			ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, FALSE));
-			return ;
-		}
 }
 
 void	ft_print_expo(t_env_list *ms_export, char *cmd)
@@ -176,20 +168,19 @@ int main(int ac, char **av, char **env)
 		printf("\033[0m "); 
 		str = readline("");
 		if (str && *str)
-		{
 			add_history(str);
-		}
 		cmd = ft_split(str, ' ');
+		
 		if (!ft_strcmp(cmd[0], "echo"))
 			ft_echo(cmd);
 		else if (!ft_strcmp(cmd[0], "cd"))
 			ft_cd(cmd);
 		else if (!ft_strcmp(cmd[0], "pwd"))
 			ft_pwd(cmd);
-		else if (!ft_strcmp(cmd[0], "export") && cmd[1] == NULL)
+		else if (!ft_strcmp(cmd[0], "export") && !cmd[1])
 			ft_print_expo(ms_export, cmd[0]);
 		else if (!ft_strcmp(cmd[0], "export"))
-			ft_export(ms_export, cmd, ms_env);
+			ft_export(ms_export, cmd);
 		else if (!ft_strcmp(cmd[0], "env"))
 			ft_print_expo(ms_export, cmd[0]);
 		else

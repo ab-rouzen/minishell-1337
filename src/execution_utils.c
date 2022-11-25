@@ -31,10 +31,23 @@ void	ft_echo(char **cmd)
 		printf("\n");
 }
 
-void	ft_cd(char **cmd)
+void	ft_cd(char **cmd, t_env_list *ms_list)
 {
 	if (chdir(cmd[1]) < 0)
 		printf ("mini_shell: cd: %s: No such file or directory\n", cmd[1]);
+	else
+	{
+		while (ms_list)
+		{
+
+			if (!ft_strcmp(ms_list->variable, "PWD"))
+			{
+				ms_list->value = ft_strdup(getcwd(cwd, sizeof(cwd)));
+				return ;
+			}
+			ms_list = ms_list->next;
+		}
+	}
 }
 
 void	ft_pwd(char **cmd)
