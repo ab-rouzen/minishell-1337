@@ -174,9 +174,9 @@ int main(int ac, char **av, char **env)
 		if (!ft_strcmp(cmd[0], "echo"))
 			ft_echo(cmd);
 		else if (!ft_strcmp(cmd[0], "cd"))
-			ft_cd(cmd);
+			ft_cd(cmd, ms_export);
 		else if (!ft_strcmp(cmd[0], "pwd"))
-			ft_pwd(cmd);
+			ft_pwd();
 		else if (!ft_strcmp(cmd[0], "export") && !cmd[1])
 			ft_print_expo(ms_export, cmd[0]);
 		else if (!ft_strcmp(cmd[0], "export"))

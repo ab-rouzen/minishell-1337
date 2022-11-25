@@ -6,7 +6,11 @@ Not-yet:   ❌
 
 ◦ echo // echo -n : ✅
 ◦ pwd : ✅
-◦ cd : => still :cd(no arg) // "modifying env" ⏲
+◦ cd : => still :cd(no arg) // "modifying env" ✅
+{
+	"modifying env" ✅
+	cd ~
+}
 ◦ env      with no options or arguments ⏲
 {
 	=> copy the env in linked list✅
