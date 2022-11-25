@@ -146,6 +146,23 @@ void	ft_print_expo(t_env_list *ms_export, char *cmd)
 	}
 }
 
+void	ft_unset(t_env_list **ms_list, char *cmd)
+{
+	t_env_list *tmp;
+
+	while (*ms_list)
+	{
+		if (!ft_strcmp((*ms_list)->variable, cmd))
+		{
+ 			tmp = (*ms_list)->next;
+			free(*ms_list);
+			(*ms_list) = tmp;
+			return ;
+		}
+		ms_list = &(*ms_list)->next;
+	}
+}
+
 int main(int ac, char **av, char **env)
 {
 	
@@ -183,8 +200,29 @@ int main(int ac, char **av, char **env)
 			ft_export(ms_export, cmd);
 		else if (!ft_strcmp(cmd[0], "env"))
 			ft_print_expo(ms_export, cmd[0]);
+		else if (!ft_strcmp(cmd[0], "unset"))
+			ft_unset(&ms_export, cmd[1]);
 		else
 			printf("%s: command not found\n", str);
 	}
 	return 0;
 }
+
+
+// void	ft_delet(t_env_list **ms_list)
+// {
+// 	t_env_list *env_prev;
+
+// 	while (ms_list)
+// 	{
+// 		env_prev = *ms_list;
+// 		if (!ft_strcmp(tmp->variable, cmd))
+// 		{
+//  			//tmp = (*ms_list)->next;
+// 			(*ms_list)->next = (*ms_list)->next->next;
+// 			//free(tmp);
+// 			return ;
+// 		}
+// 		ms_list = ms_list->next;
+// 	}
+// }
