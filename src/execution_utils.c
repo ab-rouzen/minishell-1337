@@ -67,20 +67,22 @@ void	ft_lstadd_back1(t_env_list **lst, t_env_list *new)
 		*lst = new;
 }
 
-t_env_list	*ft_lstnew1(void **content)
+t_env_list	*ft_lstnew1(void **content, bool exported)
 {
 	t_env_list	*new_elem;
 
+	//printf("content[0] = %s, content[1] = %s", content[0], content[1]);
+	
 	if (!(new_elem = malloc(sizeof(t_env_list))))
 		return (NULL);
 	new_elem->variable = ft_strdup(content[0]);
-	if (content[1] == NULL )
+	if (content[1] == NULL)
 		content[1] = ft_strdup("");
 	new_elem->value = ft_strdup(content[1]);
+	new_elem->exported = exported;
 	new_elem->next = NULL;
 	return (new_elem);
 }
-
 t_env_list	*ft_env(char **env)
 {
 	int i;
@@ -93,9 +95,7 @@ t_env_list	*ft_env(char **env)
 	while (env[i])
 	{
 		str = ft_split(env[i], '=');
-		if (str[1])
-			str[0] = ft_strjoin(str[0], "=");
-		ft_lstadd_back1(&elem, ft_lstnew1((void **)str)); 
+		ft_lstadd_back1(&elem, ft_lstnew1((void **)str, TRUE)); 
 		i++;
 	}
 	return (elem);

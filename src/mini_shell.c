@@ -1,105 +1,139 @@
 
 #include "minishell.h"
+char	*ft_substr1(char const *s, unsigned int start, size_t len)
+{
+	char	*p;
+	size_t	i;
 
-int	ft_find_variable(t_env_list *ms_list, char *variable, char *new_value, char *cmd, int i)
-{	
-	if (!ft_strchr(cmd, '='))
-		while (ms_list)
-		{
-			if(ft_strcmp(ms_list->variable, variable) == 0)
-				return (1);
-			ms_list = ms_list->next;
-		}
+	if (!s)
+		return (NULL);
+	if (len > ft_strlen(&s[start]))
+		p = malloc((ft_strlen(&s[start]) + 1) * sizeof(char));
 	else
+		p = malloc((len + 1) * sizeof(char));
+	if (!p)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		start = ft_strlen(s);
+	i = 0;
+	while (i < len && s[start + i])
+	{
+		p[i] = s[start + i];
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
+}
+
+char	**ft_split_export(char *str)
+{
+	char	**expo;
+	int		i;
+	int		j;
+	int		x;
+
+	i = 0;
+	j = 0;
+	x = 0;
+	expo = malloc ((3) * sizeof(char *));
+	if (!expo)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] != '=')
+			x++;
+		else
+		{
+			expo[0] = ft_substr1(str, 0, x);
+			j = 0;
+			if (!str[i])
+			{
+				expo[1] = ft_strdup("");
+				expo[2] = NULL;
+				return (expo);
+			}
+			while (str[++i])
+				j++;
+			expo[1] = ft_substr1(str, x+1, j);
+			return (expo);
+		}
+		i++;
+	}
+	expo[0] = ft_substr1(str, 0, x);
+	expo[1] = ft_strdup("");
+	expo[2] = NULL;
+	return (expo);
+}
+
+int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i)
+{
+	if (!ft_strchr(cmd, '='))
+	{
 		while (ms_list)
 		{
-			if(ft_strcmp(ms_list->variable, variable) == 0)
+
+			if (!ft_strcmp(ms_list->variable, str[0]))
 			{
-				if (i)
-					ms_list->value = ft_strdup(new_value);
-				else if (i == 0)
-				{
-					puts("*-*-*-*-*-*-*-**--*-*-*-*-*-*-*-*--*-*-*-*-*-*");
-					memmove(&ms_list->value[0], &ms_list->value[1], ft_strlen(ms_list->value) - 0);
-					memmove(&new_value[0], &new_value[1], ft_strlen(new_value) - 0);
-					ft_strtrim(ms_list->value, "\"");
-					ft_strtrim(new_value, "\"");
-					printf("%s\n", ms_list->value);
-					printf("%s\n", new_value);
-					ms_list->value = ft_strjoin(ms_list->value, new_value);
-				}
+				str[i] = ft_strdup(ms_list->value);
 				return (1);
 			}
+			ms_list = ms_list->next;
+		}
+		ft_lstadd_back1(&ms_list, ft_lstnew1((void **)str, FALSE));
+	}
+	str[0] = ft_strtrim(str[0], "+");
+	if (ft_strchr(cmd, '='))// if there is '=' in the cmd
+		while (ms_list)
+		{
+			if(ft_strcmp(ms_list->variable, str[0]) == 0)
+				if (i)
+				{
+					free(ms_list->value);
+					ms_list->value = ft_strdup(str[1]);
+					return (1);
+				}
+				else
+				{
+					ms_list->value = ft_strdup(ft_strjoin(ms_list->value, str[1]));
+					return (1);
+				}
 			ms_list = ms_list->next;
 		}
 	return(0);
 }
 
 
+
+
 void	ft_export(t_env_list *ms_export, char **cmd, t_env_list *ms_env)
 {
 	char **str;
-	char **env_str = NULL;
-	t_env_list *tmp;
-	if (cmd[1])
+	(void)ms_env;
+	//char **env_str;
+	//t_env_list *tmp;
+
+	str = ft_split_export(cmd[1]);
+	if (ft_strchr(cmd[1], '='))
 	{
-		str = ft_split(cmd[1], '=');
-		env_str = ft_split(cmd[1], '=');
-		int i = 1;
-		while (str[i] && str[i + 1])
-		{
-			str[1] = ft_strjoin(str[1], "=");
-			str[1] = ft_strjoin(str[1], str[i + 1]);
-			env_str[1] = ft_strjoin(env_str[1], "=");
-			env_str[1] = ft_strjoin(env_str[1], env_str[i + 1]);
-			i++;
-		}
-		if (!str[1])
-		{
-			str[1] = ft_strdup("");
-			env_str[1] = ft_strdup("");
-		}
-	}
-	if (cmd[1])
-	{
-		
-		if (ft_strchr(cmd[1], '='))
-			env_str[1] = ft_strjoin("=", env_str[1]);
-
-		if (ft_strchr(cmd[1], '='))
-		{
-			str[1] = ft_strjoin("\"", str[1]);
-			str[1] = ft_strjoin("=", str[1]);
-			str[1] = ft_strjoin(str[1], "\"");
-		}
-		int check = 1;
-		if (ft_strchr(cmd[1], '='))
-		{
-			if (str[0][ft_strlen(str[0]) - 1] == '+')
+		if (str[0][ft_strlen(str[0]) - 1] == '+')
+			if (ft_find_variable(ms_export, str,cmd[1], 0) == 0)
 			{
-				//join the old with new 
-				int j = ft_strlen(str[0]) - 1;
-
-				memmove(&str[0][j], &str[0][ft_strlen(str[0]) + 1], ft_strlen(str[0]) - j);
-				ft_find_variable(ms_export, str[0], str[1], cmd[1], 0);
-
-			}
-			if (ft_find_variable(ms_export, str[0], str[1], cmd[1], 1))
-				check = 0;
-			if(ft_find_variable(ms_env, env_str[0], env_str[1], cmd[1], 1))
-				return ;
-			if (check)
-			{
-				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str));
-				ft_lstadd_back1(&ms_env, ft_lstnew1((void **)env_str));
+				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, TRUE));
 				return ;
 			}
-			ft_lstadd_back1(&ms_env, ft_lstnew1((void **)env_str));
-		}
-		else if (ft_strchr(cmd[1], '=') == 0)
-			if (ft_find_variable(ms_export, str[0], str[1], cmd[1], 1) == 0)
-				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str));
+		else
+			if (ft_find_variable(ms_export, str,cmd[1], 1) == 0)
+			{
+				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, TRUE));
+				return ;
+			}
 	}
+	else if (!ft_strchr(cmd[1], '='))
+		if (ft_find_variable(ms_export, str,cmd[1], 1) == 0)
+		{
+			ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, TRUE));
+			return ;
+		}
 }
 
 void	ft_print_env(t_env_list *ms_env)
@@ -109,12 +143,12 @@ void	ft_print_env(t_env_list *ms_env)
 	tmp = ms_env;
 	while (tmp)
 	{
-		printf("%s%s\n", tmp->variable, tmp->value);
+		printf("%s=%s\n", tmp->variable, tmp->value);
 		tmp = tmp->next;
 	}
 }
 
-void	ft_print_expo(t_env_list *ms_export)
+void	ft_print_expo(t_env_list *ms_export, char *cmd)
 {
 	t_env_list *tmp;
  	tmp = ms_export;
@@ -122,10 +156,10 @@ void	ft_print_expo(t_env_list *ms_export)
 	while (tmp)
 	{
 		printf("declare -x ");
-		if(ft_strchr(tmp->variable, '='))
-			printf("%s\"%s\"\n", tmp->variable, tmp->value);
+		if(ft_strchr(cmd, '='))
+			printf("%s=\"%s\"\n", tmp->variable, tmp->value);
 		else
-			printf("%s%s\n", tmp->variable, tmp->value);
+			printf("%s=%s\n", tmp->variable, tmp->value);
 		tmp = tmp->next;
 	}
 }
@@ -163,7 +197,7 @@ int main(int ac, char **av, char **env)
 		else if (!ft_strcmp(cmd[0], "pwd"))
 			ft_pwd(cmd);
 		else if (!ft_strcmp(cmd[0], "export") && cmd[1] == NULL)
-			ft_print_expo(ms_export);
+			ft_print_expo(ms_export, cmd[1]);
 		else if (!ft_strcmp(cmd[0], "export"))
 			ft_export(ms_export, cmd, ms_env);
 		else if (!ft_strcmp(cmd[0], "env"))
