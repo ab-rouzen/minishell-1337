@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/22 18:30:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/24 21:09:14 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,4 +166,27 @@ void	delete_element(t_list **tok_l, enum token token)
 		else
 			tok_l = &(*tok_l)->next;
 	}
+}
+
+int	get_words_num(t_list *tok_l)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (tok_l && ((t_token*)tok_l->content)->tkn != TOK_PIPE)
+	{
+		if (((t_token*)tok_l->content)->tkn == TOK_WORD)
+			i++;
+		else
+			j++;
+		tok_l = tok_l->next;
+	}
+	return (i - j);
+}
+
+void	join_adj_quotes()
+{
+	
 }

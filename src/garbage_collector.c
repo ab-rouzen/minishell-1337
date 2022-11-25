@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:32:11 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/20 13:20:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/24 17:42:32 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*malloca(size_t size)
 	static t_list	*malloced_mem;
 	t_list	*tmp;
 
+	//printf("been here: size is '%d'\n", size);
 	if (size == 0)
 	{
 		mfree((void**)&malloced_mem);
@@ -27,7 +28,7 @@ void	*malloca(size_t size)
 	}
 	tmp = malloc(size);
 	if (tmp == NULL)
-		exit(EXIT_FAILURE);
+		exit(77);
 	ft_lstadd_back(&malloced_mem, ft_lstnew(tmp));
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/22 18:29:58 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/24 21:01:25 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,23 @@ int main(int argc, char *argv[], char **environ)
 			printf("All matched: SUCCESS\n");
 		else
 			printf("Parse error: FAILURE\n");
+		tmp = to_cmdline_lst(tok_l);
+		while (tmp)
+		{
+			int i = 0;
+			while (((t_cmd_lst*)tmp->content)->cmd_args[i])
+				printf("word:'%s'\n", ((t_cmd_lst*)tmp->content)->cmd_args[i++]);
+			printf("tokens:\n");
+			t_list	*mylist = ((t_cmd_lst*)tmp->content)->redir_lst;
+			while (mylist)
+			{
+				printf("enum tok:'%d'\n", ((t_redir_list*)mylist->content)->tok);
+				printf("word:'%s'\n", ((t_redir_list*)mylist->content)->file);
+				mylist = mylist->next;
+			}
+			printf("--------NEXT LIST----------\n");
+			tmp = tmp->next;
+		}
 	}
 	return (0);
 }

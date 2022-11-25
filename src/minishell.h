@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/23 18:21:46 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/24 17:11:34 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ typedef struct	s_redir_list
 	char		*file;
 }				t_redir_list;
 
-typedef struct	s_cmdline
+typedef struct	s_cmd_ls
 {
 	char			*cmd_name;
 	char			**cmd_args;
-	t_redir_list	*redir_lst;
-}				t_cmdline;
+	t_list			*redir_lst;
+}				t_cmd_lst;
 
 typedef int bool;
 t_list	*new_token_lst(enum token tok, char *line, int index);
@@ -78,5 +78,9 @@ void	mfree(void **node);
 void	expand_env_var(t_list **tok_l, char **environ);
 char	*get_env_val(char *environ[], char *var);
 void	delete_element(t_list **tok_l, enum token token);
+int		get_words_num(t_list *tok_l);
+t_cmd_lst	*new_cmd_lst(char *cmd_name, char **cmd_args, t_list *redir_lst);
+t_redir_list	*new_redir_lst(enum token tok, char *file);
+t_list	*to_cmdline_lst(t_list	*tok_l);
 
 #endif
