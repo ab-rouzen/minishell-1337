@@ -1,0 +1,7 @@
+element to be allocated using malloca:
+* lst_new, needs to switch to malloca
+* join_token strdup and strjoin??
+*
+*
+
+others:

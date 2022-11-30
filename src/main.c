@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/24 21:01:25 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/30 19:56:33 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int main(int argc, char *argv[], char **environ)
 	//rl_complete('\t', filename_completion_function);
 	while(TRUE)
 	{
+		//malloca(0);
 		line  = readline(SHELL_PROMPT);
         tok_l = lexer(line);
 		if (line && *line)
@@ -32,6 +33,7 @@ int main(int argc, char *argv[], char **environ)
 		tmp = tok_l;
 		if (!unquote(&tok_l, line, environ))
 			printf("Quote parse error!\n");
+		join_adjacent_quotes(&tok_l);
 		delete_element(&tok_l, TOK_WHITESPACE);
 		printf("token list | ");
 		tmp = tok_l;
@@ -64,6 +66,7 @@ int main(int argc, char *argv[], char **environ)
 			printf("--------NEXT LIST----------\n");
 			tmp = tmp->next;
 		}
+		free(line);
 	}
 	return (0);
 }

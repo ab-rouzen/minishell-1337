@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/22 18:12:22 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/30 10:47:59 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	dq_unquote(t_list *tok_l, char *line, char **environ)
 				tmp = (*ltkn)->next;
 				join_token(tok_l, (*ltkn), TOK_DQUOTE);
 				tok_l->next = tmp;
-				((t_token*)tok_l->content)->tkn = TOK_WORD;
+				((t_token*)tok_l->content)->tkn = TOK_QUOTE;
 				return (TRUE);
 			//}
 		}
@@ -85,7 +85,7 @@ int	sq_unquote(t_list *tok_l, char *line)
 			//printf("was i here ?\n");
 			join_token(tok_l, ltkn, TOK_SQUOTE);
 			tok_l->next = tmp;
-			((t_token*)tok_l->content)->tkn = TOK_WORD;
+			((t_token*)tok_l->content)->tkn = TOK_QUOTE;
 			return (TRUE);
 		}
 		ltkn = ltkn->next;

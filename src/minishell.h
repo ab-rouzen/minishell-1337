@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/24 17:11:34 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/11/30 18:54:00 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ enum token {
 	TOK_REDI_O,
 	TOK_REDI_O_APP,
 	TOK_HEREDOC,
+	TOK_QUOTE,
 	TOK_SQUOTE, 
 	TOK_DQUOTE,
 	TOK_DOLLAR};
@@ -67,20 +68,24 @@ typedef struct	s_cmd_ls
 }				t_cmd_lst;
 
 typedef int bool;
-t_list	*new_token_lst(enum token tok, char *line, int index);
-t_list	*lexer(char *line);
-void	index_token(t_list *tok_lst);
-char	*copy_token_val(char *line, int	size);
-void	delete_token(t_list	*start, t_list *end);
-void	join_token(t_list *start, t_list *end, enum token quote);
-void	*malloca(size_t size);
-void	mfree(void **node);
-void	expand_env_var(t_list **tok_l, char **environ);
-char	*get_env_val(char *environ[], char *var);
-void	delete_element(t_list **tok_l, enum token token);
-int		get_words_num(t_list *tok_l);
-t_cmd_lst	*new_cmd_lst(char *cmd_name, char **cmd_args, t_list *redir_lst);
-t_redir_list	*new_redir_lst(enum token tok, char *file);
-t_list	*to_cmdline_lst(t_list	*tok_l);
+t_list			*new_token_lst(enum token tok, char *line, int index);
+t_list			*lexer(char *line);
+void			index_token(t_list *tok_lst);
+char			*copy_token_val(char *line, int	size);
+void			delete_token(t_list	*start, t_list *end);
+void			join_token(t_list *start, t_list *end, enum token quote);
+void			*malloca(size_t size);
+void			mfree(void **node);
+void			expand_env_var(t_list **tok_l, char **environ);
+char			*get_env_val(char *environ[], char *var);
+void			delete_element(t_list **tok_l, enum token token);
+int				get_words_num(t_list *tok_l);
+t_list			*new_cmd_lst(char *cmd_name, char **cmd_args, t_list *redir_lst);
+t_list			*new_redir_lst(enum token tok, char *file);
+t_list			*to_cmdline_lst(t_list	*tok_l);
+void			join_adjacent_quotes(t_list **tok_l);
+void			replace_element(t_list *tok_l, enum token token_1, enum token token_2);
+t_list			*ft_lstnew_falloc(void *content, void*(*alloc)(size_t));
+char			*ft_strdup_alloca(const char *src, void*(alloc)(size_t));
 
 #endif
