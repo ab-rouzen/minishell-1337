@@ -103,25 +103,50 @@ int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i) // free
 	return(0);
 }
 
-void	ft_export(t_env_list *ms_export, char **cmd)
+int	ft_check_variable(char **str, char *cmd)
+{
+	int i = 0;
+
+	if (ft_isalpha(str[0][0]))
+	{
+		while (str[0][++i])
+		{
+			if (!ft_isalnum(str[0][i])) // modify in isalnum by adding +
+			{
+				printf("`%s\': not a valid identifier\n", cmd);
+				return (1);
+			}
+		}
+	}
+	else
+	{
+		printf("`%s\': not a valid identifier\n", cmd);
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_export(t_env_list **ms_export, char **cmd)
 {
 	char **str;
 
 	str = ft_split_export(cmd[1]);
+	if (ft_check_variable(str, cmd[1]))
+		return ;
 	if (ft_strchr(cmd[1], '='))
 	{
 		if (str[0][ft_strlen(str[0]) - 1] == '+')
 		{
-			if (ft_find_variable(ms_export, str,cmd[1], 0) == 0)
-				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, TRUE));
+			if (ft_find_variable(*ms_export, str,cmd[1], 0) == 0)
+				ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
 		}
 		else
-			if (ft_find_variable(ms_export, str,cmd[1], 1) == 0)
-				ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, TRUE));
+			if (ft_find_variable(*ms_export, str,cmd[1], 1) == 0)
+				ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
 	}
 	else if (!ft_strchr(cmd[1], '='))
-		if (ft_find_variable(ms_export, str,cmd[1], 1) == 0)
-			ft_lstadd_back1(&ms_export, ft_lstnew1((void **)str, FALSE));
+		if (ft_find_variable(*ms_export, str,cmd[1], 1) == 0)
+			ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, FALSE));
 }
 
 void	ft_print_expo(t_env_list *ms_export, char *cmd)
@@ -163,20 +188,35 @@ void	ft_unset(t_env_list **ms_list, char *cmd)
 	}
 }
 
+int	ft_exit()
+{
+	
+	return (0);
+}
+
 int main(int ac, char **av, char **env)
 {
 	
 	char	*str;
 	char	**cmd;
+	char	**cmd_path;
 	int		check;
-	t_env_list *ms_env;
+	int		i;
 	t_env_list *ms_export;
 
 (void)ac;
 (void)av;
 
 	ms_export = ft_env(env);
-	ms_env = ft_env(env);
+	while (ms_export)
+	{
+		if (!ft_strcmp(ms_export->variable, "PATH"))
+		{
+			cmd_path = ft_split(ms_export->value, ':');
+			break ;
+		}
+		ms_export = ms_export->next;
+	}
 	check = 0;
 	while (1) 
 	{
@@ -187,7 +227,7 @@ int main(int ac, char **av, char **env)
 		if (str && *str)
 			add_history(str);
 		cmd = ft_split(str, ' ');
-		
+
 		if (!ft_strcmp(cmd[0], "echo"))
 			ft_echo(cmd);
 		else if (!ft_strcmp(cmd[0], "cd"))
@@ -197,32 +237,40 @@ int main(int ac, char **av, char **env)
 		else if (!ft_strcmp(cmd[0], "export") && !cmd[1])
 			ft_print_expo(ms_export, cmd[0]);
 		else if (!ft_strcmp(cmd[0], "export"))
-			ft_export(ms_export, cmd);
+			ft_export(&ms_export, cmd);
 		else if (!ft_strcmp(cmd[0], "env"))
 			ft_print_expo(ms_export, cmd[0]);
 		else if (!ft_strcmp(cmd[0], "unset"))
 			ft_unset(&ms_export, cmd[1]);
+		else if (!ft_strcmp(cmd[0], "exit"))
+		{
+			ft_exit();
+			exit (1);
+		}
 		else
-			printf("%s: command not found\n", str);
+		{
+			i = 0;
+			cmd[0] = ft_strjoin("/", cmd[0]);
+			while (cmd_path[i])
+			{
+					// printf("%s\n",cmd[0]);
+					// printf("%s\n", cmd_path[0]);
+					//printf("%s\n", ft_strjoin(cmd_path[i], cmd[0]));
+				if (access(ft_strjoin(cmd_path[i], cmd[0]), F_OK) == 0)
+				{
+					//printf("%s", ft_strjoin(cmd_path[i], cmd[0]), F_OK);
+					int pid = fork() == 0;
+					if (pid == 0)
+					{
+						execve(ft_strjoin(cmd_path[i], cmd[0]), NULL, env);
+					}
+					//wait(&pid);
+				}
+				i++;
+			}
+		}
+			//printf ("%d",access("/bin/ls", F_OK));
+			// printf("%s: command not found\n", str);
 	}
 	return 0;
 }
-
-
-// void	ft_delet(t_env_list **ms_list)
-// {
-// 	t_env_list *env_prev;
-
-// 	while (ms_list)
-// 	{
-// 		env_prev = *ms_list;
-// 		if (!ft_strcmp(tmp->variable, cmd))
-// 		{
-//  			//tmp = (*ms_list)->next;
-// 			(*ms_list)->next = (*ms_list)->next->next;
-// 			//free(tmp);
-// 			return ;
-// 		}
-// 		ms_list = ms_list->next;
-// 	}
-// }
