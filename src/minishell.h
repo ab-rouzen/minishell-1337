@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/30 18:54:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/01 14:28:47 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ void			join_adjacent_quotes(t_list **tok_l);
 void			replace_element(t_list *tok_l, enum token token_1, enum token token_2);
 t_list			*ft_lstnew_falloc(void *content, void*(*alloc)(size_t));
 char			*ft_strdup_alloca(const char *src, void*(alloc)(size_t));
+t_list			*create_cmd_node(t_list *tok_l, char **cmd_words, t_list **redir_lst);
 
 #endif

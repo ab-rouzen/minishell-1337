@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/30 10:47:59 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/01 15:25:25 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	unquote(t_list **tok_l, char *line, char **environ)
 {
-
 	while (*tok_l)
 	{
 		if (((t_token*)((*tok_l)->content))->tkn == TOK_SQUOTE)
@@ -45,22 +44,14 @@ int	dq_unquote(t_list *tok_l, char *line, char **environ)
 	ltkn  = &tok_l->next;
 	while (*ltkn)
 	{
-		//if (((t_token*)ltkn->content)->tkn == TOK_DOLLAR)
-		//printf("benn ger\n");
 		expand_env_var(ltkn, environ);
-		//printf("two: %d\n", ((t_token*)ltkn->content)->tkn);
 		if (((t_token*)(*ltkn)->content)->tkn == TOK_DQUOTE)
 		{
-			// should free elements here
-			//if (((t_token*)(*tok_l)->next->content)->tkn != TOK_SQUOTE);
-			//{
-				// ((n*)(*tok_l)->next->content)->index = ((t_token*)ltkn->content)->index 
-				tmp = (*ltkn)->next;
-				join_token(tok_l, (*ltkn), TOK_DQUOTE);
-				tok_l->next = tmp;
-				((t_token*)tok_l->content)->tkn = TOK_QUOTE;
-				return (TRUE);
-			//}
+			tmp = (*ltkn)->next;
+			join_token(tok_l, (*ltkn), TOK_DQUOTE);
+			tok_l->next = tmp;
+			((t_token*)tok_l->content)->tkn = TOK_QUOTE;
+			return (TRUE);
 		}
 		ltkn = &(*ltkn)->next;
 	}
@@ -77,12 +68,9 @@ int	sq_unquote(t_list *tok_l, char *line)
 	ltkn  = tok_l->next;
 	while (ltkn)
 	{
-		//if (((t_token*)ltkn->content)->tkn == TOK_DOLLAR)
-		//printf("benn here\n");
 		if (((t_token*)ltkn->content)->tkn == TOK_SQUOTE)
 		{
 			tmp = ltkn->next;
-			//printf("was i here ?\n");
 			join_token(tok_l, ltkn, TOK_SQUOTE);
 			tok_l->next = tmp;
 			((t_token*)tok_l->content)->tkn = TOK_QUOTE;

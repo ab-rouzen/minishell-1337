@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:53:30 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/15 15:14:57 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/01 15:18:37 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ int		lex_wspaces(t_list **tok_l, char *line);
 int		lex_quote(t_list **tok_l, char *line);
 int		lex_dollar(t_list **tok_l, char *line);
 bool	is_metachar(char tok);
+int		lex_redir_in(t_list **tok_l, char *line);
+int		lex_redir_out(t_list **tok_l, char *line);
 
 #endif

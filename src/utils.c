@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/30 18:53:50 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/01 15:10:42 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	join_token(t_list *start, t_list *end, enum token quote)
 	i = 0;
 	tmp = start->next;
 	val = NULL;
-	/*segfaults here?*/
-	//assert(((t_token*)tmp->content)->tkn != TOK_SQUOTE);
 	if (((t_token*)tmp->content)->tkn != quote)
 	{
 		val = ft_strdup(((t_token*)tmp->content)->val);
@@ -81,11 +79,7 @@ void	join_token(t_list *start, t_list *end, enum token quote)
 			tmp = tmp->next;
 		}
 	}
-	//should free bellow??
-	//free(((t_token*)start->content)->val);
 	((t_token*)start->content)->val = val;
-	//printf("val here is %s ^ %s\n", ((t_token*)start->content)->val, val);
-	//delete_token(start->next, end);
 }
 
 void	delete_token(t_list	*start, t_list *end)
@@ -113,20 +107,13 @@ void	expand_env_var(t_list **tok_l, char **environ)
 		{
 			tmp = (*tok_l)->next->next;
 			((t_token*)(*tok_l)->content)->val =  get_env_val(environ,  ((t_token*)(*tok_l)->next->content)->val);
-			//free ((*tok_l)->next);
 			if (((t_token*)(*tok_l)->content)->val == NULL)
-			{
-				//printf("was here?\n");
 				(*tok_l) = tmp;
-			}
 			else
 			{
 				(*tok_l)->next = tmp;
 				((t_token*)(*tok_l)->content)->tkn = TOK_WORD;
 			}	
-			//printf("val is:%s\n", ((t_token*)(*tok_l)->content)->val);
-			//not the proper way to free?
-			//assert(!tmp);
 		}
 		else
 			*tok_l = (*tok_l)->next;
@@ -137,6 +124,7 @@ char	*get_env_val(char *environ[], char *var)
 {
 	int		i;
 	char	**tmp;
+	char	*buff;
 
 	i = 0;
 	while (environ[i])
@@ -145,10 +133,14 @@ char	*get_env_val(char *environ[], char *var)
 		if (!ft_strcmp(tmp[0], var))
 		{
 			free(tmp[0]);
-			return (tmp[1]);
+			buff = ft_strdup_alloca(tmp[1], malloca);
+			free(tmp[1]);
+			free(tmp);
+			return (buff);
 		}
 		free(tmp[0]);
 		free(tmp[1]);
+		free(tmp);
 		i++;
 	}
 	return (NULL);
@@ -194,12 +186,10 @@ void	join_adjacent_quotes(t_list **tok_l)
 	head = *tok_l;
 	while(*tok_l)
 	{
-		//tok_l;
 		if (((t_token*)(*tok_l)->content)->tkn == TOK_QUOTE)
 		{
 			if ((*tok_l)->next && ((t_token*)(*tok_l)->next->content)->tkn == TOK_QUOTE)
 			{
-				//some frees here
 				tmp = ((t_token*)(*tok_l)->content)->val;
 				((t_token*)(*tok_l)->content)->val =  ft_strjoin(((t_token*)(*tok_l)->content)->val, ((t_token*)(*tok_l)->next->content)->val);
 				free(tmp);
