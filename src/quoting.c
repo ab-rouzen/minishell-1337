@@ -16,12 +16,12 @@ int	unquote(t_list **tok_l, char *line, char **environ)
 {
 	while (*tok_l)
 	{
-		if (((t_token*)((*tok_l)->content))->tkn == TOK_SQUOTE)
+		if (((t_token *)((*tok_l)->content))->tkn == TOK_SQUOTE)
 		{
 			if (sq_unquote((*tok_l), line) == FALSE)
 				return (FALSE);
 		}
-		else if (((t_token*)((*tok_l)->content))->tkn == TOK_DQUOTE)
+		else if (((t_token *)((*tok_l)->content))->tkn == TOK_DQUOTE)
 		{
 			if (dq_unquote((*tok_l), line, environ) == FALSE)
 				return (FALSE);
@@ -36,21 +36,21 @@ int	unquote(t_list **tok_l, char *line, char **environ)
 
 int	dq_unquote(t_list *tok_l, char *line, char **environ)
 {
-	int	i;
+	int		i;
 	t_list	**ltkn;
 	t_list	*tmp;
 
 	i = 0;
-	ltkn  = &tok_l->next;
+	ltkn = &tok_l->next;
 	while (*ltkn)
 	{
 		expand_env_var(ltkn, environ);
-		if (((t_token*)(*ltkn)->content)->tkn == TOK_DQUOTE)
+		if (((t_token *)(*ltkn)->content)->tkn == TOK_DQUOTE)
 		{
 			tmp = (*ltkn)->next;
 			join_token(tok_l, (*ltkn), TOK_DQUOTE);
 			tok_l->next = tmp;
-			((t_token*)tok_l->content)->tkn = TOK_QUOTE;
+			((t_token *)tok_l->content)->tkn = TOK_QUOTE;
 			return (TRUE);
 		}
 		ltkn = &(*ltkn)->next;
@@ -60,20 +60,20 @@ int	dq_unquote(t_list *tok_l, char *line, char **environ)
 
 int	sq_unquote(t_list *tok_l, char *line)
 {
-	int	i;
+	int		i;
 	t_list	*ltkn;
 	t_list	*tmp;
 
 	i = 0;
-	ltkn  = tok_l->next;
+	ltkn = tok_l->next;
 	while (ltkn)
 	{
-		if (((t_token*)ltkn->content)->tkn == TOK_SQUOTE)
+		if (((t_token *)ltkn->content)->tkn == TOK_SQUOTE)
 		{
 			tmp = ltkn->next;
 			join_token(tok_l, ltkn, TOK_SQUOTE);
 			tok_l->next = tmp;
-			((t_token*)tok_l->content)->tkn = TOK_QUOTE;
+			((t_token *)tok_l->content)->tkn = TOK_QUOTE;
 			return (TRUE);
 		}
 		ltkn = ltkn->next;

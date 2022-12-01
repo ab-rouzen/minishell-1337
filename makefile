@@ -4,7 +4,11 @@ NAME = minishell
 CC = gcc
 M_INCL = ./src/minishell.h
 FALGS = $(CPPFLAGS) -Wall -Wextra -g #-fsanitize=address
-M_SRC_NAME = main lexer utils parser quoting garbage_collector utils_cmd_construct
+M_SRC_NAME = main lexer lexer_2 \
+			lexer_redirection utils utils_parser utils_quotes \
+			utils_tokenizer parser parser_pipe \
+			parser_redirection quoting garbage_collector \
+			utils_cmd_construct utils_environ
 L_READ_LINE = -lreadline
 BUILD_DIR = build/
 M_SRC_DIR  = src/

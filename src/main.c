@@ -12,20 +12,22 @@
 
 #include "minishell.h"
 
-int main(int argc, char *argv[], char **environ)
+int	main(int argc, char *argv[], char **environ)
 {
 	char	*line;
 	t_list	*tok_l;
 	t_list	*tmp;
+	int		i;
+	t_list	*mylist;
 
-	(void) argv;
-	(void) argc;
+	(void)argv;
+	(void)argc;
 	//rl_complete('\t', filename_completion_function);
-	while(TRUE)
+	while (TRUE)
 	{
 		//malloca(0);
-		line  = readline(SHELL_PROMPT);
-        tok_l = lexer(line);
+		line = readline(SHELL_PROMPT);
+		tok_l = lexer(line);
 		if (line && *line)
 		{
 			add_history(line);
@@ -39,7 +41,8 @@ int main(int argc, char *argv[], char **environ)
 		tmp = tok_l;
 		while (tmp)
 		{
-			printf("-->%d, val:%s ", ((t_token*)tmp->content)->tkn, ((t_token*)tmp->content)->val);
+			printf("-->%d, val:%s ", ((t_token *)tmp->content)->tkn,
+					((t_token *)tmp->content)->val);
 			tmp = tmp->next;
 		}
 		printf(" |\n");
@@ -52,15 +55,17 @@ int main(int argc, char *argv[], char **environ)
 		tmp = to_cmdline_lst(tok_l);
 		while (tmp)
 		{
-			int i = 0;
-			while (((t_cmd_lst*)tmp->content)->cmd_args[i])
-				printf("word:'%s'\n", ((t_cmd_lst*)tmp->content)->cmd_args[i++]);
+			i = 0;
+			while (((t_cmd_lst *)tmp->content)->cmd_args[i])
+				printf("word:'%s'\n",
+						((t_cmd_lst *)tmp->content)->cmd_args[i++]);
 			printf("tokens:\n");
-			t_list	*mylist = ((t_cmd_lst*)tmp->content)->redir_lst;
+			mylist = ((t_cmd_lst *)tmp->content)->redir_lst;
 			while (mylist)
 			{
-				printf("enum tok:'%d'\n", ((t_redir_list*)mylist->content)->tok);
-				printf("word:'%s'\n", ((t_redir_list*)mylist->content)->file);
+				printf("enum tok:'%d'\n",
+						((t_redir_list *)mylist->content)->tok);
+				printf("word:'%s'\n", ((t_redir_list *)mylist->content)->file);
 				mylist = mylist->next;
 			}
 			printf("--------NEXT LIST----------\n");

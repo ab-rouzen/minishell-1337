@@ -1,27 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 12:02:39 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/17 15:15:15 by arouzen          ###   ########.fr       */
+/*   Created: 2022/12/01 20:43:15 by arouzen           #+#    #+#             */
+/*   Updated: 2022/12/01 20:43:42 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
-# include "minishell.h"
+#include "minishell.h"
 
-int	parse_line(t_list *tok_l);
-int	match_word(t_list *tok_l);
-int	match_redirect_sym(t_list *tok_l);
-int	match_redirection(t_list *tok_l);
-int	match_redi_list(t_list *tok_l);
-int	l_match(int tab[], int cases);
-int	match_command(t_list *tok_l);
-int	match_pipeline(t_list *tok_l);
-int	match_pipe_sym(t_list *tok_l);
+t_list	*get_nlst(t_list *lst, int n)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (lst)
+	{
+		if (i == n)
+			return (lst);
+		i++;
+		lst = lst->next;
+	}
+	return (lst);
+}
+
+/*finds a returns the longest match in tab*/
+int	l_match(int tab[], int cases)
+{
+	int	i;
+	int	max;
+
+	i = 0;
+	max = 0;
+	while (i < cases)
+	{
+		if (tab[i] > max)
+			max = tab[i];
+		i++;
+	}
+	return (max);
+}

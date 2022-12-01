@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef QUOTING_H
-# define QUOTING_H	
-#include "minishell.h"
+# define QUOTING_H
+# include "minishell.h"
 
 int	unquote(t_list **tok_l, char *line, char **environ);
 int	dq_unquote(t_list *tok_l, char *line, char **environ);
 int	sq_unquote(t_list *tok_l, char *line);
-
 
 #endif
