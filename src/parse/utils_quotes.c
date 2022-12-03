@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:33:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/02 21:25:10 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/03 21:22:41 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,15 @@ void	join_adjacent_token(t_list **tok_l, enum e_token tok)
 			if ((*tok_l)->next
 				&& ((t_token *)(*tok_l)->next->content)->tkn == tok)
 			{
-				tmp = ((t_token *)(*tok_l)->content)->val;
 				((t_token *)(*tok_l)->content)->val = \
-				ft_strjoin(((t_token *)(*tok_l)->content)->val, \
-				((t_token *)(*tok_l)->next->content)->val);
-				free(tmp);
-				free(((t_token *)(*tok_l)->next->content)->val);
+				ft_strjoin_alloca(((t_token *)(*tok_l)->content)->val, \
+				((t_token *)(*tok_l)->next->content)->val, malloca);
 				(*tok_l)->next = (*tok_l)->next->next;
 				continue ;
 			}
 		}
 		tok_l = &(*tok_l)->next;
 	}
-	replace_element(head, TOK_QUOTE, TOK_WORD);
 }
 
 void	join_token(t_list *start, t_list *end, enum e_token quote)
@@ -52,15 +48,13 @@ void	join_token(t_list *start, t_list *end, enum e_token quote)
 	val = NULL;
 	if (((t_token *)tmp->content)->tkn != quote)
 	{
-		val = ft_strdup(((t_token *)tmp->content)->val);
+		val = ft_strdup_alloca(((t_token *)tmp->content)->val, malloca);
 		tmp = tmp->next;
 		while (tmp && ((t_token *)tmp->content)->tkn != quote)
 		{
-			buff = val;
-			val = ft_strjoin(val, ((t_token *)tmp->content)->val);
-			free(buff);
+			val = ft_strjoin_alloca(val, ((t_token *)tmp->content)->val, malloca);
 			tmp = tmp->next;
 		}
 	}
-	((t_token *)start->content)->val = val;
+	((t_token *)start->content)->val = ft_strdup_alloca("\0", malloca);
 }

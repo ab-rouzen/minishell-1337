@@ -6,13 +6,14 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/03 17:43:24 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/03 21:06:01 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell.h"
 
 void	print_test(t_list *tmp);
+void	print_token(char *line, char **environ);
 
 int	main(int argc, char *argv[], char **environ)
 {
@@ -30,6 +31,7 @@ int	main(int argc, char *argv[], char **environ)
 		if (line && *line)
 			add_history(line);
 		tmp = parse(line, environ);
+		print_token(line, environ);
 		print_test(tmp);
 		free(line);
 	}
@@ -59,4 +61,23 @@ void	print_test(t_list *tmp)
 		printf("--------NEXT LIST----------\n");
 		tmp = tmp->next;
 	}	
+}
+
+void	print_token(char *line, char **environ)
+{
+	t_list	*tmp;
+
+	printf("token list | ");
+	tmp = lexer(line);
+	if (!unquote(&tmp, line, environ))
+		printf("Quote parse error\n");
+	join_adjacent_token(&tmp, TOK_WORD);
+	delete_element(&tmp, TOK_WHITESPACE);
+	while (tmp)
+	{
+		printf("-->%d, val:%s ", ((t_token *)tmp->content)->tkn,
+				((t_token *)tmp->content)->val);
+		tmp = tmp->next;
+	}
+	printf(" |\n");
 }
