@@ -2,3 +2,5 @@
 build
 parsing_tuts
 minishell
+.out
+*/*.o
