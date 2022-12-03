@@ -1,21 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quoting.h                                          :+:      :+:    :+:   */
+/*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 22:25:14 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/03 22:35:03 by arouzen          ###   ########.fr       */
+/*   Created: 2022/12/01 20:43:15 by arouzen           #+#    #+#             */
+/*   Updated: 2022/12/02 21:25:07 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUOTING_H
-# define QUOTING_H	
-#include "minishell.h"
+#include "../include/minishell.h"
 
-int	unquote(t_list *tok_l, char *line, char **environ);
-int	dq_unquote(t_list *tok_l, char *line, char **environ);
-int	sq_unquote(t_list *tok_l, char *line);
+t_list	*get_nlst(t_list *lst, int n)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (lst)
+	{
+		if (i == n)
+			return (lst);
+		i++;
+		lst = lst->next;
+	}
+	return (lst);
+}
+
+/*finds a returns the longest match in tab*/
+int	l_match(int tab[], int cases)
+{
+	int	i;
+	int	max;
+
+	i = 0;
+	max = 0;
+	while (i < cases)
+	{
+		if (tab[i] > max)
+			max = tab[i];
+		i++;
+	}
+	return (max);
+}
