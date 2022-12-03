@@ -47,15 +47,6 @@ typedef struct s_token_lst
 	char			*val;
 }					t_token;
 
-// enum			e_ptoken
-// {
-// 	PTOK_WORD,
-// 	PTOK_COMMAD,
-// 	PTOK_PIPELINE,
-// 	PTOK_REDI_L,
-// 	PTOK_REDI,
-// 	PTOK_REDI_S,
-// };
 typedef struct s_redir_list
 {
 	enum e_token	tok;
@@ -70,6 +61,8 @@ typedef struct s_cmd_ls
 }				t_cmd_lst;
 
 typedef int		t_bool;
+
+t_list 			*parse(char *line, char **environ);
 t_list			*new_token_lst(enum e_token tok, char *line, int index);
 t_list			*lexer(char *line);
 void			index_token(t_list *tok_lst);

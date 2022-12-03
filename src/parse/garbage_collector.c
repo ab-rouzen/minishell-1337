@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:32:11 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/02 21:24:06 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/03 17:41:26 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	mfree(void **node)
 		free(malloced_mem->content);
 		tmp = malloced_mem;
 		malloced_mem = malloced_mem->next;
+		// if (tmp != *node)
 		free(tmp);
 	}
 	*node = NULL;

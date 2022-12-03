@@ -1,4 +1,4 @@
-.PHONY: all re clean fclean
+a.PHONY: all re clean fclean
 
 NAME = minishell
 CC = gcc

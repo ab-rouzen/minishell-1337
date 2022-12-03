@@ -6,11 +6,27 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/02 21:24:56 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/03 17:38:50 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+t_list *parse(char *line, char **environ)
+{
+	t_list	*tok_l;
+
+	tok_l = lexer(line);
+	if (!unquote(&tok_l, line, environ))
+		printf("Quote parse error\n");
+	join_adjacent_token(&tok_l, TOK_WORD);
+	delete_element(&tok_l, TOK_WHITESPACE);
+	if (ft_lstsize(tok_l) ==  match_pipeline(tok_l))
+		printf("All matched: SUCCESS\n");
+	else
+		printf("Parse error: FAILURE\n");
+	return (to_cmdline_lst(tok_l));
+}
 
 void	match_command_rules(t_list *tok_l, int n_match[])
 {
