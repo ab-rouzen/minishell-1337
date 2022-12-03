@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/20 21:10:46 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/03 22:29:10 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@
 #include "lexer.h"
 #include "parser.h"
 #include "quoting.h"
+<<<<<<< HEAD
 #include "assert.h"
+=======
+#include "execution.h"
+>>>>>>> 8b98af8ba4fd7818b8fd7f1486f97e214f41ca60
 
 enum token {
 	TOK_WORD,
@@ -41,7 +45,6 @@ typedef struct s_token_lst
 		enum token	tkn;
 		int			n_char;
 		int			index;
-		char		*val;
 	} t_token;
 
 enum p_token {
