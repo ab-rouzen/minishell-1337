@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:36:13 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:25:15 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 // void	delete_token(t_list *start, t_list *end)
 // {
@@ -27,7 +27,7 @@
 // 	free(end);
 // }
 
-void	delete_element(t_list **tok_l, enum token token)
+void	delete_element(t_list **tok_l, enum e_token token)
 {
 	while (*tok_l)
 	{

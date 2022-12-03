@@ -6,20 +6,20 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:40:41 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:44:04 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:24:53 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int	match_redirect_sym(t_list *tok_l)
 {
 	if (tok_l == NULL)
 		return (0);
-	if (*(enum token *)tok_l->content == TOK_REDI_I || \
-		*(enum token *)tok_l->content == TOK_REDI_O || \
-		*(enum token *)tok_l->content == TOK_REDI_O_APP || \
-		*(enum token *)tok_l->content == TOK_HEREDOC)
+	if (*(enum e_token *)tok_l->content == TOK_REDI_I || \
+		*(enum e_token *)tok_l->content == TOK_REDI_O || \
+		*(enum e_token *)tok_l->content == TOK_REDI_O_APP || \
+		*(enum e_token *)tok_l->content == TOK_HEREDOC)
 		return (1);
 	return (0);
 }

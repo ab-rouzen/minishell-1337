@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:45:33 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:51:05 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:24:36 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int	lex_wspaces(t_list **tok_l, char *line)
 {
@@ -38,10 +38,10 @@ int	lex_word(t_list **tok_l, char *line)
 	return (i);
 }
 
-bool	is_metachar(char tok)
+t_bool	is_metachar(char tok)
 {
-	if (tok == '$' || tok == '|' || tok == '>' || 
-		tok == '<' || tok == '\'' || tok == '\"' || 
+	if (tok == '$' || tok == '|' || tok == '>' || \
+		tok == '<' || tok == '\'' || tok == '\"' || \
 		tok == ' ' || tok == '\t' || tok == '\n')
 		return (TRUE);
 	return (FALSE);

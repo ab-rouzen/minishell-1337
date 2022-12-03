@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:27:27 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:50:55 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:24:29 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 t_list	*lexer(char *line)
 {

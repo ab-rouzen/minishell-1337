@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 15:25:25 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:24:58 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int	unquote(t_list **tok_l, char *line, char **environ)
 {
@@ -50,7 +50,7 @@ int	dq_unquote(t_list *tok_l, char *line, char **environ)
 			tmp = (*ltkn)->next;
 			join_token(tok_l, (*ltkn), TOK_DQUOTE);
 			tok_l->next = tmp;
-			((t_token *)tok_l->content)->tkn = TOK_QUOTE;
+			((t_token *)tok_l->content)->tkn = TOK_WORD;
 			return (TRUE);
 		}
 		ltkn = &(*ltkn)->next;
@@ -73,7 +73,7 @@ int	sq_unquote(t_list *tok_l, char *line)
 			tmp = ltkn->next;
 			join_token(tok_l, ltkn, TOK_SQUOTE);
 			tok_l->next = tmp;
-			((t_token *)tok_l->content)->tkn = TOK_QUOTE;
+			((t_token *)tok_l->content)->tkn = TOK_WORD;
 			return (TRUE);
 		}
 		ltkn = ltkn->next;

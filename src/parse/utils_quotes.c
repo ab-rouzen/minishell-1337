@@ -6,13 +6,13 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:33:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:34:31 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:25:10 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-void	join_adjacent_quotes(t_list **tok_l)
+void	join_adjacent_token(t_list **tok_l, enum e_token tok)
 {
 	t_list	*head;
 	char	*tmp;
@@ -20,10 +20,10 @@ void	join_adjacent_quotes(t_list **tok_l)
 	head = *tok_l;
 	while (*tok_l)
 	{
-		if (((t_token *)(*tok_l)->content)->tkn == TOK_QUOTE)
+		if (((t_token *)(*tok_l)->content)->tkn == tok)
 		{
 			if ((*tok_l)->next
-				&& ((t_token *)(*tok_l)->next->content)->tkn == TOK_QUOTE)
+				&& ((t_token *)(*tok_l)->next->content)->tkn == tok)
 			{
 				tmp = ((t_token *)(*tok_l)->content)->val;
 				((t_token *)(*tok_l)->content)->val = \
@@ -40,7 +40,7 @@ void	join_adjacent_quotes(t_list **tok_l)
 	replace_element(head, TOK_QUOTE, TOK_WORD);
 }
 
-void	join_token(t_list *start, t_list *end, enum token quote)
+void	join_token(t_list *start, t_list *end, enum e_token quote)
 {
 	int		i;
 	t_list	*tmp;

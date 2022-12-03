@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:32:11 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 19:47:02 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:24:06 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 /*allocates memory using malloc and stores corresponding pointer */
 /*for eventual feeing. Returns pointer to all malloced nodes*/

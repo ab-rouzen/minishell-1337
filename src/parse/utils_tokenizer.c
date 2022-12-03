@@ -6,14 +6,14 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:16:38 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:18:44 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:25:13 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 /*allocates a new token_lst and returns it*/
-t_list	*new_token_lst(enum token token, char *line, int n_char)
+t_list	*new_token_lst(enum e_token token, char *line, int n_char)
 {
 	t_token	*new_tkn_lst;
 
@@ -75,7 +75,8 @@ int	get_words_num(t_list *tok_l)
 	return (i - j);
 }
 
-void	replace_element(t_list *tok_l, enum token token_1, enum token token_2)
+void	replace_element(t_list *tok_l, enum e_token token_1, \
+		enum e_token token_2)
 {
 	while (tok_l)
 	{

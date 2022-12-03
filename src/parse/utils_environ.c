@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:35:28 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:36:31 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/03 13:09:18 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	expand_env_var(t_list **tok_l, char **environ)
 {
@@ -24,13 +24,16 @@ void	expand_env_var(t_list **tok_l, char **environ)
 			tmp = (*tok_l)->next->next;
 			((t_token *)(*tok_l)->content)->val = get_env_val(environ, \
 			((t_token *)(*tok_l)->next->content)->val);
-			if (((t_token *)(*tok_l)->content)->val == NULL)
-				(*tok_l) = tmp;
-			else
-			{
+			// if (((t_token *)(*tok_l)->content)->val[0] == '\0')
+			// {
+			// 	(*tok_l)->next = tmp;
+			
+			// }
+			// if
+			// {
 				(*tok_l)->next = tmp;
 				((t_token *)(*tok_l)->content)->tkn = TOK_WORD;
-			}
+			//}
 		}
 		else
 			*tok_l = (*tok_l)->next;
@@ -60,5 +63,5 @@ char	*get_env_val(char *environ[], char *var)
 		free(tmp);
 		i++;
 	}
-	return (NULL);
+	return (ft_strdup_alloca("\0", malloca));
 }

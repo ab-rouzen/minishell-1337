@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:37:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:38:07 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:24:46 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int	lex_redirection(t_list **tok_l, char *line)
 {

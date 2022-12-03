@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 20:40:59 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:05:20 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:25:01 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 t_list	*to_cmdline_lst(t_list *tok_l)
 {
@@ -67,7 +67,7 @@ t_list	*new_cmd_lst(char *cmd_name, char **cmd_args, t_list *redir_lst)
 	return (ft_lstnew_falloc(cmd_lst, malloca));
 }
 
-t_list	*new_redir_lst(enum token tok, char *file)
+t_list	*new_redir_lst(enum e_token tok, char *file)
 {
 	t_redir_list	*new_lst;
 

@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/11/30 19:56:33 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/03 16:26:05 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./include/minishell.h"
 
 int	main(int argc, char *argv[], char **environ)
 {
@@ -35,7 +35,7 @@ int	main(int argc, char *argv[], char **environ)
 		tmp = tok_l;
 		if (!unquote(&tok_l, line, environ))
 			printf("Quote parse error!\n");
-		join_adjacent_quotes(&tok_l);
+		join_adjacent_token(&tok_l, TOK_WORD);
 		delete_element(&tok_l, TOK_WHITESPACE);
 		printf("token list | ");
 		tmp = tok_l;
@@ -51,7 +51,10 @@ int	main(int argc, char *argv[], char **environ)
 		if (ft_lstsize(tok_l) == match_pipeline(tok_l))
 			printf("All matched: SUCCESS\n");
 		else
+		{
 			printf("Parse error: FAILURE\n");
+			continue;
+		}
 		tmp = to_cmdline_lst(tok_l);
 		while (tmp)
 		{

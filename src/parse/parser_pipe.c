@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:42:13 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:42:33 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:24:50 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int	match_pipeline(t_list *tok_l)
 {
@@ -33,7 +33,7 @@ int	match_pipe_sym(t_list *tok_l)
 {
 	if (tok_l == NULL)
 		return (0);
-	if (*(enum token *)tok_l->content == TOK_PIPE)
+	if (*(enum e_token *)tok_l->content == TOK_PIPE)
 		return (1);
 	return (0);
 }

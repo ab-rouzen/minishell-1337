@@ -6,11 +6,11 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/01 20:43:39 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/02 21:24:56 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	match_command_rules(t_list *tok_l, int n_match[])
 {
@@ -40,7 +40,7 @@ int	match_word(t_list *tok_l)
 {
 	if (tok_l == NULL)
 		return (0);
-	if (*(enum token *)tok_l->content == TOK_WORD)
+	if (*(enum e_token *)tok_l->content == TOK_WORD)
 		return (1);
 	return (0);
 }
@@ -49,7 +49,7 @@ int	match_wspace(t_list *tok_l)
 {
 	if (tok_l == NULL)
 		return (0);
-	if (*(enum token *)tok_l->content == TOK_WHITESPACE)
+	if (*(enum e_token *)tok_l->content == TOK_WHITESPACE)
 		return (1);
 	return (0);
 }
