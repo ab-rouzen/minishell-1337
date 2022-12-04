@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 19:47:12 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/04 21:14:04 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,19 @@ void	delete_element(t_list **tok_l, enum e_token token)
 void	heredoc_no_expand(t_list *tok_l)
 {
 	if (tok_l && ((t_token *)(tok_l->content))->tkn == TOK_HEREDOC)
-		if (tok_l->next && ((t_token *)(tok_l->next->content))->tkn == TOK_DOLLAR)
-			((t_token *)(tok_l->next->content))->tkn = TOK_WORD;
-			//if 	(tok_l->next->next && ((t_token *)((*tok_l)->next->content))->tkn == TOK_WORD)
+	{
+		while (tok_l)
+		{
+			if (tok_l->next && ((t_token *)(tok_l->next->content))->tkn \
+				== TOK_WHITESPACE)
+			{
+				tok_l = tok_l->next;
+				continue ;
+			}
+			if (tok_l->next && ((t_token *)(tok_l->next->content))->tkn \
+				== TOK_DOLLAR)
+				((t_token *)(tok_l->next->content))->tkn = TOK_WORD;
+			break ;
+		}
+	}	
 }
