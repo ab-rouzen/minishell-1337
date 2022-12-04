@@ -96,5 +96,6 @@ t_list			*create_cmd_node(t_list *tok_l, char **cmd_words, \
 				t_list **redir_lst);
 t_list			*get_nlst(t_list *lst, int n);
 char			*ft_strjoin_alloca(char const *s1, char const *s2, void*(alloc)(size_t));
+void			heredoc_no_expand(t_list *tok_l);
 
 #endif

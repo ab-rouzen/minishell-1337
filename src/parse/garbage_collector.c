@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:32:11 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/03 17:41:26 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/04 18:53:04 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*allocates memory using malloc and stores corresponding pointer */
 /*for eventual feeing. Returns pointer to all malloced nodes*/
 /*upon receiving size '0'*/
+
 void	*malloca(size_t size)
 {
 	static t_list	*malloced_mem;
@@ -43,7 +44,6 @@ void	mfree(void **node)
 		free(malloced_mem->content);
 		tmp = malloced_mem;
 		malloced_mem = malloced_mem->next;
-		// if (tmp != *node)
 		free(tmp);
 	}
 	*node = NULL;

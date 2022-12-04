@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 11:11:12 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 11:11:56 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/04 13:52:13 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(int ac, char **av, char **env)
 		}
 		ms_export = ms_export->next;
 	}
-	check = 0;
+	check = 0;≥≥≥
 	while (1) 
 	{
 		printf("\033[0;36m ");

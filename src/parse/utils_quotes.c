@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:33:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/03 21:22:41 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/04 18:52:23 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	join_token(t_list *start, t_list *end, enum e_token quote)
 		tmp = tmp->next;
 		while (tmp && ((t_token *)tmp->content)->tkn != quote)
 		{
-			val = ft_strjoin_alloca(val, ((t_token *)tmp->content)->val, malloca);
+			val = ft_strjoin_alloca(val, ((t_token *)tmp->content)->val, \
+			malloca);
 			tmp = tmp->next;
 		}
 	}

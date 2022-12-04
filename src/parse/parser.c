@@ -6,13 +6,13 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/03 17:38:50 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/04 18:53:30 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_list *parse(char *line, char **environ)
+t_list	*parse(char *line, char **environ)
 {
 	t_list	*tok_l;
 
@@ -21,7 +21,7 @@ t_list *parse(char *line, char **environ)
 		printf("Quote parse error\n");
 	join_adjacent_token(&tok_l, TOK_WORD);
 	delete_element(&tok_l, TOK_WHITESPACE);
-	if (ft_lstsize(tok_l) ==  match_pipeline(tok_l))
+	if (ft_lstsize(tok_l) == match_pipeline(tok_l))
 		printf("All matched: SUCCESS\n");
 	else
 		printf("Parse error: FAILURE\n");
