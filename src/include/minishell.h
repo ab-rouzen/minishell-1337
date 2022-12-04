@@ -20,6 +20,14 @@
 # include "lexer.h"
 # include "parser.h"
 # include "quoting.h"
+# include "execution.h"
+# include <stdlib.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
 # include <unistd.h>

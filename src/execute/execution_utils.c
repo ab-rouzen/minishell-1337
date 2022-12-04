@@ -1,5 +1,5 @@
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	ft_echo(char **cmd)
 {
@@ -108,7 +108,7 @@ void	ft_lstadd_back1(t_env_list **lst, t_env_list *new)
 	}
 }
 
-t_env_list	*ft_lstnew1(void **content, bool exported)
+t_env_list	*ft_lstnew1(void **content, t_bool exported)
 {
 	t_env_list	*new_elem;
 	if (!(new_elem = malloc(sizeof(t_env_list))))
