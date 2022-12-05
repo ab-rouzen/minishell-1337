@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/03 22:48:48 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/05 23:42:35 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char *argv[], char **environ)
 	while (TRUE)
 	{
 		malloca(0);
+		here_doc(2, ft_split("mad\n-happy\n", '-'));
 		line = readline(SHELL_PROMPT);
 		if (line && *line)
 			add_history(line);

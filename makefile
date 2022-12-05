@@ -12,14 +12,15 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 				utils_tokenizer parser parser_pipe \
 				parser_redirection quoting garbage_collector \
 				utils_cmd_construct utils_environ
-M_SRC_EXEC_NAME = execution_utils mini_shell
+M_SRC_EXEC_NAME = execution_utils mini_shell heredoc
 M_SRC_PRIME_NAME = main  #exec_main 
 M_INCLUDE_NAME = lexer minishell parser quoting execution
 L_READ_LINE = -lreadline
 BUILD_DIR = build/
 M_SRC_DIR  = src/
-LIBS = lib/libft/libft.a
+LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a
 LIB_FT = lib/libft/
+LIB_GNL = lib/get_next_line/
 
 # Header files
 M_INCUDE = $(addsuffix .h, $(M_INCLUDE_NAME))
@@ -42,6 +43,7 @@ all : $(NAME)
 
 $(NAME) : $(M_OBJ) $(M_INCL_PATH) 
 	make bonus -C $(LIB_FT)
+	make bonus -C $(LIB_GNL)
 	$(CC) $(LDFLAGS) $(FALGS) $(L_READ_LINE) $(M_OBJ) $(LIBS) -o $(NAME)
 
 $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)

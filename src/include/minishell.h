@@ -16,6 +16,7 @@
 # define TRUE 1
 # define FALSE 0
 # include "../../lib/libft/libft.h"
+# include "../../lib/get_next_line/get_next_line_bonus.h"
 # include "assert.h"
 # include "lexer.h"
 # include "parser.h"
