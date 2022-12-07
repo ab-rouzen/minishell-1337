@@ -12,7 +12,7 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 				utils_tokenizer parser parser_pipe \
 				parser_redirection quoting garbage_collector \
 				utils_cmd_construct utils_environ
-M_SRC_EXEC_NAME = execution_utils mini_shell heredoc
+M_SRC_EXEC_NAME = execution_utils mini_shell heredoc utils
 M_SRC_PRIME_NAME = main  #exec_main 
 M_INCLUDE_NAME = lexer minishell parser quoting execution
 L_READ_LINE = -lreadline
