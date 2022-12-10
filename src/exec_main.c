@@ -6,20 +6,25 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 11:11:12 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 22:34:00 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/10 23:01:00 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	handler(int a, siginfo_t *info, void *context)
+void	handler(int a)
 {
-	(void)context;
 	if (a == SIGINT)
 	{
 		printf("\n"); // Move to a new line
     	rl_on_new_line(); // Regenerate the prompt on a newline
+		rl_replace_line("", 0);
     	rl_redisplay();
+	}
+	if (a == SIGQUIT)
+	{
+    	rl_redisplay();
+		return ;
 	}
 }
 
@@ -54,12 +59,21 @@ int main(int ac, char **av, char **env)
 	check = 0;
 	while (1) 
 	{
-		printf("\033[0;36m ");
+		signal(SIGINT, &handler);
+		signal(SIGQUIT, &handler);
+		//signal(EOF, &handler);
+		printf("\033[0;36m");
 		str = readline("mini_shell=>");
-		printf("\033[0m "); 
+		printf("\033[0m"); 
 		if (str && *str)
 			add_history(str);
 		cmd = ft_split(str, ' ');
+
+		if (!str)
+		{
+			printf ("exit");
+			exit(0);
+		}
 
 		if (!ft_strcmp(cmd[0], "echo"))
 			ft_echo(cmd);
@@ -96,7 +110,7 @@ int main(int ac, char **av, char **env)
 				i++;
 			}
 		}
-		sigaction(SIGINT, &chanel, NULL);
+
 		
 	}
 	return 0;
