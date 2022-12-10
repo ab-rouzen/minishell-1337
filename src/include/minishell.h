@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minish/hixcoder/minishell/blob/610728b206fdc1ddbdf6d0cef5f21c9bbbb3e9e6/parsing/tests.textell.h                                        :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/02 21:23:35 by arouzen          ###   ########.fr       */
+/*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
+/*   Updated: 2022/12/10 14:06:42 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define TRUE 1
 # define FALSE 0
 # include "../../lib/libft/libft.h"
+# include "../../lib/get_next_line/get_next_line_bonus.h"
 # include "assert.h"
 # include "lexer.h"
 # include "parser.h"

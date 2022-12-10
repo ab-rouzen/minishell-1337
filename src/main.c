@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 23:02:23 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/10 23:12:36 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	print_token(char *line, char **environ);
 int	main(int argc, char *argv[], char **environ)
 {
 	char	*line;
+	char	**delim;
 	t_list	*tmp;
 	int		i;
+	int		*iz;
 	t_list	*mylist;
 
 	(void)argv;
@@ -27,12 +29,15 @@ int	main(int argc, char *argv[], char **environ)
 	while (TRUE)
 	{
 		malloca(0);
+		delim = ft_split("mad-happy", '-');
+		here_doc(2, delim);
 		line = readline(SHELL_PROMPT);
 		if (line && *line)
 			add_history(line);
 		tmp = parse(line, environ);
 		print_token(line, environ);
 		print_test(tmp);
+		execute(tmp, environ);
 		free(line);
 	}
 	return (0);
