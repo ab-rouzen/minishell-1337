@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/07 14:47:04 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/10 22:36:44 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,13 @@ int	main(int argc, char *argv[], char **environ)
 		malloca(0);
 		delim = ft_split("mad-happy", '-');
 		here_doc(2, delim);
-		free(delim[0]);
-		free(delim[1]);
-		free(delim);
 		line = readline(SHELL_PROMPT);
 		if (line && *line)
 			add_history(line);
 		tmp = parse(line, environ);
 		print_token(line, environ);
 		print_test(tmp);
+		execute(tmp, environ);
 		free(line);
 	}
 	return (0);

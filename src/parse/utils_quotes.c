@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:33:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 18:52:23 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/09 15:06:58 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	join_token(t_list *start, t_list *end, enum e_token quote)
 			malloca);
 			tmp = tmp->next;
 		}
+		((t_token *)start->content)->val = val;
+		return ;
 	}
 	((t_token *)start->content)->val = ft_strdup_alloca("\0", malloca);
 }
