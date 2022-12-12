@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/12 22:26:55 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/12 22:41:03 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char *argv[], char **environ)
 	if (tok == TOK_HEREDOC)
 		
 	return (0);
-}
+}      
 
 void	print_test(t_list *tmp)
 {

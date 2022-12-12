@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 11:11:12 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 13:52:13 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/10 23:01:00 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+void	handler(int a)
+{
+	if (a == SIGINT)
+	{
+		printf("\n"); // Move to a new line
+    	rl_on_new_line(); // Regenerate the prompt on a newline
+		rl_replace_line("", 0);
+    	rl_redisplay();
+	}
+	if (a == SIGQUIT)
+	{
+    	rl_redisplay();
+		return ;
+	}
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -21,9 +37,14 @@ int main(int ac, char **av, char **env)
 	int		check;
 	int		i;
 	t_env_list *ms_export;
+	pid_t				pid;
+	struct sigaction	chanel;
 
 (void)ac;
 (void)av;
+
+	chanel.sa_flags = SA_SIGINFO;
+	chanel.sa_sigaction = &handler;
 
 	ms_export = ft_env(env);
 	while (ms_export)
@@ -35,16 +56,24 @@ int main(int ac, char **av, char **env)
 		}
 		ms_export = ms_export->next;
 	}
-	check = 0;≥≥≥
+	check = 0;
 	while (1) 
 	{
-		printf("\033[0;36m ");
-		printf("mini_shell=>");
-		printf("\033[0m "); 
-		str = readline("");
+		signal(SIGINT, &handler);
+		signal(SIGQUIT, &handler);
+		//signal(EOF, &handler);
+		printf("\033[0;36m");
+		str = readline("mini_shell=>");
+		printf("\033[0m"); 
 		if (str && *str)
 			add_history(str);
 		cmd = ft_split(str, ' ');
+
+		if (!str)
+		{
+			printf ("exit");
+			exit(0);
+		}
 
 		if (!ft_strcmp(cmd[0], "echo"))
 			ft_echo(cmd);
@@ -71,24 +100,18 @@ int main(int ac, char **av, char **env)
 			cmd[0] = ft_strjoin("/", cmd[0]);
 			while (cmd_path[i])
 			{
-					// printf("%s\n",cmd[0]);
-					// printf("%s\n", cmd_path[0]);
-					//printf("%s\n", ft_strjoin(cmd_path[i], cmd[0]));
 				if (access(ft_strjoin(cmd_path[i], cmd[0]), F_OK) == 0)
 				{
-					//printf("%s", ft_strjoin(cmd_path[i], cmd[0]), F_OK);
-					int pid = fork() == 0;
-					if (pid == 0)
-					{
-						execve(ft_strjoin(cmd_path[i], cmd[0]), NULL, env);
-					}
-					//wait(&pid);
+					char *argvv[] = {ft_strjoin(cmd_path[i], cmd[0]), NULL};
+					if (fork() == 0)
+						execve(ft_strjoin(cmd_path[i], cmd[0]), argvv, env);
+					waitpid(0, NULL, 0);
 				}
 				i++;
 			}
 		}
-			//printf ("%d",access("/bin/ls", F_OK));
-			// printf("%s: command not found\n", str);
+
+		
 	}
 	return 0;
 }
