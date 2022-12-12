@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/09 21:02:44 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/12 20:43:32 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	p_open(char *file, int flags, int perm)
 	return (filedes);
 }
 
-static char	*get_path(t_env_list *env)
+static char	*get_path(void)
 {
-	int	i;
+	t_env_list *env;
 
-	i = 0;
+	env = glob.env_lst;
 	while (env)
 	{
 		if (ft_strcmp(env->variable, "PATH") == 0)
@@ -36,25 +36,27 @@ static char	*get_path(t_env_list *env)
 	return (NULL);
 }
 
-char	*get_cmd_path(t_list *cmd_lst, t_env_list *env)
+void	get_cmd_path(t_list *cmd_lst)
 {
 	int		i;
 	char	**path;
 	char	*tmp;
 
-	path = ft_split(get_path(env), ':');
-	//printf("%s\n", path[0]);
+	path = ft_split(get_path(), ':');
 	i = 0;
 	if (access(((t_cmd_lst*)cmd_lst->content)->cmd_name, F_OK) == 0)
-		return (((t_cmd_lst*)cmd_lst->content)->cmd_name);
+		return ;
 	while (path[i])
 	{
 		tmp = ft_strjoin_alloca(path[i], "/", malloca);
 		tmp = ft_strjoin_alloca(tmp, ((t_cmd_lst*)cmd_lst\
 		->content)->cmd_name, malloca);
 		if (access(tmp, F_OK) == 0)
-			return (tmp);
+		{
+			((t_cmd_lst*)cmd_lst->content)->cmd_name = tmp;
+			return ;
+		}
 		i++;
 	}
-	return (NULL);
+	((t_cmd_lst*)cmd_lst->content)->cmd_name = NULL;
 }

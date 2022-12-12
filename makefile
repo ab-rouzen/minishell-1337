@@ -6,7 +6,7 @@ M_INCL_DIR = src/include/
 M_SRC_PRIME_DIR = src/
 M_SRC_PARSE_DIR = src/parse/
 M_SRC_EXEC_DIR = src/execute/
-FALGS = $(CPPFLAGS) -Wall -Wextra -g ##-fsanitize=address
+FALGS = $(CPPFLAGS) -Wall -Wextra -g -fsanitize=address
 M_SRC_PARSE_NAME = lexer lexer_2 \
 				lexer_redirection utils utils_parser utils_quotes \
 				utils_tokenizer parser parser_pipe \
@@ -15,7 +15,7 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 M_SRC_EXEC_NAME = execution_utils mini_shell heredoc utils \
 				execute
 
-M_SRC_PRIME_NAME = main  #exec_main 
+M_SRC_PRIME_NAME = init main  #exec_main 
 M_INCLUDE_NAME = lexer minishell parser quoting execution
 L_READ_LINE = -lreadline
 BUILD_DIR = build/

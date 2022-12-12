@@ -6,80 +6,62 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/10 22:26:51 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/12 22:33:02 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	child_exec(t_list *pipeline, char *cmd_path, char **environ, **pipe, int i);
+void	exec_child(t_list *cmd, int fd_in, int fd_out);
 
-int	execute(t_list *pipeline, char **environ)
+int	execute(t_list *cmd_lst)
 {
 	int			childPid;
-	int			pipe1[10][2];
+	int			(*piper)[2];
 	int			i;
-	char		*cmd_path;
-	t_env_list	*env_lst;
+	//t_list		*tmp;
 
+	piper = malloca(sizeof(int[25][2]));
+	piper[0][0] = 0;
+	piper[2][1] = 1;
 	i = 0;
-	env_lst = ft_env(environ);
-	pipe1[0][0] = 0;
-	pipe1[2][1] = 1;
-	while (pipeline)
+	while (cmd_lst)
 	{
-		if (pipeline->next)
-			if(pipe(pipe1[i + 1]))
-				printf("pipe creation failed\n");
-		cmd_path = get_cmd_path(pipeline, env_lst);
-		if (cmd_path == NULL)
+		if (cmd_lst->next)
+			pipe(piper[i + 1]);
+		get_cmd_path(cmd_lst);
+		if (((t_cmd_lst*)cmd_lst->content)->cmd_name == NULL)
 		{
 			printf("command not found\n");
-			pipeline =pipeline->next;
+			cmd_lst =cmd_lst->next;
 			continue;
 		}
-		printf("pipe creation success: %d in | %d out \n", pipe1[i+1][1], pipe1[i+1][0]);
+		printf("pipe creation success: %d in | %d out \n", piper[0][1], piper[0][0]);
 		childPid = fork();
 		if (childPid == 0)
 		{
-			int r,w;
-			if (pipeline->next)
-				close(pipe1[i+1][0]); //closed read end of the 1
-			printf("pipe read end :%d\n", r = dup2(pipe1[i][0], 0));
-			//close(pipe1[i][0]); h
-			//if (pipeline->next)
-			printf("pipe write end :%d\n", w = dup2(pipe1[i + 1][1], 1));
-			execve(cmd_path, ((t_cmd_lst*)pipeline->content)->cmd_args, environ);
-			puts("execve failed\n");
+			if (cmd_lst->next)
+				close(piper[i + 1][0]); //closed read end of the 1
+			exec_child(cmd_lst, piper[i][0], piper[i + 1][1]);
 		}
-		if (pipeline->next)
-			close(pipe1[i + 1][1]); // closed write end of the pipe
+		if (cmd_lst->next)
+			close(piper[i + 1][1]); // closed write end of the pipe
 		i++;
 		wait(NULL);
-		pipeline = pipeline->next;
+		cmd_lst = cmd_lst->next;
 	}
 	printf("All exec'ed successfully\n");
 	return (0);
 }
 
-void	child_exec(t_list *pipeline, char *cmd_path, char **environ, int **pipe, int i)
+void	exec_child(t_list *cmd, int fd_in, int fd_out)
 {
+	char	*cmd_path;
+
 	int r,w;
-	if (pipeline->next)
-		close(pipe[i+1][0]); //closed read end of the pipe
-	printf("pipe read end :%d\n", r = dup2(pipe[i][0], 0));
-	//close(pipe1[i][0]); h
-	//if (pipeline->next)
-	printf("pipe write end :%d\n", w = dup2(pipe[i + 1][1], 1));
-	execve(cmd_path, ((t_cmd_lst*)pipeline->content)->cmd_args, environ);
+	cmd_path = ((t_cmd_lst*)cmd->content)->cmd_name;
+	printf("pipe read end :%d\n", r = dup2(fd_in, 0));
+	printf("pipe write end :%d\n", w = dup2(fd_out, 1));
+	execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, NULL); // needs env lst function to char**
 	puts("execve failed\n");
 }
-// void	pipe_cmd(void)
-// {
-// 	int	pipe1[2];
-
-// 	pipe(&pipe1);
-
-// 	dup2(1, pipe[0]);
-// 	dup2(, pipe[1]);
-// }

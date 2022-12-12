@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/10 14:06:42 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/12 20:53:45 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ enum			e_token
 	TOK_DOLLAR
 };
 
+typedef struct s_shell
+{
+	int			exit_status;
+	t_env_list	*env_lst;
+}				t_shell;
+
 typedef struct s_token_lst
 {
 	enum e_token	tkn;
@@ -71,6 +77,8 @@ typedef struct s_cmd_ls
 
 typedef int		t_bool;
 
+t_shell			glob;
+
 t_list 			*parse(char *line, char **environ);
 t_list			*new_token_lst(enum e_token tok, char *line, int index);
 t_list			*lexer(char *line);
@@ -79,7 +87,7 @@ char			*copy_token_val(char *line, int size);
 void			delete_token(t_list *start, t_list *end);
 void			join_token(t_list *start, t_list *end, enum e_token quote);
 void			*malloca(size_t size);
-void			mfree(void **node);
+void			mfree(t_list **node);
 void			expand_env_var(t_list **tok_l, char **environ);
 char			*get_env_val(char *environ[], char *var);
 void			delete_element(t_list **tok_l, enum e_token token);
@@ -98,5 +106,6 @@ t_list			*create_cmd_node(t_list *tok_l, char **cmd_words, \
 t_list			*get_nlst(t_list *lst, int n);
 char			*ft_strjoin_alloca(char const *s1, char const *s2, void*(alloc)(size_t));
 void			heredoc_no_expand(t_list *tok_l);
+void			init_shell(char **environ);
 
 #endif
