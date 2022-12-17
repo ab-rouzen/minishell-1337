@@ -6,7 +6,7 @@ M_INCL_DIR = src/include/
 M_SRC_PRIME_DIR = src/
 M_SRC_PARSE_DIR = src/parse/
 M_SRC_EXEC_DIR = src/execute/
-FALGS = $(CPPFLAGS) -Wall -Wextra -g ##-fsanitize=address
+FALGS = $(CPPFLAGS) -Wall -Wextra #-g -fsanitize=address
 M_SRC_PARSE_NAME = lexer lexer_2 \
 				lexer_redirection utils utils_parser utils_quotes \
 				utils_tokenizer parser parser_pipe \
@@ -36,17 +36,20 @@ M_SRC_PATH = $(M_SRC_PARSE_PATH) $(M_SRC_PRIME_PATH) $(M_SRC_EXEC_PATH)
 M_SRC_NAME = $(M_SRC_PARSE_NAME) $(M_SRC_PRIME_NAME) $(M_SRC_EXEC_NAME)
 M_SRC = $(addsuffix .c, $(M_SRC_PATH))
 
+LFLAGS = -L/Users/imittous/.brew/opt/readline/lib
+IFLAGS = -I/Users/imittous/.brew/opt/readline/include
+
 # Object files
 M_OBJ = $(M_SRC:%=$(BUILD_DIR)%.o)
 
+
 all : $(NAME)
 	@echo everything is in order...
-	./minishell
 
 $(NAME) : $(M_OBJ) $(M_INCL_PATH) 
 	make bonus -C $(LIB_FT)
 	make bonus -C $(LIB_GNL)
-	$(CC) $(LDFLAGS) $(FALGS) $(L_READ_LINE) $(M_OBJ) $(LIBS) -o $(NAME)
+	$(CC) $(LDFLAGS) $(FALGS) $(LFLAGS) $(L_READ_LINE) $(M_OBJ) $(LIBS) -o $(NAME)
 
 $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
 	@mkdir -p $(dir $@)
@@ -59,5 +62,6 @@ clean :
 fclean : clean
 	@make fclean -C $(LIB_FT)
 	rm -rf $(NAME)
+a : all
 
 re : fclean all

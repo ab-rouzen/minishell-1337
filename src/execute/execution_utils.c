@@ -8,18 +8,39 @@ void	ft_echo(char **cmd)
 	int	check;
 
 	i = 1;
-	j = 0;
 	check = 0;
-	if (cmd[i] && cmd[i][j] == '-')
+
+	while(cmd[i + 1])
 	{
-		j++;
-		while (cmd[i][j] == 'n')
-			j++;
-		if (cmd[i][j] == '\0')
+		j = 0;
+		while (cmd[i + 1])
 		{
-			check = 1;
+			if (ft_strcmp(cmd[i], cmd[i + 1]))
+			{
+				//i++;
+				break ;
+			}
 			i++;
 		}
+		if (cmd[i] && (cmd[i][j] == '-' && cmd[i][j+1]))
+		{
+			// j++;
+			while (cmd[i][j+1] == 'n')
+				j++;
+			if (cmd[i][j + 1] == '\0')
+			{
+				puts ("dkhlan hna");
+				check = 1;
+				i++;
+			}
+			else
+			{
+				i--;
+				break ;
+			}
+		}
+		if (!cmd[i][j+1])
+			break ;
 	}
 	while (cmd[i])
 	{
@@ -46,17 +67,17 @@ void	ft_update_export(t_env_list *ms_list, char* oldpwd)
 	}
 }
 
-void	ft_cd(char **cmd, t_env_list *ms_list)
+void	ft_cd(char *cmd, t_env_list *ms_list)
 {
 	char cwd[100000];
 
 	getcwd(cwd, sizeof(cwd));
-	if (!cmd[1] || !(ft_strcmp(cmd[1],"~")))
+	if (!cmd || !(ft_strcmp(cmd,"~")))
 	{
 		chdir("/Users/imittous");
 		ft_update_export(ms_list, cwd);
 	}
-	else if (!(ft_strcmp(cmd[1],"-")))
+	else if (!(ft_strcmp(cmd,"-")))
 	{
 		while (ms_list)
 		{
@@ -71,8 +92,8 @@ void	ft_cd(char **cmd, t_env_list *ms_list)
 		}
 		printf ("mini_shell: cd: OLDPWD not set");
 	}
-	else if (chdir(cmd[1]) < 0)
-		printf ("mini_shell: cd: %s: No such file or directory\n", cmd[1]);
+	else if (chdir(cmd) < 0)
+		printf ("mini_shell: cd: %s: No such file or directory\n", cmd);
 	else
 		ft_update_export(ms_list, cwd);
 }

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/10 14:06:42 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/11 19:54:55 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define SHELL_PROMPT "minishell$ "
+# define SHELL_PROMPT_EXIT "minishell$ exit"
 # define TRUE 1
 # define FALSE 0
 # include "../../lib/libft/libft.h"

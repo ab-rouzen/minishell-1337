@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/09 21:02:44 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/10 23:30:56 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*get_path(t_env_list *env)
 	i = 0;
 	while (env)
 	{
-		if (ft_strcmp(env->variable, "PATH") == 0)
+		if (!ft_strcmp(env->variable, "PATH"))
 			return(env->value);
 		env = env->next;
 	}

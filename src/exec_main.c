@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 11:11:12 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/10 23:01:00 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/12 21:05:10 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	handler(int a)
 	}
 	if (a == SIGQUIT)
 	{
+	
     	rl_redisplay();
 		return ;
 	}
@@ -59,8 +60,6 @@ int main(int ac, char **av, char **env)
 	check = 0;
 	while (1) 
 	{
-		signal(SIGINT, &handler);
-		signal(SIGQUIT, &handler);
 		//signal(EOF, &handler);
 		printf("\033[0;36m");
 		str = readline("mini_shell=>");
@@ -69,6 +68,8 @@ int main(int ac, char **av, char **env)
 			add_history(str);
 		cmd = ft_split(str, ' ');
 
+		signal(SIGINT, &handler);
+		signal(SIGQUIT, &handler);
 		if (!str)
 		{
 			printf ("exit");
