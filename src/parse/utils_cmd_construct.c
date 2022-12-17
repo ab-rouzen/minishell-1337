@@ -64,7 +64,7 @@ t_list	*new_cmd_lst(char *cmd_name, char **cmd_args, t_list *redir_lst)
 	cmd_lst->cmd_args = cmd_args;
 	cmd_lst->cmd_name = cmd_name;
 	cmd_lst->redir_lst = redir_lst;
-	return (ft_lstnew_falloc(cmd_lst, malloca));
+	return (ft_lstnew_alloca(cmd_lst, malloca));
 }
 
 t_list	*new_redir_lst(enum e_token tok, char *file)
@@ -76,5 +76,5 @@ t_list	*new_redir_lst(enum e_token tok, char *file)
 		return (NULL);
 	new_lst->file = file;
 	new_lst->tok = tok;
-	return (ft_lstnew_falloc(new_lst, malloca));
+	return (ft_lstnew_alloca(new_lst, malloca));
 }

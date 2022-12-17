@@ -33,18 +33,18 @@ void	*malloca(size_t size)
 	return (tmp);
 }
 
-void	mfree(t_list **node)
+void	mfree(t_list **head)
 {
-	t_list	*malloced_mem;
+	t_list	*node;
 	t_list	*tmp;
 
-	malloced_mem = *node;
-	while (malloced_mem)
+	node = *head;
+	while (node)
 	{
-		free(malloced_mem->content);
-		tmp = malloced_mem;
-		malloced_mem = malloced_mem->next;
+		free(node->content);
+		tmp = node;
+		node = node->next;
 		free(tmp);
 	}
-	*node = NULL;
+	*head = NULL;
 }

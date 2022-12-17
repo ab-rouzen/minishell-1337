@@ -46,7 +46,7 @@ all : $(NAME)
 $(NAME) : $(M_OBJ) $(M_INCL_PATH) 
 	make bonus -C $(LIB_FT)
 	make bonus -C $(LIB_GNL)
-	$(CC) $(LDFLAGS) $(FALGS) $(L_READ_LINE) $(M_OBJ) $(LIBS) -o $(NAME)
+	$(CC) $(LDFLAGS) $(FALGS) $(M_OBJ) $(LIBS) -o $(NAME) $(L_READ_LINE)
 
 $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
 	@mkdir -p $(dir $@)

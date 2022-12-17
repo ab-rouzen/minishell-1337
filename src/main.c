@@ -15,9 +15,12 @@
 void	print_test(t_list *tmp);
 void	print_token(char *line, char **environ);
 
+t_shell	g_data;
+
 int	main(int argc, char *argv[], char **environ)
 {
 	char	*line;
+		//delim = ft_split("mad-happy", '-');
 	char	**delim;
 	t_list	*tmp;
 	int		i;
@@ -30,7 +33,6 @@ int	main(int argc, char *argv[], char **environ)
 	{
 		malloca(0);
 		init_shell(environ);
-		//delim = ft_split("mad-happy", '-');
 		//here_doc(2, delim);
 		line = readline(SHELL_PROMPT);
 		if (line && *line)
@@ -40,10 +42,7 @@ int	main(int argc, char *argv[], char **environ)
 		print_test(tmp);
 		execute(tmp);
 		free(line);
-	}
-	enum e_token tok; 
-	if (tok == TOK_HEREDOC)
-		
+	}		
 	return (0);
 }      
 

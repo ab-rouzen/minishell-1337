@@ -26,7 +26,7 @@ static char	*get_path(void)
 {
 	t_env_list *env;
 
-	env = glob.env_lst;
+	env = g_data.env_lst;
 	while (env)
 	{
 		if (ft_strcmp(env->variable, "PATH") == 0)
@@ -54,9 +54,11 @@ void	get_cmd_path(t_list *cmd_lst)
 		if (access(tmp, F_OK) == 0)
 		{
 			((t_cmd_lst*)cmd_lst->content)->cmd_name = tmp;
+			free(path);
 			return ;
 		}
 		i++;
 	}
+	free(path);
 	((t_cmd_lst*)cmd_lst->content)->cmd_name = NULL;
 }

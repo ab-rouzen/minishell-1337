@@ -77,7 +77,7 @@ typedef struct s_cmd_ls
 
 typedef int		t_bool;
 
-t_shell			glob;
+extern t_shell	g_data;
 
 t_list 			*parse(char *line, char **environ);
 t_list			*new_token_lst(enum e_token tok, char *line, int index);

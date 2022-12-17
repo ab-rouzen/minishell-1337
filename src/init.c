@@ -14,5 +14,5 @@
 
 void	init_shell(char **environ)
 {
-	glob.env_lst = ft_env(environ);
+	g_data.env_lst = ft_env(environ);
 };
