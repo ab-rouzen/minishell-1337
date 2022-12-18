@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/17 13:31:32 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/17 19:15:48 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	main(int argc, char *argv[], char **environ)
 		// print_test(tmp);
 		ft_builtin(tmp, ms_export);
 		//execute(tmp, environ);
+		//puts ("hna");
 		free(line);
 	}
 	return (0);

@@ -1,47 +1,8 @@
 
 #include "../include/minishell.h"
 
-void	ft_echo(char **cmd)
+void	ft_print_echo(char **cmd, int i, int check)
 {
-	int	i;
-	int	j;
-	int	check;
-
-	i = 1;
-	check = 0;
-
-	while(cmd[i + 1])
-	{
-		j = 0;
-		while (cmd[i + 1])
-		{
-			if (ft_strcmp(cmd[i], cmd[i + 1]))
-			{
-				//i++;
-				break ;
-			}
-			i++;
-		}
-		if (cmd[i] && (cmd[i][j] == '-' && cmd[i][j+1]))
-		{
-			// j++;
-			while (cmd[i][j+1] == 'n')
-				j++;
-			if (cmd[i][j + 1] == '\0')
-			{
-				puts ("dkhlan hna");
-				check = 1;
-				i++;
-			}
-			else
-			{
-				i--;
-				break ;
-			}
-		}
-		if (!cmd[i][j+1])
-			break ;
-	}
 	while (cmd[i])
 	{
 		printf("%s", cmd[i++]);
@@ -50,6 +11,33 @@ void	ft_echo(char **cmd)
 	}
 	if (check == 0)
 		printf("\n");
+}
+
+void	ft_echo(char **cmd)
+{
+	int	i;
+	int	j;
+	int	check;
+
+	i = 1;
+	j = 0;
+	check = 0;
+	while (cmd[i])
+	{
+		j = 0;
+		if (cmd[i] && cmd[i][j] == '-' && cmd[i][j + 1] == 'n')
+		{
+			j++;
+			while (cmd[i][j] == 'n')
+				j++;
+			if (cmd[i][j] == '\0')
+				check = 1;
+		}
+		else
+			break ;
+		i++;
+	}
+	ft_print_echo(cmd, i, check);
 }
 
 void	ft_update_export(t_env_list *ms_list, char* oldpwd)
