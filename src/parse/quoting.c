@@ -6,13 +6,13 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 19:48:59 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 12:42:21 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	unquote(t_list **tok_l, char *line, char **environ)
+int	unquote(t_list **tok_l, char *line)
 {
 	while (*tok_l)
 	{
@@ -23,18 +23,18 @@ int	unquote(t_list **tok_l, char *line, char **environ)
 		}
 		else if (((t_token *)((*tok_l)->content))->tkn == TOK_DQUOTE)
 		{
-			if (dq_unquote((*tok_l), line, environ) == FALSE)
+			if (dq_unquote((*tok_l), line) == FALSE)
 				return (FALSE);
 		}
 		else
-			expand_env_var(tok_l, environ);
+			expand_env_var(tok_l);
 		if (*tok_l)
 			tok_l = &(*tok_l)->next;
 	}
 	return (TRUE);
 }
 
-int	dq_unquote(t_list *tok_l, char *line, char **environ)
+int	dq_unquote(t_list *tok_l, char *line)
 {
 	int		i;
 	t_list	**ltkn;
@@ -44,7 +44,7 @@ int	dq_unquote(t_list *tok_l, char *line, char **environ)
 	ltkn = &tok_l->next;
 	while (*ltkn)
 	{
-		expand_env_var(ltkn, environ);
+		expand_env_var(ltkn);
 		if (((t_token *)(*ltkn)->content)->tkn == TOK_DQUOTE)
 		{
 			tmp = (*ltkn)->next;

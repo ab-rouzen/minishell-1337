@@ -6,13 +6,13 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:35:28 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 19:49:45 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 15:37:39 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	expand_env_var(t_list **tok_l, char **environ)
+void	expand_env_var(t_list **tok_l)
 {
 	t_list	*tmp;
 
@@ -23,38 +23,30 @@ void	expand_env_var(t_list **tok_l, char **environ)
 			&& ((t_token *)(*tok_l)->next->content)->tkn == TOK_WORD)
 		{
 			tmp = (*tok_l)->next->next;
-			((t_token *)(*tok_l)->content)->val = get_env_val(environ, \
-			((t_token *)(*tok_l)->next->content)->val);
+			((t_token *)(*tok_l)->content)->val = \
+			get_env_val(((t_token *)(*tok_l)->next->content)->val);
 			(*tok_l)->next = tmp;
 			((t_token *)(*tok_l)->content)->tkn = TOK_WORD;
 		}
 		else
-			*tok_l = (*tok_l)->next;
+			((t_token *)(*tok_l)->content)->tkn = TOK_WORD;
 	}
 }
 
-char	*get_env_val(char *environ[], char *var)
+char	*get_env_val(char *var)
 {
-	int		i;
-	char	**tmp;
 	char	*buff;
+	t_env_list	*env;
 
-	i = 0;
-	while (environ[i])
+	env = g_data.env_lst;
+	while (env)
 	{
-		tmp = ft_split(environ[i], '=');
-		if (!ft_strcmp(tmp[0], var))
+		if (!ft_strcmp(env->variable, var))
 		{
-			free(tmp[0]);
-			buff = ft_strdup_alloca(tmp[1], malloca);
-			free(tmp[1]);
-			free(tmp);
+			buff = ft_strdup_alloca(env->value, malloca);
 			return (buff);
 		}
-		free(tmp[0]);
-		free(tmp[1]);
-		free(tmp);
-		i++;
+		env = env->next;
 	}
 	return (ft_strdup_alloca("\0", malloca));
 }
