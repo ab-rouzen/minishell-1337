@@ -20,9 +20,10 @@ M_INCLUDE_NAME = lexer minishell parser quoting execution
 L_READ_LINE = -lreadline
 BUILD_DIR = build/
 M_SRC_DIR  = src/
-LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a
+LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a $(LIB_PRINTF)libftprintf.a
 LIB_FT = lib/libft/
 LIB_GNL = lib/get_next_line/
+LIB_PRINTF = lib/printf/
 
 # Header files
 M_INCUDE = $(addsuffix .h, $(M_INCLUDE_NAME))
@@ -46,6 +47,7 @@ all : $(NAME)
 $(NAME) : $(M_OBJ) $(M_INCL_PATH) 
 	make bonus -C $(LIB_FT)
 	make bonus -C $(LIB_GNL)
+	make bonus -C $(LIB_PRINTF)
 	$(CC) $(LDFLAGS) $(FALGS) $(M_OBJ) $(LIBS) -o $(NAME) $(L_READ_LINE)
 
 $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
@@ -54,10 +56,14 @@ $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
 
 clean : 
 	@make clean -C $(LIB_FT)
+	@make clean -C $(LIB_GNL)
+	@make clean -C $(LIB_PRINTF)
 	rm -rf $(BUILD_DIR)
 
 fclean : clean
 	@make fclean -C $(LIB_FT)
+	@make fclean -C $(LIB_GNL)
+	@make fclean -C $(LIB_PRINTF)
 	rm -rf $(NAME)
 
 re : fclean all

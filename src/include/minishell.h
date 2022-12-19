@@ -6,17 +6,20 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/12 20:53:45 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 18:27:52 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define SHELL_PROMPT "minishell$ "
+# define SHELL_NAME "minishell"
 # define TRUE 1
 # define FALSE 0
+# define FREE_ALL 0
 # include "../../lib/libft/libft.h"
 # include "../../lib/get_next_line/get_next_line_bonus.h"
+# include "../../lib/printf/ft_printf_bonus.h"
 # include "assert.h"
 # include "lexer.h"
 # include "parser.h"
@@ -79,7 +82,7 @@ typedef int		t_bool;
 
 extern t_shell	g_data;
 
-t_list 			*parse(char *line, char **environ);
+t_list 			*parse(char *line);
 t_list			*new_token_lst(enum e_token tok, char *line, int index);
 t_list			*lexer(char *line);
 void			index_token(t_list *tok_lst);
@@ -88,8 +91,8 @@ void			delete_token(t_list *start, t_list *end);
 void			join_token(t_list *start, t_list *end, enum e_token quote);
 void			*malloca(size_t size);
 void			mfree(t_list **node);
-void			expand_env_var(t_list **tok_l, char **environ);
-char			*get_env_val(char *environ[], char *var);
+void			expand_env_var(t_list **tok_l);
+char			*get_env_val(char *var);
 void			delete_element(t_list **tok_l, enum e_token token);
 int				get_words_num(t_list *tok_l);
 t_list			*new_cmd_lst(char *cmd_name, char **cmd_args, \

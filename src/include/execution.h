@@ -20,6 +20,8 @@ char			**ft_split_export(char *str);
 int				*here_doc(size_t n, char **deli);
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
-void			get_cmd_path(t_list *cmd_lst);
+int				get_cmd_path(t_list *cmd_lst);
+int				check_cmd(t_bool status, t_list **cmd);
+int				(*init_pipe(t_list *cmd_lst))[2];
 
 #endif

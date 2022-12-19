@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/13 18:06:43 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 18:25:19 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,18 @@ int	execute(t_list *cmd_lst)
 	t_list		*cmd;
 
 	cmd = cmd_lst;
-	piper = malloca(sizeof(int[25][2]));
-	piper[0][0] = 0;
-	piper[2][1] = 1;
+	piper = init_pipe(cmd_lst);
 	i = 0;
 	while (cmd)
 	{
 		if (cmd->next)
 			pipe(piper[i + 1]);
-		get_cmd_path(cmd);
-		if (((t_cmd_lst*)cmd->content)->cmd_name == NULL)
-		{
-			printf("command not found\n");
-			cmd = cmd->next;
+		if (check_cmd(get_cmd_path(cmd), &cmd) == FALSE)
 			continue ;
-		}
 		printf("pipe creation success: %d in | %d out \n", piper[i + 1][1], piper[i + 1][0]);
 		childPid = fork();
 		if (childPid == 0)
-			exec_child(cmd, piper[i][0], piper[i + 1]);
+			exec_child(cmd, piper[i][0], &piper[i + 1]);
 		if (cmd->next)
 			close(piper[i + 1][1]); // closed write end of the pipe
 		i++;
@@ -70,4 +63,19 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	}
 	execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, NULL); // needs env lst function to char**
 	printf("execve failed\n");
+}
+
+int (*init_pipe(t_list *cmd_lst))[2]
+{
+	int	(*piper)[2];
+	int	size;
+
+	size = ft_lstsize(cmd_lst);
+	//ft_printf("sz is %d\n", size);
+	piper = malloca(sizeof(int[size + 1][2]));
+	piper[0][0] = 0;
+	piper[size][1] = 1;
+	piper[size][0] = 0;
+	//ft_printf("pipe is %d\n", piper[size - 1][0]);
+	return (piper);
 }

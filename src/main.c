@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/12 22:41:03 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 12:55:00 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	main(int argc, char *argv[], char **environ)
 	(void)argc;
 	while (TRUE)
 	{
-		malloca(0);
+		malloca(FREE_ALL);
 		init_shell(environ);
 		//here_doc(2, delim);
 		line = readline(SHELL_PROMPT);
 		if (line && *line)
 			add_history(line);
-		tmp = parse(line, environ);
+		tmp = parse(line);
 		print_token(line, environ);
 		print_test(tmp);
 		execute(tmp);
@@ -77,7 +77,7 @@ void	print_token(char *line, char **environ)
 
 	printf("token list | ");
 	tmp = lexer(line);
-	if (!unquote(&tmp, line, environ))
+	if (!unquote(&tmp, line))
 		printf("Quote parse error\n");
 	join_adjacent_token(&tmp, TOK_WORD);
 	delete_element(&tmp, TOK_WHITESPACE);

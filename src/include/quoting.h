@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 22:25:14 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/03 22:49:33 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 12:43:28 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define QUOTING_H
 # include "minishell.h"
 
-int	unquote(t_list **tok_l, char *line, char **environ);
-int	dq_unquote(t_list *tok_l, char *line, char **environ);
+int	unquote(t_list **tok_l, char *line);
+int	dq_unquote(t_list *tok_l, char *line);
 int	sq_unquote(t_list *tok_l, char *line);
 
 #endif

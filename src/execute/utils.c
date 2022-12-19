@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/12 20:43:32 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 18:28:02 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*get_path(void)
 	return (NULL);
 }
 
-void	get_cmd_path(t_list *cmd_lst)
+int	get_cmd_path(t_list *cmd_lst)
 {
 	int		i;
 	char	**path;
@@ -45,7 +45,7 @@ void	get_cmd_path(t_list *cmd_lst)
 	path = ft_split(get_path(), ':');
 	i = 0;
 	if (access(((t_cmd_lst*)cmd_lst->content)->cmd_name, F_OK) == 0)
-		return ;
+		return (TRUE);
 	while (path[i])
 	{
 		tmp = ft_strjoin_alloca(path[i], "/", malloca);
@@ -54,11 +54,23 @@ void	get_cmd_path(t_list *cmd_lst)
 		if (access(tmp, F_OK) == 0)
 		{
 			((t_cmd_lst*)cmd_lst->content)->cmd_name = tmp;
-			free(path);
-			return ;
+			return (free(path), TRUE);
 		}
 		i++;
 	}
-	free(path);
-	((t_cmd_lst*)cmd_lst->content)->cmd_name = NULL;
+	//((t_cmd_lst*)cmd_lst->content)->cmd_name = NULL;
+	return (free(path), FALSE);
+}
+
+int	check_cmd(t_bool status, t_list **cmd)
+{
+	if (status == FALSE)
+	{
+		ft_printf("%s: %s: command not found\n", SHELL_NAME, \
+		((t_cmd_lst*)(*cmd)->content)->cmd_name);
+		*cmd = (*cmd)->next;
+		return (status);
+	}
+	return (status);
+	//continue ;
 }
