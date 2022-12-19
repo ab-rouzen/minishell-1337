@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 11:11:47 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 02:51:25 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	ft_print_expo(t_env_list *ms_export, char *cmd)
 {
 	t_env_list *tmp;
  	tmp = ms_export;
-
+	//puts("print expo");
 	while (!ft_strcmp(cmd, "export") && tmp)
 	{
 		printf("declare -x ");

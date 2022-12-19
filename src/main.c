@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/17 19:15:48 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/19 02:53:31 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int	ft_builtin(t_list	*tmp, t_env_list *ms_export)
 	else if (!ft_strcmp(cmd_name, "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(cmd_name, "export") && !((t_cmd_lst*)tmp->content)\
-		->cmd_name)
+		->cmd_args[1])
 		ft_print_expo(ms_export, cmd_name);
-	// else if (!ft_strcmp(cmd_name, "export"))
-	// 	ft_export(&ms_export, cmd);
+	else if (!ft_strcmp(cmd_name, "export"))
+		ft_export((&ms_export, (t_cmd_lst*)tmp->content)->cmd_args);
 	else if (!ft_strcmp(cmd_name, "env"))
 		ft_print_expo(ms_export, cmd_name);
 	else if (!ft_strcmp(cmd_name, "unset"))
@@ -98,6 +98,8 @@ int	main(int argc, char *argv[], char **environ)
 		// print_token(line, environ);
 		// print_test(tmp);
 		ft_builtin(tmp, ms_export);
+		//puts ("hna");
+		
 		//execute(tmp, environ);
 		//puts ("hna");
 		free(line);
