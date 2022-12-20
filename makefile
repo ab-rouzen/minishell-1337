@@ -13,7 +13,7 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 				parser_redirection quoting garbage_collector \
 				utils_cmd_construct utils_environ
 M_SRC_EXEC_NAME = execution_utils mini_shell heredoc utils \
-				execute
+				execute redirection
 
 M_SRC_PRIME_NAME = init main  #exec_main 
 M_INCLUDE_NAME = lexer minishell parser quoting execution

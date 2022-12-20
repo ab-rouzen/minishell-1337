@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 18:28:02 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 22:13:27 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,3 +74,16 @@ int	check_cmd(t_bool status, t_list **cmd)
 	return (status);
 	//continue ;
 }
+
+// char **to_env()
+// {
+// 	int i;
+// 	t_list	*env;
+
+// 	env = g_data.env_lst;
+// 	i = 0;
+// 	while (env)
+// 	{
+		
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 18:27:52 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 21:21:24 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define TRUE 1
 # define FALSE 0
 # define FREE_ALL 0
+# define FD_ERROR -1
 # include "../../lib/libft/libft.h"
 # include "../../lib/get_next_line/get_next_line_bonus.h"
 # include "../../lib/printf/ft_printf_bonus.h"
@@ -30,6 +31,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -55,6 +57,7 @@ typedef struct s_shell
 {
 	int			exit_status;
 	t_env_list	*env_lst;
+	int			*fd_heredoc;
 }				t_shell;
 
 typedef struct s_token_lst
@@ -109,6 +112,6 @@ t_list			*create_cmd_node(t_list *tok_l, char **cmd_words, \
 t_list			*get_nlst(t_list *lst, int n);
 char			*ft_strjoin_alloca(char const *s1, char const *s2, void*(alloc)(size_t));
 void			heredoc_no_expand(t_list *tok_l);
-void			init_shell(char **environ);
+void			init_shell(char **environ, t_list *cmd_lst);
 
 #endif

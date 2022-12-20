@@ -17,7 +17,16 @@ void			ft_lstadd_back1(t_env_list **lst, t_env_list *new);
 t_env_list		*ft_lstnew1(void **content, t_bool exported);
 t_env_list  	*ft_env(char **env);
 char			**ft_split_export(char *str);
+
+/*************************   heredoc  ***************************/
 int				*here_doc(size_t n, char **deli);
+int				get_heredoc_num(t_list *cmd_lst);
+char			**get_heredoc_delim(t_list *cmd_lst);
+
+/*************************   redirection  ***************************/
+int				set_redirection(t_list *redir_lst);
+void			duplicate_redir_fd(int fd_input, int fd_output);
+
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
 int				get_cmd_path(t_list *cmd_lst);

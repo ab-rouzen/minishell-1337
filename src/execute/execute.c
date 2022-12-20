@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 18:25:19 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 21:48:03 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	execute(t_list *cmd_lst)
 			pipe(piper[i + 1]);
 		if (check_cmd(get_cmd_path(cmd), &cmd) == FALSE)
 			continue ;
-		printf("pipe creation success: %d in | %d out \n", piper[i + 1][1], piper[i + 1][0]);
+		//printf("pipe creation success: %d in | %d out \n", piper[i + 1][1], piper[i + 1][0]);
 		childPid = fork();
 		if (childPid == 0)
 			exec_child(cmd, piper[i][0], &piper[i + 1]);
@@ -53,14 +53,16 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	cmd_path = ((t_cmd_lst*)cmd->content)->cmd_name;
 	if (fd_in != STDIN_FILENO)
 	{
-		printf("pipe read end :%d\n", r = dup2(fd_in, 0));
+		printf("pipe read end :%d\n", r = dup2(fd_in, STDIN_FILENO));
 		close(fd_in);
 	}
 	if (pipe[0][1] != STDOUT_FILENO)
 	{
-		printf("pipe write end :%d\n", w = dup2(pipe[0][1], 1));
+		printf("pipe write end :%d\n", w = dup2(pipe[0][1], STDOUT_FILENO));
 		close(pipe[0][1]);
 	}
+	if (set_redirection(((t_cmd_lst*)cmd->content)->redir_lst) == FALSE)
+		exit(EXIT_FAILURE);
 	execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, NULL); // needs env lst function to char**
 	printf("execve failed\n");
 }

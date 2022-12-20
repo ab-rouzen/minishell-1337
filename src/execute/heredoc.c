@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/09 14:23:40 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/19 21:44:48 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	*here_doc(size_t n, char **deli)
 	int		*hdoc_fdes;
 	char	*tmp;
 
+	if (n == 0)
+		return (NULL);
 	hdoc_fdes = malloca(n * sizeof(int));
 	i = 0;
 	while (i < (int) n)
@@ -61,4 +63,50 @@ static int	create_file(char *fname, char *delim)
 	}
 	filedes = p_open(fpath, O_RDONLY, 0);
 	return (filedes);
+}
+
+int	get_heredoc_num(t_list *cmd_lst)
+{
+	int		i;
+	t_list	*redi_lst;
+
+	i = 0;
+	while (cmd_lst)
+	{
+		redi_lst = ((t_cmd_lst*)cmd_lst->content)->redir_lst;
+		while (redi_lst)
+		{
+			if (((t_redir_list*)redi_lst->content)->tok == TOK_HEREDOC)
+				i++;
+			redi_lst = redi_lst->next;
+		}
+		cmd_lst =cmd_lst->next;
+	}
+	return (i);
+}
+
+char	**get_heredoc_delim(t_list *cmd_lst)
+{
+	int		i;
+	t_list	*redi_lst;
+	char	**delim;
+
+	i = 0;
+	delim = malloca(sizeof(char*) * (get_heredoc_num(cmd_lst) + 1));
+	while (cmd_lst)
+	{
+		redi_lst = ((t_cmd_lst*)cmd_lst->content)->redir_lst;
+		while (redi_lst)
+		{
+			if (((t_redir_list*)redi_lst->content)->tok == TOK_HEREDOC)
+			{
+				delim[i] = ((t_redir_list*)redi_lst->content)->file;
+				i++;
+			}
+			redi_lst = redi_lst->next;
+		}
+		cmd_lst =cmd_lst->next;
+	}
+	delim[i] = NULL;
+	return (delim);
 }
