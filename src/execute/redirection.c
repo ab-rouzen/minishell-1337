@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:41:33 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 21:58:27 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 18:22:07 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ int	set_redirection(t_list *redir_lst)
 {
 	enum 		e_token tok;
 	char		*file;
-	static int	count;
+	int			index;
 	int			fd_in;
 	int			fd_out;
 
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
+	index = g_data.hdoc_index;
 	while (redir_lst)
 	{
 		tok = ((t_redir_list*)redir_lst->content)->tok;
@@ -55,21 +56,26 @@ int	set_redirection(t_list *redir_lst)
 		if (tok == TOK_REDI_I)
 			fd_in = open_file_redir_in(file);
 		if (tok == TOK_REDI_O)
-			fd_out = open_file_redir_out(file, O_CREAT|O_TRUNC|O_WRONLY, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+			fd_out = open_file_redir_out(file, O_CREAT|O_TRUNC|O_WRONLY, \
+			S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 		else if (tok == TOK_REDI_O_APP)
-			fd_out = open_file_redir_out(file, O_CREAT|O_APPEND|O_WRONLY, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+			fd_out = open_file_redir_out(file, O_CREAT|O_APPEND|O_WRONLY, \
+			S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 		else if (tok == TOK_HEREDOC)
-			fd_in = g_data.fd_heredoc[count++];
+			fd_in = g_data.fd_heredoc[index++];
 		if (fd_in == FD_ERROR || fd_out == FD_ERROR)
 			return (FALSE);
 		redir_lst = redir_lst->next;
 	}
+	ft_printf("count: %d\n", index);
 	duplicate_redir_fd(fd_in, fd_out);
 	return (TRUE);
 }
 
 void	duplicate_redir_fd(int fd_input, int fd_output)
 {
-	dup2(fd_input, STDIN_FILENO);
-	dup2(fd_output, STDOUT_FILENO);
+	printf("input: %d, duped to %d\n", fd_input, dup2(fd_input, STDIN_FILENO));
+	printf("output: %d, duped to %d\n", fd_output, dup2(fd_output, STDOUT_FILENO));
+	;
+	;
 }

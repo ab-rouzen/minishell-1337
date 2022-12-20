@@ -22,6 +22,7 @@ char			**ft_split_export(char *str);
 int				*here_doc(size_t n, char **deli);
 int				get_heredoc_num(t_list *cmd_lst);
 char			**get_heredoc_delim(t_list *cmd_lst);
+int				get_redir_lst_heredoc_num(t_list *redir_lst);
 
 /*************************   redirection  ***************************/
 int				set_redirection(t_list *redir_lst);

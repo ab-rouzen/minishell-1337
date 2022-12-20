@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 12:41:23 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 12:04:18 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_list	*parse(char *line)
 	t_list	*tok_l;
 
 	tok_l = lexer(line);
-	if (!unquote(&tok_l, line))
+	if (!unquote(&tok_l))
 		printf("Quote parse error\n");
 	join_adjacent_token(&tok_l, TOK_WORD);
 	delete_element(&tok_l, TOK_WHITESPACE);

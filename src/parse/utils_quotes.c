@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:33:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/09 15:06:58 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 12:01:04 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	join_adjacent_token(t_list **tok_l, enum e_token tok)
 {
 	t_list	*head;
-	char	*tmp;
 
 	head = *tok_l;
 	while (*tok_l)
@@ -36,12 +35,11 @@ void	join_adjacent_token(t_list **tok_l, enum e_token tok)
 	}
 }
 
-void	join_token(t_list *start, t_list *end, enum e_token quote)
+void	join_token(t_list *start, enum e_token quote)
 {
 	int		i;
 	t_list	*tmp;
 	char	*val;
-	char	*buff;
 
 	i = 0;
 	tmp = start->next;

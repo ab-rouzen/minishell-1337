@@ -6,24 +6,24 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 12:42:21 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 12:03:27 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	unquote(t_list **tok_l, char *line)
+int	unquote(t_list **tok_l)
 {
 	while (*tok_l)
 	{
 		if (((t_token *)((*tok_l)->content))->tkn == TOK_SQUOTE)
 		{
-			if (sq_unquote((*tok_l), line) == FALSE)
+			if (sq_unquote(*tok_l) == FALSE)
 				return (FALSE);
 		}
 		else if (((t_token *)((*tok_l)->content))->tkn == TOK_DQUOTE)
 		{
-			if (dq_unquote((*tok_l), line) == FALSE)
+			if (dq_unquote(*tok_l) == FALSE)
 				return (FALSE);
 		}
 		else
@@ -34,7 +34,7 @@ int	unquote(t_list **tok_l, char *line)
 	return (TRUE);
 }
 
-int	dq_unquote(t_list *tok_l, char *line)
+int	dq_unquote(t_list *tok_l)
 {
 	int		i;
 	t_list	**ltkn;
@@ -48,7 +48,7 @@ int	dq_unquote(t_list *tok_l, char *line)
 		if (((t_token *)(*ltkn)->content)->tkn == TOK_DQUOTE)
 		{
 			tmp = (*ltkn)->next;
-			join_token(tok_l, (*ltkn), TOK_DQUOTE);
+			join_token(tok_l, TOK_DQUOTE);
 			tok_l->next = tmp;
 			((t_token *)tok_l->content)->tkn = TOK_WORD;
 			return (TRUE);
@@ -58,7 +58,7 @@ int	dq_unquote(t_list *tok_l, char *line)
 	return (FALSE);
 }
 
-int	sq_unquote(t_list *tok_l, char *line)
+int	sq_unquote(t_list *tok_l)
 {
 	int		i;
 	t_list	*ltkn;
@@ -71,7 +71,7 @@ int	sq_unquote(t_list *tok_l, char *line)
 		if (((t_token *)ltkn->content)->tkn == TOK_SQUOTE)
 		{
 			tmp = ltkn->next;
-			join_token(tok_l, ltkn, TOK_SQUOTE);
+			join_token(tok_l, TOK_SQUOTE);
 			tok_l->next = tmp;
 			((t_token *)tok_l->content)->tkn = TOK_WORD;
 			return (TRUE);

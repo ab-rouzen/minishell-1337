@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 21:21:24 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 18:16:51 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_shell
 	int			exit_status;
 	t_env_list	*env_lst;
 	int			*fd_heredoc;
+	int			hdoc_index;
 }				t_shell;
 
 typedef struct s_token_lst
@@ -91,7 +92,7 @@ t_list			*lexer(char *line);
 void			index_token(t_list *tok_lst);
 char			*copy_token_val(char *line, int size);
 void			delete_token(t_list *start, t_list *end);
-void			join_token(t_list *start, t_list *end, enum e_token quote);
+void			join_token(t_list *start, enum e_token quote);
 void			*malloca(size_t size);
 void			mfree(t_list **node);
 void			expand_env_var(t_list **tok_l);

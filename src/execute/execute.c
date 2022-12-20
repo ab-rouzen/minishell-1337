@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 21:48:03 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 18:21:00 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	execute(t_list *cmd_lst)
 	cmd = cmd_lst;
 	piper = init_pipe(cmd_lst);
 	i = 0;
+	g_data.hdoc_index = 0;
 	while (cmd)
 	{
 		if (cmd->next)
@@ -34,10 +35,12 @@ int	execute(t_list *cmd_lst)
 		childPid = fork();
 		if (childPid == 0)
 			exec_child(cmd, piper[i][0], &piper[i + 1]);
+		//sleep(2);
 		if (cmd->next)
 			close(piper[i + 1][1]); // closed write end of the pipe
 		i++;
 		wait(NULL);
+		g_data.hdoc_index += get_redir_lst_heredoc_num(((t_cmd_lst*)cmd->content)->redir_lst);
 		cmd = cmd->next;
 	}
 	return (0);
@@ -53,11 +56,13 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	cmd_path = ((t_cmd_lst*)cmd->content)->cmd_name;
 	if (fd_in != STDIN_FILENO)
 	{
+		ft_printf("in STDIN\n");
 		printf("pipe read end :%d\n", r = dup2(fd_in, STDIN_FILENO));
 		close(fd_in);
 	}
 	if (pipe[0][1] != STDOUT_FILENO)
 	{
+		ft_printf("in STDOUT\n");
 		printf("pipe write end :%d\n", w = dup2(pipe[0][1], STDOUT_FILENO));
 		close(pipe[0][1]);
 	}

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 21:44:48 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 18:31:09 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ static int	create_file(char *fname, char *delim)
 		free(line);
 	}
 	filedes = p_open(fpath, O_RDONLY, 0);
+	ft_printf("hdoc fd -> %d\n", filedes);
 	return (filedes);
 }
 
+/*returns totol number of heredocs in pipeline*/
 int	get_heredoc_num(t_list *cmd_lst)
 {
 	int		i;
@@ -74,17 +76,28 @@ int	get_heredoc_num(t_list *cmd_lst)
 	while (cmd_lst)
 	{
 		redi_lst = ((t_cmd_lst*)cmd_lst->content)->redir_lst;
-		while (redi_lst)
-		{
-			if (((t_redir_list*)redi_lst->content)->tok == TOK_HEREDOC)
-				i++;
-			redi_lst = redi_lst->next;
-		}
-		cmd_lst =cmd_lst->next;
+		i += get_redir_lst_heredoc_num(redi_lst);
+		cmd_lst = cmd_lst->next;
 	}
 	return (i);
 }
 
+/*returns number of heredocs in a single redir_lst*/
+int	get_redir_lst_heredoc_num(t_list *redir_lst)
+{
+	int		i;
+
+	i = 0;
+	while (redir_lst)
+	{
+		if (((t_redir_list*)redir_lst->content)->tok == TOK_HEREDOC)
+			i++;
+		redir_lst = redir_lst->next;
+	}
+	return (i);
+}
+
+/*returns all heredoc delimiters from a pipeline*/
 char	**get_heredoc_delim(t_list *cmd_lst)
 {
 	int		i;

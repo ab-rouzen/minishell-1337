@@ -6,39 +6,33 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 21:41:50 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 12:05:13 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell.h"
 
 void	print_test(t_list *tmp);
-void	print_token(char *line, char **environ);
+void	print_token(char *line);
 
 t_shell	g_data;
 
 int	main(int argc, char *argv[], char **environ)
 {
 	char	*line;
-		//delim = ft_split("mad-happy", '-');
-	char	**delim;
 	t_list	*cmd_lst;
-	int		i;
-	int		*iz;
-	t_list	*mylist;
 
 	(void)argv;
 	(void)argc;
 	while (TRUE)
 	{
 		malloca(FREE_ALL);
-		//here_doc(2, delim);
 		init_shell(environ, cmd_lst);
 		line = readline(SHELL_PROMPT);
 		if (line && *line)
 			add_history(line);
 		cmd_lst = parse(line);
-		print_token(line, environ);
+		print_token(line);
 		print_test(cmd_lst);
 			g_data.fd_heredoc = here_doc(get_heredoc_num(cmd_lst), \
 			get_heredoc_delim(cmd_lst));
@@ -73,13 +67,13 @@ void	print_test(t_list *tmp)
 	}	
 }
 
-void	print_token(char *line, char **environ)
+void	print_token(char *line)
 {
 	t_list	*tmp;
 
 	printf("token list | ");
 	tmp = lexer(line);
-	if (!unquote(&tmp, line))
+	if (!unquote(&tmp))
 		printf("Quote parse error\n");
 	join_adjacent_token(&tmp, TOK_WORD);
 	delete_element(&tmp, TOK_WHITESPACE);
