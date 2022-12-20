@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:41:33 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 18:22:07 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 23:19:46 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	set_redirection(t_list *redir_lst)
 
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
-	index = g_data.hdoc_index;
+	index = 0;
 	while (redir_lst)
 	{
 		tok = ((t_redir_list*)redir_lst->content)->tok;
@@ -62,7 +62,7 @@ int	set_redirection(t_list *redir_lst)
 			fd_out = open_file_redir_out(file, O_CREAT|O_APPEND|O_WRONLY, \
 			S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 		else if (tok == TOK_HEREDOC)
-			fd_in = g_data.fd_heredoc[index++];
+			fd_in = g_data.fd_heredoc[g_data.hdoc_cmd_no][index++];
 		if (fd_in == FD_ERROR || fd_out == FD_ERROR)
 			return (FALSE);
 		redir_lst = redir_lst->next;

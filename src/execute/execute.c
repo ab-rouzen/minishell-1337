@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 18:21:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 23:17:08 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,23 @@ int	execute(t_list *cmd_lst)
 	cmd = cmd_lst;
 	piper = init_pipe(cmd_lst);
 	i = 0;
-	g_data.hdoc_index = 0;
+	g_data.hdoc_cmd_no = 0;
 	while (cmd)
 	{
 		if (cmd->next)
 			pipe(piper[i + 1]);
 		if (check_cmd(get_cmd_path(cmd), &cmd) == FALSE)
-			continue ;
-		//printf("pipe creation success: %d in | %d out \n", piper[i + 1][1], piper[i + 1][0]);
+			if (++i) 
+				continue ;
 		childPid = fork();
 		if (childPid == 0)
 			exec_child(cmd, piper[i][0], &piper[i + 1]);
-		//sleep(2);
 		if (cmd->next)
 			close(piper[i + 1][1]); // closed write end of the pipe
 		i++;
 		wait(NULL);
-		g_data.hdoc_index += get_redir_lst_heredoc_num(((t_cmd_lst*)cmd->content)->redir_lst);
+		if (get_redir_lst_heredoc_num(((t_cmd_lst*)cmd->content)->redir_lst))
+			g_data.hdoc_cmd_no++;
 		cmd = cmd->next;
 	}
 	return (0);

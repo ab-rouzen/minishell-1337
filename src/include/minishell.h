@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 18:16:51 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/20 23:14:00 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ typedef struct s_shell
 {
 	int			exit_status;
 	t_env_list	*env_lst;
-	int			*fd_heredoc;
-	int			hdoc_index;
+	int			**fd_heredoc;
+	int			hdoc_cmd_no;
 }				t_shell;
 
 typedef struct s_token_lst
