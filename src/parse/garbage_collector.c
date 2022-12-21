@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:32:11 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/12 11:16:47 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 10:43:00 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*malloca(size_t size)
 	static t_list	*malloced_mem = NULL;
 	t_list			*tmp;
 
-	if (size == 0)
+	if (size == FREE_ALL)
 	{
 		mfree(&malloced_mem);
 		return (NULL);

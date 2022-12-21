@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 23:13:15 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 10:49:51 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char *argv[], char **environ)
 		cmd_lst = parse(line);
 		print_token(line);
 		print_test(cmd_lst);
-			g_data.fd_heredoc = here_doc(cmd_lst);
+		g_data.fd_heredoc = here_doc(cmd_lst);
 		execute(cmd_lst);
 		free(line);
 	}		

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 23:36:09 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 11:01:18 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	**here_doc(t_list *cmd_lst)
 	char	cmd_hdoc_num;
 
 
+	if (get_heredoc_num(cmd_lst) == 0)
+		return (NULL);	
 	hdoc_fdes = allocate_hdoc_fd(cmd_lst);
 	i = 0;
 	delim = get_heredoc_delim(cmd_lst);
@@ -67,13 +69,20 @@ int	**allocate_hdoc_fd(t_list *cmd_lst)
 {
 	int	**fd_hdoc;
 	int	i;
+	int size;
 
 	fd_hdoc = malloca(get_heredoc_num(cmd_lst) * sizeof(int*));
 	i = 0;
 	while (cmd_lst)
 	{
-		fd_hdoc[i] = malloca(get_redir_lst_heredoc_num(\
-		((t_cmd_lst*)cmd_lst->content)->redir_lst));
+		size = get_redir_lst_heredoc_num(\
+		((t_cmd_lst*)cmd_lst->content)->redir_lst);
+		if (size == 0)
+		{
+			cmd_lst = cmd_lst->next;
+			continue ;
+		}
+		fd_hdoc[i] = malloca(size);
 		cmd_lst = cmd_lst->next;
 		i++;
 	}
