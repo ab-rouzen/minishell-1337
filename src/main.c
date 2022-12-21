@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 02:53:31 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/21 04:27:43 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,17 @@ int	ft_builtin(t_list	*tmp, t_env_list *ms_export)
 		ft_cd(((t_cmd_lst*)tmp->content)->cmd_args[1], ms_export);
 	else if (!ft_strcmp(cmd_name, "pwd"))
 		ft_pwd();
-	else if (!ft_strcmp(cmd_name, "export") && !((t_cmd_lst*)tmp->content)\
-		->cmd_args[1])
-		ft_print_expo(ms_export, cmd_name);
 	else if (!ft_strcmp(cmd_name, "export"))
-		ft_export((&ms_export, (t_cmd_lst*)tmp->content)->cmd_args);
+	{
+		if (((t_cmd_lst*)tmp->content)->cmd_args[1])
+		{
+			//puts("export");
+			//printf("export[%d] = %s\n", 1, ((t_cmd_lst*)tmp->content)->cmd_args[1]);
+			ft_export(&ms_export, ((t_cmd_lst*)tmp->content)->cmd_args);
+		}
+		else
+			ft_print_expo(ms_export, cmd_name);
+	}
 	else if (!ft_strcmp(cmd_name, "env"))
 		ft_print_expo(ms_export, cmd_name);
 	else if (!ft_strcmp(cmd_name, "unset"))
@@ -65,12 +71,15 @@ int	main(int argc, char *argv[], char **environ)
 	t_list	*tmp;
 	int		i;
 	int		*iz;
+	int 	fd1, fd;
+	int check_redir = 0;
 	//t_list	*mylist;
 	t_env_list *ms_export;
 
 	(void)argv;
 	(void)argc;
 	ms_export = ft_env(environ);
+	fd1 = dup(STDOUT_FILENO);
 	while (TRUE)
 	{
 		signal(SIGINT, &handler);
@@ -88,21 +97,48 @@ int	main(int argc, char *argv[], char **environ)
 			add_history(line);
 		tmp = parse(line, environ);
 		int i = 0;
-		// while (tmp)
+		t_list *mylist = ((t_cmd_lst *)tmp->content)->redir_lst;
+
+		// printf ("%s ", ((t_redir_list*)mylist->content)->file);
+		// printf ("%d \n", ((t_redir_list*)mylist->content)->tok);
+		
+		// mylist->next;
+		
+		// printf ("%s ", ((t_redir_list*)mylist->content)->file);
+		// printf ("%d \n", ((t_redir_list*)mylist->content)->tok);
+		
+		// while(mylist)
 		// {
-		// 	printf ("%s\n", ((t_cmd_lst*)tmp->content)->cmd_args[i]);
-		// 	i++;
-		// 	tmp->next;
-		// }
-		
-		// print_token(line, environ);
-		// print_test(tmp);
-		ft_builtin(tmp, ms_export);
-		//puts ("hna");
-		
-		//execute(tmp, environ);
-		//puts ("hna");
+			
+			if (mylist && ((t_redir_list*)mylist->content)->tok == TOK_REDI_O)
+			{
+				puts("TOK_REDI_O");
+				fd = open(((t_redir_list*)mylist->content)->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+				if (fd < 0)
+				{
+					printf("Error opening file");
+					exit(1);
+				}
+				if (dup2(fd, STDOUT_FILENO) < 0)
+				{
+					printf("Error dup2");
+					exit(1);
+				}
+				execute(tmp, environ);
+				if ((dup2(fd1, STDOUT_FILENO) < 0))
+				{
+					printf("Error dup2");
+					exit(1);
+				}
+				//close(fd);
+				check_redir = 1;
+				//break ;
+			}
+			//mylist = mylist->next;
+		//}
 		free(line);
+		if (check_redir == 0)
+			execute(tmp, environ);
 	}
 	return (0);
 }      
@@ -135,17 +171,39 @@ void	print_test(t_list *tmp)
 void	print_token(char *line, char **environ)
 {
 	t_list	*tmp;
-
-	printf("token list  \n");
+	int check_redir = 0;
+	//printf("token list  \n");
 	tmp = lexer(line);
 	if (!unquote(&tmp, line, environ))
 		printf("Quote parse error\n");
 	join_adjacent_token(&tmp, TOK_WORD);
 	delete_element(&tmp, TOK_WHITESPACE);
+
 	while (tmp)
 	{
-		printf("token = %d ==> val:%s \n", ((t_token *)tmp->content)->tkn,
-				((t_token *)tmp->content)->val);
+		// printf("token = %d ==> val:%s \n", ((t_token *)tmp->content)->tkn, ((t_token *)tmp->content)->val);
+		// printf(("%s",(t_token *)tmp->content)->val);
+		
+		if (((t_token *)tmp->content)->tkn == TOK_REDI_O)
+		{
+			printf("%u", ((t_token *)tmp->content)->tkn);
+			//puts ("hna");
+			tmp = tmp->next;
+			printf("%u", ((t_token *)tmp->content)->tkn);
+			int fd = open(((t_token *)tmp->content)->val, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			if (fd < 0)
+			{
+				printf("Error opening file");
+				exit(1);
+			}
+			if (dup2(fd, STDOUT_FILENO) < 0)
+			{
+				printf("Error dup2");
+				exit(1);
+			}
+			close(fd);
+			break ;
+		}
 		tmp = tmp->next;
 	}
 	printf(" \n");

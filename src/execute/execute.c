@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/16 12:40:51 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/21 03:23:18 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	execute(t_list *pipeline, char **environ)
 	pipe1[2][1] = 1;
 	while (pipeline)
 	{
+		
 		if (pipeline->next)
 			if(pipe(pipe1[i + 1]))
 				printf("pipe creation failed\n");

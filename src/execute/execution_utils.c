@@ -91,7 +91,11 @@ void	ft_pwd()
 	char cwd[100000];
 
 	if (getcwd(cwd, sizeof(cwd)))
+	{
+		printf("we are here\n");
+		//printf("%s\n", cwd);
 		printf("%s\n", cwd);
+	}
 }
 
 

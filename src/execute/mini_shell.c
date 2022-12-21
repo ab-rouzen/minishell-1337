@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 02:51:25 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/19 05:06:25 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void	ft_export(t_env_list **ms_export, char **cmd)
 {
 	char **str;
 
+	// printf("cmd[0] = %s", cmd[0]);
+	// printf("cmd[1] = %s", cmd[1]);
 	str = ft_split_export(cmd[1]);
 	if (ft_check_variable(str, cmd[1]))
 		return ;
