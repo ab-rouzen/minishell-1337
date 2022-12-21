@@ -13,17 +13,19 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 				parser_redirection quoting garbage_collector \
 				utils_cmd_construct utils_environ
 M_SRC_EXEC_NAME = execution_utils mini_shell heredoc utils \
-				execute redirection
+				execute redirection heredoc_utils
 
 M_SRC_PRIME_NAME = init main  #exec_main 
 M_INCLUDE_NAME = lexer minishell parser quoting execution
-L_READ_LINE = -lreadline
+L_READ_LINE = -lreadline 
 BUILD_DIR = build/
 M_SRC_DIR  = src/
 LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a $(LIB_PRINTF)libftprintf.a
 LIB_FT = lib/libft/
 LIB_GNL = lib/get_next_line/
 LIB_PRINTF = lib/printf/
+LFLAGS = -L/Users/${USER}/.brew/opt/readline/lib
+IFLAGS = -I/Users/${USER}/.brew/opt/readline/include
 
 # Header files
 M_INCUDE = $(addsuffix .h, $(M_INCLUDE_NAME))
@@ -48,7 +50,7 @@ $(NAME) : $(M_OBJ) $(M_INCL_PATH)
 	make bonus -C $(LIB_FT)
 	make bonus -C $(LIB_GNL)
 	make bonus -C $(LIB_PRINTF)
-	$(CC) $(LDFLAGS) $(FALGS) $(M_OBJ) $(LIBS) -o $(NAME) $(L_READ_LINE)
+	$(CC) $(LDFLAGS) $(FALGS) $(M_OBJ) $(LIBS) $(LFLAGS) $(IFLAGS) -o $(NAME) $(L_READ_LINE)
 
 $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
 	@mkdir -p $(dir $@)

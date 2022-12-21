@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 15:27:30 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 18:14:46 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	**here_doc(t_list *cmd_lst)
 {
 	int		i;
 	int		**hdoc_fdes;
-	char	*tmp;
 	char	***delim;
 	char	cmd_hdoc_num;
 
@@ -44,6 +43,7 @@ int	**here_doc(t_list *cmd_lst)
 	return (hdoc_fdes);
 }
 
+/*creates all heredoc files for the corresponding command*/
 int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 {
 	int		i;
@@ -63,32 +63,6 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 	return (hdoc_fdes);
 }
 
-int	**allocate_hdoc_fd(t_list *cmd_lst)
-{
-	int	**fd_hdoc;
-	int	i;
-	int size;
-
-	
-	if (get_heredoc_cmd_num(cmd_lst) == 0 )
-		return (NULL);
-	fd_hdoc = malloca(get_heredoc_cmd_num(cmd_lst) * sizeof(int*));
-	i = 0;
-	while (cmd_lst)
-	{
-		size = get_redir_lst_heredoc_num(\
-		((t_cmd_lst*)cmd_lst->content)->redir_lst);
-		if (size == 0)
-		{
-			cmd_lst = cmd_lst->next;
-			continue ;
-		}
-		fd_hdoc[i] = malloca(size);
-		cmd_lst = cmd_lst->next;
-		i++;
-	}
-	return (fd_hdoc);
-}
 
 /* Creates the file "fname" and append input to it */
 /*untill delim is encountered */
@@ -106,7 +80,7 @@ static int	create_file(char *fname, char *delim)
 	while (TRUE)
 	{
 		line = readline("> ");
-		if (ft_strcmp(line, delim) == 0)
+		if (ft_strcmp(line, delim) == 0 || line == NULL)
 		{
 			close(filedes);
 			free(line);
@@ -119,38 +93,6 @@ static int	create_file(char *fname, char *delim)
 	filedes = p_open(fpath, O_RDONLY, 0);
 	ft_printf("hdoc fd -> %d\n", filedes);
 	return (filedes);
-}
-
-/*returns totol number of commands in pipeline with at least one heredoc*/
-int	get_heredoc_cmd_num(t_list *cmd_lst)
-{
-	int		i;
-	t_list	*redi_lst;
-
-	i = 0;
-	while (cmd_lst)
-	{
-		redi_lst = ((t_cmd_lst*)cmd_lst->content)->redir_lst;
-		if (get_redir_lst_heredoc_num(redi_lst))
-			i++;
-		cmd_lst = cmd_lst->next;
-	}
-	return (i);
-}
-
-/*returns number of heredocs in a single redir_lst*/
-int	get_redir_lst_heredoc_num(t_list *redir_lst)
-{
-	int		i;
-
-	i = 0;
-	while (redir_lst)
-	{
-		if (((t_redir_list*)redir_lst->content)->tok == TOK_HEREDOC)
-			i++;
-		redir_lst = redir_lst->next;
-	}
-	return (i);
 }
 
 /*returns all heredoc delimiters from a pipeline*/
@@ -179,21 +121,4 @@ char	***get_heredoc_delim(t_list *cmd_lst)
 	}
 	delim[i] = NULL;
 	return (delim);
-}
-
-void	insert_cmd_delim(t_list *redir_lst, char **cmd_delim)
-{
-	int	i;
-
-	i = 0;
-	while (redir_lst)
-	{
-		if (((t_redir_list*)redir_lst->content)->tok == TOK_HEREDOC)
-		{
-			cmd_delim[i] = ((t_redir_list*)redir_lst->content)->file;
-			i++;
-		}
-		redir_lst = redir_lst->next;
-	}	
-	cmd_delim[i] = NULL;
 }

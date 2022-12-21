@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 15:57:55 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 21:28:22 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2]);
 
 int	execute(t_list *cmd_lst)
 {
-	int			childPid;
+	int			childpid;
 	int			(*piper)[2];
 	int			i;
 	t_list		*cmd;
@@ -29,19 +29,13 @@ int	execute(t_list *cmd_lst)
 	{
 		if (cmd->next)
 			pipe(piper[i + 1]);
-		if (check_cmd(get_cmd_path(cmd), &cmd) == FALSE && ++i)
-			continue ;
-		childPid = fork();
-		if (childPid == 0)
-			exec_child(cmd, piper[i][0], &piper[i + 1]);
+		childpid = fork_cmd(cmd, piper[i][0], &piper[i + 1]);
 		if (cmd->next)
 			close(piper[i + 1][1]); // closed write end of the pipe
 		i++;
-		wait(NULL);
-		if (get_redir_lst_heredoc_num(((t_cmd_lst*)cmd->content)->redir_lst))
-			g_data.hdoc_cmd_no++;
 		cmd = cmd->next;
 	}
+	printf("%d: child returned\n", waitpid(childpid, NULL, WUNTRACED));
 	return (0);
 }
 
@@ -86,7 +80,16 @@ int (*init_pipe(t_list *cmd_lst))[2]
 	return (piper);
 }
 
-void	fork_cmd()
+int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
 {
-	
+	int	childpid;
+
+	if (check_cmd(get_cmd_path(cmd), &cmd) == FALSE)
+		return (-1);
+	childpid = fork();
+	if (childpid == 0)
+		exec_child(cmd, fd_in, pipe_fd);
+	if (get_redir_lst_heredoc_num(((t_cmd_lst*)cmd->content)->redir_lst))
+		g_data.hdoc_cmd_no++;
+	return (childpid);
 }

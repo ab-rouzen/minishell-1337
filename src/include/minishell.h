@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 23:14:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 20:27:36 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void			join_token(t_list *start, enum e_token quote);
 void			*malloca(size_t size);
 void			mfree(t_list **node);
 void			expand_env_var(t_list **tok_l);
+char 			*join_strings(char **str);
 char			*get_env_val(char *var);
 void			delete_element(t_list **tok_l, enum e_token token);
 int				get_words_num(t_list *tok_l);
@@ -114,5 +115,6 @@ t_list			*get_nlst(t_list *lst, int n);
 char			*ft_strjoin_alloca(char const *s1, char const *s2, void*(alloc)(size_t));
 void			heredoc_no_expand(t_list *tok_l);
 void			init_shell(char **environ, t_list *cmd_lst);
+void			free_split(char **str);
 
 #endif

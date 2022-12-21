@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 23:13:15 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 17:30:29 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int argc, char *argv[], char **environ)
 
 	(void)argv;
 	(void)argc;
+	signal(SIGINT, &handler);
+	signal(SIGQUIT, &handler);
 	while (TRUE)
 	{
 		malloca(FREE_ALL);
@@ -84,3 +86,61 @@ void	print_token(char *line)
 	}
 	printf(" |\n");
 }
+
+
+void	handler(int a)
+{
+	if (a == SIGINT)
+	{
+		printf("\n"); // Move to a new line
+    	rl_on_new_line(); // Regenerate the prompt on a newline
+		rl_replace_line("", 0);
+    	rl_redisplay();
+	}
+	if (a == SIGQUIT)
+	{
+    	rl_redisplay();
+		return ;
+	}
+}
+int	ft_builtin(t_list	*tmp, t_env_list *ms_export)
+{
+	char	*cmd_name;
+
+	cmd_name = ((t_cmd_lst*)tmp->content)->cmd_name;
+	if (!ft_strcmp(cmd_name, "echo"))
+		ft_echo(((t_cmd_lst*)tmp->content)->cmd_args);
+	if (!ft_strcmp(cmd_name, "cd"))
+		ft_cd(((t_cmd_lst*)tmp->content)->cmd_args[1], ms_export);
+	else if (!ft_strcmp(cmd_name, "pwd"))
+		ft_pwd();
+	else if (!ft_strcmp(cmd_name, "export"))
+	{
+		if (((t_cmd_lst*)tmp->content)->cmd_args[1])
+		{
+			//puts("export");
+			//printf("export[%d] = %s\n", 1, ((t_cmd_lst*)tmp->content)->cmd_args[1]);
+			ft_export(&ms_export, ((t_cmd_lst*)tmp->content)->cmd_args);
+		}
+		else
+			ft_print_expo(ms_export, cmd_name);
+	}
+	else if (!ft_strcmp(cmd_name, "env"))
+		ft_print_expo(ms_export, cmd_name);
+	else if (!ft_strcmp(cmd_name, "unset"))
+		ft_unset(&ms_export, ((t_cmd_lst*)tmp->content)->cmd_name);
+	else if (!ft_strcmp(cmd_name, "exit"))
+	{
+		ft_exit();
+		exit (1);
+	}
+}
+/*
+		if (!line)
+		{
+			printf ("exit");
+			exit(0);
+		}
+		signal(SIGINT, &handler);
+		signal(SIGQUIT, &handler);
+*/
