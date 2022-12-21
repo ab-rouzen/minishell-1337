@@ -20,11 +20,12 @@ char			**ft_split_export(char *str);
 
 /*************************   heredoc  ***************************/
 int				**here_doc(t_list *cmd_lst);
-int				get_heredoc_num(t_list *cmd_lst);
+int				get_heredoc_cmd_num(t_list *cmd_lst);
 char			***get_heredoc_delim(t_list *cmd_lst);
 int				get_redir_lst_heredoc_num(t_list *redir_lst);
 int				**allocate_hdoc_fd(t_list *cmd_lst);
 int				*create_cmd_heredoc(int size, char **delim, int hdoc_id);
+void			insert_cmd_delim(t_list *redir_lst, char **cmd_delim);
 
 /*************************   redirection  ***************************/
 int				set_redirection(t_list *redir_lst);

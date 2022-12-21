@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 23:36:09 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 15:27:30 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	**here_doc(t_list *cmd_lst)
 	hdoc_fdes = allocate_hdoc_fd(cmd_lst);
 	i = 0;
 	delim = get_heredoc_delim(cmd_lst);
-	while (cmd_lst)
+	while (cmd_lst && hdoc_fdes)
 	{
 		cmd_hdoc_num = get_redir_lst_heredoc_num(\
 		((t_cmd_lst*)cmd_lst->content)->redir_lst);
@@ -67,13 +67,23 @@ int	**allocate_hdoc_fd(t_list *cmd_lst)
 {
 	int	**fd_hdoc;
 	int	i;
+	int size;
 
-	fd_hdoc = malloca(get_heredoc_num(cmd_lst) * sizeof(int*));
+	
+	if (get_heredoc_cmd_num(cmd_lst) == 0 )
+		return (NULL);
+	fd_hdoc = malloca(get_heredoc_cmd_num(cmd_lst) * sizeof(int*));
 	i = 0;
 	while (cmd_lst)
 	{
-		fd_hdoc[i] = malloca(get_redir_lst_heredoc_num(\
-		((t_cmd_lst*)cmd_lst->content)->redir_lst));
+		size = get_redir_lst_heredoc_num(\
+		((t_cmd_lst*)cmd_lst->content)->redir_lst);
+		if (size == 0)
+		{
+			cmd_lst = cmd_lst->next;
+			continue ;
+		}
+		fd_hdoc[i] = malloca(size);
 		cmd_lst = cmd_lst->next;
 		i++;
 	}
@@ -111,8 +121,8 @@ static int	create_file(char *fname, char *delim)
 	return (filedes);
 }
 
-/*returns totol number of heredocs in pipeline*/
-int	get_heredoc_num(t_list *cmd_lst)
+/*returns totol number of commands in pipeline with at least one heredoc*/
+int	get_heredoc_cmd_num(t_list *cmd_lst)
 {
 	int		i;
 	t_list	*redi_lst;
@@ -121,7 +131,8 @@ int	get_heredoc_num(t_list *cmd_lst)
 	while (cmd_lst)
 	{
 		redi_lst = ((t_cmd_lst*)cmd_lst->content)->redir_lst;
-		i += get_redir_lst_heredoc_num(redi_lst);
+		if (get_redir_lst_heredoc_num(redi_lst))
+			i++;
 		cmd_lst = cmd_lst->next;
 	}
 	return (i);
@@ -146,30 +157,43 @@ int	get_redir_lst_heredoc_num(t_list *redir_lst)
 char	***get_heredoc_delim(t_list *cmd_lst)
 {
 	int		i;
-	int		j;
+	int		size;
 	t_list	*redi_lst;
 	char	***delim;
 
 	i = 0;
-	delim = malloca(sizeof(char**) * (get_heredoc_num(cmd_lst) + 1));
+	delim = malloca(sizeof(char**) * (get_heredoc_cmd_num(cmd_lst) + 1));
 	while (cmd_lst)
 	{
-		j = 0;
 		redi_lst = ((t_cmd_lst*)cmd_lst->content)->redir_lst;
-		delim[i] = malloca((get_redir_lst_heredoc_num(redi_lst) + 1)* sizeof(char*));
-		while (redi_lst)
+		size = get_redir_lst_heredoc_num(redi_lst);
+		if (size == 0)
 		{
-			if (((t_redir_list*)redi_lst->content)->tok == TOK_HEREDOC)
-			{
-				delim[i][j] = ((t_redir_list*)redi_lst->content)->file;
-				j++;
-			}
-			redi_lst = redi_lst->next;
+			cmd_lst = cmd_lst->next;
+			continue ;
 		}
-		delim[i][j] = NULL;
+		delim[i] = malloca((size + 1)* sizeof(char*));
+		insert_cmd_delim(redi_lst, delim[i]);
 		i++;
-		cmd_lst =cmd_lst->next;
+		cmd_lst = cmd_lst->next;
 	}
 	delim[i] = NULL;
 	return (delim);
+}
+
+void	insert_cmd_delim(t_list *redir_lst, char **cmd_delim)
+{
+	int	i;
+
+	i = 0;
+	while (redir_lst)
+	{
+		if (((t_redir_list*)redir_lst->content)->tok == TOK_HEREDOC)
+		{
+			cmd_delim[i] = ((t_redir_list*)redir_lst->content)->file;
+			i++;
+		}
+		redir_lst = redir_lst->next;
+	}	
+	cmd_delim[i] = NULL;
 }

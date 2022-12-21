@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 23:17:08 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 15:57:55 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ int	execute(t_list *cmd_lst)
 	{
 		if (cmd->next)
 			pipe(piper[i + 1]);
-		if (check_cmd(get_cmd_path(cmd), &cmd) == FALSE)
-			if (++i) 
-				continue ;
+		if (check_cmd(get_cmd_path(cmd), &cmd) == FALSE && ++i)
+			continue ;
 		childPid = fork();
 		if (childPid == 0)
 			exec_child(cmd, piper[i][0], &piper[i + 1]);
@@ -85,4 +84,9 @@ int (*init_pipe(t_list *cmd_lst))[2]
 	piper[size][0] = 0;
 	//ft_printf("pipe is %d\n", piper[size - 1][0]);
 	return (piper);
+}
+
+void	fork_cmd()
+{
+	
 }

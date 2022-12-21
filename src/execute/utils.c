@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 22:13:27 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 15:49:03 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,19 @@ int	get_cmd_path(t_list *cmd_lst)
 	return (free(path), FALSE);
 }
 
-int	check_cmd(t_bool status, t_list **cmd)
+int	check_cmd(t_bool status, t_list **cmd_lst)
 {
+	t_cmd_lst	*cmd;
+
+	cmd = (t_cmd_lst*)(*cmd_lst)->content;
 	if (status == FALSE)
 	{
-		ft_printf("%s: %s: command not found\n", SHELL_NAME, \
-		((t_cmd_lst*)(*cmd)->content)->cmd_name);
-		*cmd = (*cmd)->next;
+		*cmd_lst = (*cmd_lst)->next;
+		if (get_redir_lst_heredoc_num(cmd->redir_lst))
+				g_data.hdoc_cmd_no++;
+		if (cmd->cmd_name == NULL)
+			return (status);
+		printf("%s: %s: command not found\n", SHELL_NAME, cmd->cmd_name);
 		return (status);
 	}
 	return (status);
