@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 04:27:43 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/21 10:31:03 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	main(int argc, char *argv[], char **environ)
 	char	*line;
 	char	**delim;
 	t_list	*tmp;
-	int		i;
+	int		i = 0;
 	int		*iz;
-	int 	fd1, fd;
+	int 	fd_out, fd_in ,fd[1024];
 	int check_redir = 0;
 	//t_list	*mylist;
 	t_env_list *ms_export;
@@ -79,7 +79,8 @@ int	main(int argc, char *argv[], char **environ)
 	(void)argv;
 	(void)argc;
 	ms_export = ft_env(environ);
-	fd1 = dup(STDOUT_FILENO);
+	fd_out = dup(STDOUT_FILENO);
+	fd_in = dup(STDIN_FILENO);
 	while (TRUE)
 	{
 		signal(SIGINT, &handler);
@@ -98,47 +99,65 @@ int	main(int argc, char *argv[], char **environ)
 		tmp = parse(line, environ);
 		int i = 0;
 		t_list *mylist = ((t_cmd_lst *)tmp->content)->redir_lst;
-
-		// printf ("%s ", ((t_redir_list*)mylist->content)->file);
-		// printf ("%d \n", ((t_redir_list*)mylist->content)->tok);
-		
-		// mylist->next;
-		
-		// printf ("%s ", ((t_redir_list*)mylist->content)->file);
-		// printf ("%d \n", ((t_redir_list*)mylist->content)->tok);
-		
-		// while(mylist)
-		// {
+		while(mylist)
+		{
 			
-			if (mylist && ((t_redir_list*)mylist->content)->tok == TOK_REDI_O)
+			if (((t_redir_list*)mylist->content)->tok == TOK_REDI_O ||
+				((t_redir_list*)mylist->content)->tok == TOK_REDI_O_APP)
 			{
-				puts("TOK_REDI_O");
-				fd = open(((t_redir_list*)mylist->content)->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-				if (fd < 0)
-				{
+				//printf("TOK_REDI_O\n");
+				if (((t_redir_list*)mylist->content)->tok == TOK_REDI_O)
+					fd[i] = open(((t_redir_list*)mylist->content)->file,
+						O_WRONLY | O_CREAT | O_TRUNC, 0664);
+				if (((t_redir_list*)mylist->content)->tok == TOK_REDI_O_APP)
+					fd[i] = open(((t_redir_list*)mylist->content)->file,
+						O_WRONLY | O_CREAT | O_APPEND, 0664);
+				if (fd[i] < 0)
 					printf("Error opening file");
-					exit(1);
-				}
-				if (dup2(fd, STDOUT_FILENO) < 0)
-				{
+				if (dup2(fd[i], STDOUT_FILENO) < 0)
 					printf("Error dup2");
-					exit(1);
-				}
-				execute(tmp, environ);
-				if ((dup2(fd1, STDOUT_FILENO) < 0))
-				{
-					printf("Error dup2");
-					exit(1);
-				}
-				//close(fd);
 				check_redir = 1;
-				//break ;
 			}
-			//mylist = mylist->next;
-		//}
-		free(line);
-		if (check_redir == 0)
+			
+			if (((t_redir_list*)mylist->content)->tok == TOK_REDI_I)
+			{
+				//printf("TOK_REDI_I\n");
+				if (((t_redir_list*)mylist->content)->tok == TOK_REDI_I)
+					fd[i] = open(((t_redir_list*)mylist->content)->file, 
+						O_RDONLY);
+				if (fd[i] < 0)
+					printf("Error opening file");
+				if (dup2(fd[i], STDIN_FILENO) < 0)
+					printf("Error dup2");
+				check_redir = 2;
+			}
+			i++;
+			mylist = mylist->next;
+		}
 			execute(tmp, environ);
+		if (check_redir == 1)
+		{
+			if ((dup2(fd_out, STDOUT_FILENO) < 0))
+				printf("Error dup2");
+			i--;
+			while (i >= 0)
+			{
+				close(fd[i]);
+				i--;
+			}
+		}
+		if (check_redir == 2)
+		{
+			if ((dup2(fd_in, STDIN_FILENO) < 0))
+				printf("Error dup2");
+			i--;
+			while (i >= 0)
+			{
+				close(fd[i]);
+				i--;
+			}
+		}
+		free(line);
 	}
 	return (0);
 }      
