@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 17:30:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 22:26:44 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char *argv[], char **environ)
 		cmd_lst = parse(line);
 		print_token(line);
 		print_test(cmd_lst);
-			g_data.fd_heredoc = here_doc(cmd_lst);
+		g_data.fd_heredoc = here_doc(cmd_lst);
 		execute(cmd_lst);
 		free(line);
 	}		

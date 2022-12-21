@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 18:14:46 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 22:27:12 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	**here_doc(t_list *cmd_lst)
 	char	cmd_hdoc_num;
 
 
+	if (get_heredoc_num(cmd_lst) == 0)
+		return (NULL);	
 	hdoc_fdes = allocate_hdoc_fd(cmd_lst);
 	i = 0;
 	delim = get_heredoc_delim(cmd_lst);
