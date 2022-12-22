@@ -23,7 +23,7 @@ t_list	*new_token_lst(enum e_token token, char *line, int n_char)
 	new_tkn_lst->tkn = token;
 	new_tkn_lst->n_char = n_char;
 	new_tkn_lst->val = copy_token_val(line, n_char);
-	return (ft_lstnew_falloc(new_tkn_lst, malloca));
+	return (ft_lstnew_alloca(new_tkn_lst, malloca));
 }
 
 /*assigns an index to each token based on the number of characters it has*/

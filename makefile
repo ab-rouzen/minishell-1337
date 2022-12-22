@@ -13,16 +13,19 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 				parser_redirection quoting garbage_collector \
 				utils_cmd_construct utils_environ
 M_SRC_EXEC_NAME = execution_utils mini_shell heredoc utils \
-				execute
+				execute redirection heredoc_utils
 
-M_SRC_PRIME_NAME = main  #exec_main 
+M_SRC_PRIME_NAME = init main  #exec_main 
 M_INCLUDE_NAME = lexer minishell parser quoting execution
-L_READ_LINE = -lreadline
+L_READ_LINE = -lreadline 
 BUILD_DIR = build/
 M_SRC_DIR  = src/
-LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a
+LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a $(LIB_PRINTF)libftprintf.a
 LIB_FT = lib/libft/
 LIB_GNL = lib/get_next_line/
+LIB_PRINTF = lib/printf/
+LFLAGS = -L/Users/${USER}/.brew/opt/readline/lib
+IFLAGS = -I/Users/${USER}/.brew/opt/readline/include
 
 # Header files
 M_INCUDE = $(addsuffix .h, $(M_INCLUDE_NAME))
@@ -57,10 +60,14 @@ $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
 
 clean : 
 	@make clean -C $(LIB_FT)
+	@make clean -C $(LIB_GNL)
+	@make clean -C $(LIB_PRINTF)
 	rm -rf $(BUILD_DIR)
 
 fclean : clean
 	@make fclean -C $(LIB_FT)
+	@make fclean -C $(LIB_GNL)
+	@make fclean -C $(LIB_PRINTF)
 	rm -rf $(NAME)
 a : all
 

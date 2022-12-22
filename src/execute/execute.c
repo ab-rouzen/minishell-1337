@@ -6,81 +6,92 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 03:23:18 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/22 22:33:28 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	child_exec(t_list *pipeline, char *cmd_path, char **environ, **pipe, int i);
+void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2]);
 
-int	execute(t_list *pipeline, char **environ)
+int	execute(t_list *cmd_lst)
 {
-	int			childPid;
-	int			pipe1[10][2];
+	int			childpid;
+	int			(*piper)[2];
 	int			i;
-	char		*cmd_path;
-	t_env_list	*env_lst;
+	t_list		*cmd;
 
+	cmd = cmd_lst;
+	piper = init_pipe(cmd_lst);
 	i = 0;
-	env_lst = ft_env(environ);
-	pipe1[0][0] = 0;
-	pipe1[2][1] = 1;
-	while (pipeline)
+	g_data.hdoc_cmd_no = 0;
+	while (cmd)
 	{
-		
-		if (pipeline->next)
-			if(pipe(pipe1[i + 1]))
-				printf("pipe creation failed\n");
-		cmd_path = get_cmd_path(pipeline, env_lst);
-		if (cmd_path == NULL)
-		{
-			printf("command not found\n");
-			pipeline =pipeline->next;
-			continue;
-		}
-		//printf("pipe creation success: %d in | %d out \n", pipe1[i+1][1], pipe1[i+1][0]);
-		childPid = fork();
-		if (childPid == 0)
-		{
-			int r,w;
-			if (pipeline->next)
-				close(pipe1[i+1][0]); //closed read end of the 1
-			//printf("pipe read end :%d\n", r = dup2(pipe1[i][0], 0));
-			//close(pipe1[i][0]); h
-			//if (pipeline->next)
-			//printf("pipe write end :%d\n", w = dup2(pipe1[i + 1][1], 1));
-			execve(cmd_path, ((t_cmd_lst*)pipeline->content)->cmd_args, environ);
-			//puts("execve failed\n");
-		}
-		if (pipeline->next)
-			close(pipe1[i + 1][1]); // closed write end of the pipe
+		if (cmd->next)
+			pipe(piper[i + 1]);
+		childpid = fork_cmd(cmd, piper[i][0], &piper[i + 1]);
+		if (cmd->next)
+			close(piper[i + 1][1]); // closed write end of the pipe
 		i++;
-		waitpid(0, NULL, 0);
-		pipeline = pipeline->next;
+		cmd = cmd->next;
 	}
-	//printf("All exec'ed successfully\n");
+	printf("%d: child returned\n", waitpid(childpid, NULL, WUNTRACED));
 	return (0);
 }
 
-void	child_exec(t_list *pipeline, char *cmd_path, char **environ, int **pipe, int i)
+void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 {
+	char	*cmd_path;
+
 	int r,w;
-	if (pipeline->next)
-		close(pipe[i+1][0]); //closed read end of the pipe
-	//printf("pipe read end :%d\n", r = dup2(pipe[i][0], 0));
-	//close(pipe1[i][0]); h
-	//if (pipeline->next)
-	//printf("pipe write end :%d\n", w = dup2(pipe[i + 1][1], 1));
-	execve(cmd_path, ((t_cmd_lst*)pipeline->content)->cmd_args, environ);
-	puts("execve failed\n");
+	if (cmd->next)
+		close(pipe[0][0]); //closed read end of the 1
+	cmd_path = ((t_cmd_lst*)cmd->content)->cmd_name;
+	if (fd_in != STDIN_FILENO)
+	{
+		ft_printf("in STDIN\n");
+		printf("pipe read end :%d\n", r = dup2(fd_in, STDIN_FILENO));
+		close(fd_in);
+	}
+	if (pipe[0][1] != STDOUT_FILENO)
+	{
+		ft_printf("in STDOUT\n");
+		printf("pipe write end :%d\n", w = dup2(pipe[0][1], STDOUT_FILENO));
+		close(pipe[0][1]);
+	}
+	if (set_redirection(((t_cmd_lst*)cmd->content)->redir_lst) == FALSE)
+		exit(EXIT_FAILURE);
+	execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, to_env(((t_cmd_lst*)cmd->content)->cmd_name)); // needs env lst function to char**
+	printf("execve failed\n");
+	exit(EXIT_FAILURE);
 }
-// void	pipe_cmd(void)
-// {
-// 	int	pipe1[2];
 
-// 	pipe(&pipe1);
+int (*init_pipe(t_list *cmd_lst))[2]
+{
+	int	(*piper)[2];
+	int	size;
 
-// 	dup2(1, pipe[0]);
-// 	dup2(, pipe[1]);
-// }
+	size = ft_lstsize(cmd_lst);
+	//ft_printf("sz is %d\n", size);
+	piper = malloca(sizeof(int[size + 1][2]));
+	piper[0][0] = 0;
+	piper[size][1] = 1;
+	piper[size][0] = 0;
+	//ft_printf("pipe is %d\n", piper[size - 1][0]);
+	return (piper);
+}
+
+int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
+{
+	int	childpid;
+
+	if (check_cmd(get_cmd_path(cmd), &cmd) == FALSE)
+		return (-1);
+	childpid = fork();
+	if (childpid == 0)
+		exec_child(cmd, fd_in, pipe_fd);
+	close_hdoc_fd(cmd);
+	if (get_redir_lst_heredoc_num(((t_cmd_lst*)cmd->content)->redir_lst))
+		g_data.hdoc_cmd_no++;
+	return (childpid);
+}

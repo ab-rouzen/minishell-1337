@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:32:11 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/04 18:53:04 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/21 10:43:00 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 
 void	*malloca(size_t size)
 {
-	static t_list	*malloced_mem;
+	static t_list	*malloced_mem = NULL;
 	t_list			*tmp;
 
-	if (size == 0)
+	if (size == FREE_ALL)
 	{
-		mfree((void **)&malloced_mem);
+		mfree(&malloced_mem);
 		return (NULL);
 	}
 	tmp = malloc(size);
@@ -33,18 +33,18 @@ void	*malloca(size_t size)
 	return (tmp);
 }
 
-void	mfree(void **node)
+void	mfree(t_list **head)
 {
-	t_list	*malloced_mem;
+	t_list	*node;
 	t_list	*tmp;
 
-	malloced_mem = *node;
-	while (malloced_mem)
+	node = *head;
+	while (node)
 	{
-		free(malloced_mem->content);
-		tmp = malloced_mem;
-		malloced_mem = malloced_mem->next;
+		free(node->content);
+		tmp = node;
+		node = node->next;
 		free(tmp);
 	}
-	*node = NULL;
+	*head = NULL;
 }

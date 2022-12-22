@@ -6,18 +6,21 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/11 19:54:55 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/22 22:30:06 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define SHELL_PROMPT "minishell$ "
-# define SHELL_PROMPT_EXIT "minishell$ exit"
+# define SHELL_NAME "minishell"
 # define TRUE 1
 # define FALSE 0
+# define FREE_ALL 0
+# define FD_ERROR -1
 # include "../../lib/libft/libft.h"
 # include "../../lib/get_next_line/get_next_line_bonus.h"
+# include "../../lib/printf/ft_printf_bonus.h"
 # include "assert.h"
 # include "lexer.h"
 # include "parser.h"
@@ -28,6 +31,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -46,8 +50,17 @@ enum			e_token
 	TOK_QUOTE,
 	TOK_SQUOTE,
 	TOK_DQUOTE,
-	TOK_DOLLAR
+	TOK_DOLLAR,
+	TOK_NULL
 };
+
+typedef struct s_shell
+{
+	int			exit_status;
+	t_env_list	*env_lst;
+	int			**fd_heredoc;
+	int			hdoc_cmd_no;
+}				t_shell;
 
 typedef struct s_token_lst
 {
@@ -72,17 +85,20 @@ typedef struct s_cmd_ls
 
 typedef int		t_bool;
 
-t_list 			*parse(char *line, char **environ);
+extern t_shell	g_data;
+
+t_list 			*parse(char *line);
 t_list			*new_token_lst(enum e_token tok, char *line, int index);
 t_list			*lexer(char *line);
 void			index_token(t_list *tok_lst);
 char			*copy_token_val(char *line, int size);
 void			delete_token(t_list *start, t_list *end);
-void			join_token(t_list *start, t_list *end, enum e_token quote);
+void			join_token(t_list *start, enum e_token tok_stop);
 void			*malloca(size_t size);
-void			mfree(void **node);
-void			expand_env_var(t_list **tok_l, char **environ);
-char			*get_env_val(char *environ[], char *var);
+void			mfree(t_list **node);
+void			expand_env_var(t_list **tok_l);
+char 			*join_strings(char **str);
+char			*get_env_val(char *var);
 void			delete_element(t_list **tok_l, enum e_token token);
 int				get_words_num(t_list *tok_l);
 t_list			*new_cmd_lst(char *cmd_name, char **cmd_args, \
@@ -99,5 +115,7 @@ t_list			*create_cmd_node(t_list *tok_l, char **cmd_words, \
 t_list			*get_nlst(t_list *lst, int n);
 char			*ft_strjoin_alloca(char const *s1, char const *s2, void*(alloc)(size_t));
 void			heredoc_no_expand(t_list *tok_l);
+void			init_shell(char **environ, t_list *cmd_lst);
+void			free_split(char **str);
 
 #endif
