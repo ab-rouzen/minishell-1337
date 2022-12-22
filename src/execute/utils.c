@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 13:31:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 21:28:32 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,41 @@ int	check_cmd(t_bool status, t_list **cmd_lst)
 	//continue ;
 }
 
-// char **to_env()
-// {
-// 	int i;
-// 	t_list	*env;
+int	ft_envlstsize(t_env_list *lst)
+{
+	int			i;
+	t_env_list	*crawler;
 
-// 	env = g_data.env_lst;
-// 	i = 0;
-// 	while (env)
-// 	{
-		
-// 	}
-// }
+	crawler = lst;
+	i = 0;
+	while (crawler)
+	{
+		crawler = (*crawler).next;
+		i++;
+	}
+	return (i);
+}
+
+char **to_env(char *cmd_name)
+{
+	int 		i;
+	t_env_list	*env_lst;
+	char		**env;
+	int			size;
+	char		**tmp;
+
+	env_lst = g_data.env_lst;
+	size = ft_envlstsize(env_lst) + 1;
+	env = malloca(size * sizeof(char*));
+	i = 0;
+	while (env_lst)
+	{
+		tmp = ft_strjoin_alloca(env_lst->variable, "=", malloca);
+		env[i] = ft_strjoin_alloca(tmp, env_lst->value, malloca);
+		//printf("env[%s]\n", env[i]);
+		i++;
+		env_lst = env_lst->next;
+	}
+	env[i] = NULL;
+	return (env);
+}

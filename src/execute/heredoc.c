@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 18:45:41 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 20:52:33 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 
 	i = 0;
 	hdoc_fdes = malloca(size * sizeof(int));
-	printf("hdoc size = [%d]\n", size);
+	//printf("hdoc size = [%d]\n", size);
 	while (i < size)
 	{
 		tmp_id = ft_itoa(hdoc_id++);
@@ -80,34 +80,30 @@ static int	create_file(char *fname, char *delim)
 	int		filedes;
 	char	fpath[100];
 
-	ft_strlcpy(fpath, "/tmp/", 100);
+	ft_strlcpy(fpath, "/tmp/.", 100);
 	ft_strlcat(fpath, fname, 100);
-	printf("creating fle [%s]\n", fpath);
+	//printf("creating fle [%s]\n", fpath);
 	filedes = p_open(fpath, O_CREAT | O_WRONLY | O_APPEND | O_EXCL, S_IWUSR|S_IRUSR);
-	printf("file fd = [%d]\n", filedes);
+	//printf("file fd = [%d]\n", filedes);
 	if (filedes < 0)
 		return (filedes);
-	printf("look for delim[%s]\n", delim);
+	//printf("look for delim[%s]\n", delim);
 	while (TRUE)
 	{
 		line = readline("> ");
-		printf("read line[%s]\n", line);
-		line = hdoc_var_expand(line);
-		printf("read line[%s]\n", line);
-		printf("strcmp[%d]\n", ft_strcmp(line, delim));
 		if (ft_strcmp(line, delim) == 0 || line == NULL)
 		{
 			close(filedes);
 			break ;
 		}
-		printf("strcmp[%d]\n", ft_strcmp(line, delim));
+		line = hdoc_var_expand(line);
+		//printf("strcmp[%d]\n", ft_strcmp(line, delim));
 		write(filedes, line, ft_strlen(line));
 		write(filedes, "\n", 1);
-		//free(line);
 	}
 	filedes = open(fpath, O_RDONLY);
 	unlink(fpath);
-	ft_printf("hdoc fd -> %d\n", filedes);
+	//ft_printf("hdoc fd -> %d\n", filedes);
 	return (filedes);
 }
 
@@ -154,7 +150,7 @@ char	*hdoc_var_expand(char *line)
 		expand_env_var(&tok_lst);
 		tok_lst = tok_lst->next;
 	}
-	printf("var[%s]\n", ((t_token*)head->content)->val);
+	//printf("var[%s]\n", ((t_token*)head->content)->val);
 	join_token(head, TOK_NULL);
 	free(line);
 	return (((t_token*)head->content)->val);

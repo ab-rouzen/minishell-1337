@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 16:40:26 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 20:53:06 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ void	print_test(t_list *tmp)
 	{
 		i = 0;
 		while (((t_cmd_lst *)tmp->content)->cmd_args[i])
-			printf("word:'%s'\n",
+			printf("word:[%s]\n",
 					((t_cmd_lst *)tmp->content)->cmd_args[i++]);
 		printf("tokens:\n");
 		mylist = ((t_cmd_lst *)tmp->content)->redir_lst;
 		while (mylist)
 		{
-			printf("enum tok:'%d'\n",
+			printf("enum tok:[%d]\n",
 					((t_redir_list *)mylist->content)->tok);
-			printf("word:'%s'\n", ((t_redir_list *)mylist->content)->file);
+			printf("word:[%s]\n", ((t_redir_list *)mylist->content)->file);
 			mylist = mylist->next;
 		}
 		printf("--------NEXT LIST----------\n");

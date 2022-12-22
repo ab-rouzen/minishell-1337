@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 15:42:46 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 21:10:26 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	}
 	if (set_redirection(((t_cmd_lst*)cmd->content)->redir_lst) == FALSE)
 		exit(EXIT_FAILURE);
-	execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, NULL); // needs env lst function to char**
+	execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, to_env(((t_cmd_lst*)cmd->content)->cmd_name)); // needs env lst function to char**
 	printf("execve failed\n");
 	exit(EXIT_FAILURE);
 }
