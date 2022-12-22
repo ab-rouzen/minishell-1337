@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 21:28:22 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 15:42:46 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 		exit(EXIT_FAILURE);
 	execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, NULL); // needs env lst function to char**
 	printf("execve failed\n");
+	exit(EXIT_FAILURE);
 }
 
 int (*init_pipe(t_list *cmd_lst))[2]
@@ -89,6 +90,7 @@ int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
 	childpid = fork();
 	if (childpid == 0)
 		exec_child(cmd, fd_in, pipe_fd);
+	close_hdoc_fd(cmd);
 	if (get_redir_lst_heredoc_num(((t_cmd_lst*)cmd->content)->redir_lst))
 		g_data.hdoc_cmd_no++;
 	return (childpid);

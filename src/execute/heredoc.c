@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 22:27:12 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 15:37:30 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	**here_doc(t_list *cmd_lst)
 	char	cmd_hdoc_num;
 
 
-	if (get_heredoc_num(cmd_lst) == 0)
+	if (get_heredoc_cmd_num(cmd_lst) == 0)
 		return (NULL);	
 	hdoc_fdes = allocate_hdoc_fd(cmd_lst);
 	i = 0;
@@ -51,6 +51,7 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 	int		i;
 	char	*tmp_id;
 	int		*hdoc_fdes;
+	int		tmp_fd;
 
 	i = 0;
 	hdoc_fdes = malloca(size * sizeof(int));
@@ -58,9 +59,13 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 	while (i < size)
 	{
 		tmp_id = ft_itoa(hdoc_id++);
-		hdoc_fdes[i] =  create_file(tmp_id, delim[i]);
+		tmp_fd = create_file(tmp_id, delim[i]);
+		if (tmp_fd > 0)
+		{
+			hdoc_fdes[i] = tmp_fd;
+			i++;
+		}
 		free(tmp_id);
-		i++;
 	}
 	return (hdoc_fdes);
 }
@@ -77,7 +82,11 @@ static int	create_file(char *fname, char *delim)
 
 	ft_strlcpy(fpath, "/tmp/", 100);
 	ft_strlcat(fpath, fname, 100);
-	filedes = p_open(fpath, O_CREAT | O_WRONLY | O_APPEND | O_TRUNC, 0777);
+	printf("creating fle [%s]\n", fpath);
+	filedes = p_open(fpath, O_CREAT | O_WRONLY | O_APPEND | O_EXCL, S_IWUSR|S_IRUSR);
+	printf("file fd = [%d]\n", filedes);
+	if (filedes < 0)
+		return (filedes);
 	printf("look for delim[%s]\n", delim);
 	while (TRUE)
 	{
@@ -92,7 +101,8 @@ static int	create_file(char *fname, char *delim)
 		write(filedes, "\n", 1);
 		free(line);
 	}
-	filedes = p_open(fpath, O_RDONLY, 0);
+	filedes = open(fpath, O_RDONLY);
+	unlink(fpath);
 	ft_printf("hdoc fd -> %d\n", filedes);
 	return (filedes);
 }

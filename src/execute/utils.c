@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 15:49:03 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 13:31:29 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	p_open(char *file, int flags, int perm)
 
 	filedes = open(file, flags, perm);
 	if (filedes == -1)
-		exit(EXIT_FAILURE);
+		return (-1);
 	return (filedes);
 }
 
