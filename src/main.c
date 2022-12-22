@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 22:26:44 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 16:40:26 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(int argc, char *argv[], char **environ)
 
 	(void)argv;
 	(void)argc;
-	signal(SIGINT, &handler);
-	signal(SIGQUIT, &handler);
+	// signal(SIGINT, &handler);
+	// signal(SIGQUIT, &handler);
 	while (TRUE)
 	{
 		malloca(FREE_ALL);

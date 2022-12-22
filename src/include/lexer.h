@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:53:30 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/02 15:19:54 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 16:11:31 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 # include "minishell.h"
-# define TOK_NULL -1
 
 typedef int		t_bool;
 t_list		*lexer(char *line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quoting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/20 12:03:27 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:16:16 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	dq_unquote(t_list *tok_l)
 		if (((t_token *)(*ltkn)->content)->tkn == TOK_DQUOTE)
 		{
 			tmp = (*ltkn)->next;
-			join_token(tok_l, TOK_DQUOTE);
+			join_token(tok_l->next, TOK_DQUOTE);
+			((t_token*)tok_l->content)->val = ((t_token*)tok_l->next->content)->val;
 			tok_l->next = tmp;
 			((t_token *)tok_l->content)->tkn = TOK_WORD;
 			return (TRUE);
@@ -71,7 +72,8 @@ int	sq_unquote(t_list *tok_l)
 		if (((t_token *)ltkn->content)->tkn == TOK_SQUOTE)
 		{
 			tmp = ltkn->next;
-			join_token(tok_l, TOK_SQUOTE);
+			join_token(tok_l->next, TOK_SQUOTE);
+			((t_token*)tok_l->content)->val = ((t_token*)tok_l->next->content)->val;
 			tok_l->next = tmp;
 			((t_token *)tok_l->content)->tkn = TOK_WORD;
 			return (TRUE);

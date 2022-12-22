@@ -27,6 +27,7 @@ int				**allocate_hdoc_fd(t_list *cmd_lst);
 int				*create_cmd_heredoc(int size, char **delim, int hdoc_id);
 void			insert_cmd_delim(t_list *redir_lst, char **cmd_delim);
 void			close_hdoc_fd(t_list *cmd);
+char			*hdoc_var_expand(char *line);
 
 /*************************   redirection  ***************************/
 int				set_redirection(t_list *redir_lst);

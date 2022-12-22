@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:27:27 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/02 21:24:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 16:18:59 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_list	*lexer(char *line)
 	t_list	*tok_l;
 
 	i = 0;
+	if (line == NULL)
+		return (NULL);
 	tok_l = NULL;
 	while (line[i])
 	{

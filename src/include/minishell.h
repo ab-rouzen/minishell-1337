@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/21 22:26:55 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 16:12:30 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ enum			e_token
 	TOK_QUOTE,
 	TOK_SQUOTE,
 	TOK_DQUOTE,
-	TOK_DOLLAR
+	TOK_DOLLAR,
+	TOK_NULL
 };
 
 typedef struct s_shell
@@ -92,7 +93,7 @@ t_list			*lexer(char *line);
 void			index_token(t_list *tok_lst);
 char			*copy_token_val(char *line, int size);
 void			delete_token(t_list *start, t_list *end);
-void			join_token(t_list *start, enum e_token quote);
+void			join_token(t_list *start, enum e_token tok_stop);
 void			*malloca(size_t size);
 void			mfree(t_list **node);
 void			expand_env_var(t_list **tok_l);

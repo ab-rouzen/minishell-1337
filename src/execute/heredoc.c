@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 15:37:30 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:45:41 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,19 @@ static int	create_file(char *fname, char *delim)
 	while (TRUE)
 	{
 		line = readline("> ");
+		printf("read line[%s]\n", line);
+		line = hdoc_var_expand(line);
+		printf("read line[%s]\n", line);
+		printf("strcmp[%d]\n", ft_strcmp(line, delim));
 		if (ft_strcmp(line, delim) == 0 || line == NULL)
 		{
 			close(filedes);
-			free(line);
 			break ;
 		}
+		printf("strcmp[%d]\n", ft_strcmp(line, delim));
 		write(filedes, line, ft_strlen(line));
 		write(filedes, "\n", 1);
-		free(line);
+		//free(line);
 	}
 	filedes = open(fpath, O_RDONLY);
 	unlink(fpath);
@@ -133,4 +137,25 @@ char	***get_heredoc_delim(t_list *cmd_lst)
 	}
 	delim[i] = NULL;
 	return (delim);
+}
+
+/*expands environement variables in the argument line*/
+char	*hdoc_var_expand(char *line)
+{
+	t_list	*tok_lst;
+	t_list	*head;
+
+	if (line == NULL || *line == '\0')
+		return (line);
+	tok_lst = lexer(line);
+	head = tok_lst;
+	while (tok_lst)
+	{
+		expand_env_var(&tok_lst);
+		tok_lst = tok_lst->next;
+	}
+	printf("var[%s]\n", ((t_token*)head->content)->val);
+	join_token(head, TOK_NULL);
+	free(line);
+	return (((t_token*)head->content)->val);
 }
