@@ -92,8 +92,6 @@ void	ft_pwd()
 
 	if (getcwd(cwd, sizeof(cwd)))
 	{
-		printf("we are here\n");
-		//printf("%s\n", cwd);
 		printf("%s\n", cwd);
 	}
 }

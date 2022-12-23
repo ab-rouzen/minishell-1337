@@ -24,7 +24,7 @@ void	ft_herdoc_handler(int a)
 	if (a == SIGINT)
 	{
 		g_data.close_hdc = 1;
-		//rl_done = 1;
+		rl_done = 1;
 	}
 	// printf("close_hdc = %d\n", g_data.close_hdc);
 

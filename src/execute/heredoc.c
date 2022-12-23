@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/23 12:02:48 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/23 15:41:35 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 /* Creates the file "fname" and append input to it */
 /*untill delim is encountered */
 
+void	*ft_awaiting_read(void)
+{
+	
+}
 
 static int	create_file(char *fname, char *delim)
 {
@@ -89,15 +93,13 @@ static int	create_file(char *fname, char *delim)
 	if (filedes < 0)
 		return (filedes);
 	//printf("look for delim[%s]\n", delim);
-		ft_sig_handler(HEREDOC);
+	rl_event_hook = ft_awaiting_read;
+	ft_sig_handler(HEREDOC);
 	while (TRUE)
 	{
 		line = readline("> ");
 		if (g_data.close_hdc == 1)
 		{
-			puts ("rah dkhlna");
-			printf(" ==>%d\n", g_data.close_hdc);
-			// g_data.close_hdc = 0;
 			close(filedes);
 			break ;
 		}

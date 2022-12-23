@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/23 11:38:08 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/23 16:48:20 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char *argv[], char **environ)
 	{
 		ft_sig_handler(MAIN);
 		malloca(FREE_ALL);
-		init_shell(environ, cmd_lst);
+		init_shell(environ, cmd_lst); // enter the shell with empty env -i ./minishell
 		line = readline(SHELL_PROMPT);
 		
 		if (!line)
