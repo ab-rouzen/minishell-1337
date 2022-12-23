@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 21:10:26 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/23 17:04:46 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute(t_list *cmd_lst)
 		i++;
 		cmd = cmd->next;
 	}
-	printf("%d: child returned\n", waitpid(childpid, NULL, WUNTRACED));
+	printf("%d: child returned yayy\n", waitpid(childpid, NULL, WUNTRACED));
 	return (0);
 }
 
