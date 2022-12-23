@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 22:33:28 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:00:26 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	execute(t_list *cmd_lst)
 		i++;
 		cmd = cmd->next;
 	}
-	printf("%d: child returned\n", waitpid(childpid, NULL, WUNTRACED));
+	waitpid(childpid, NULL, WUNTRACED);
+	//printf("%d: child returned\n", waitpid(childpid, NULL, WUNTRACED));
 	return (0);
 }
 
@@ -49,13 +50,13 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	cmd_path = ((t_cmd_lst*)cmd->content)->cmd_name;
 	if (fd_in != STDIN_FILENO)
 	{
-		ft_printf("in STDIN\n");
+		printf("in STDIN\n");
 		printf("pipe read end :%d\n", r = dup2(fd_in, STDIN_FILENO));
 		close(fd_in);
 	}
 	if (pipe[0][1] != STDOUT_FILENO)
 	{
-		ft_printf("in STDOUT\n");
+		printf("in STDOUT\n");
 		printf("pipe write end :%d\n", w = dup2(pipe[0][1], STDOUT_FILENO));
 		close(pipe[0][1]);
 	}
@@ -72,12 +73,12 @@ int (*init_pipe(t_list *cmd_lst))[2]
 	int	size;
 
 	size = ft_lstsize(cmd_lst);
-	//ft_printf("sz is %d\n", size);
+	//printf("sz is %d\n", size);
 	piper = malloca(sizeof(int[size + 1][2]));
 	piper[0][0] = 0;
 	piper[size][1] = 1;
 	piper[size][0] = 0;
-	//ft_printf("pipe is %d\n", piper[size - 1][0]);
+	//printf("pipe is %d\n", piper[size - 1][0]);
 	return (piper);
 }
 

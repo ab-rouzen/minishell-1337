@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 05:06:25 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/23 11:13:36 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,6 @@ void	ft_export(t_env_list **ms_export, char **cmd)
 {
 	char **str;
 
-	// printf("cmd[0] = %s", cmd[0]);
-	// printf("cmd[1] = %s", cmd[1]);
 	str = ft_split_export(cmd[1]);
 	if (ft_check_variable(str, cmd[1]))
 		return ;
@@ -161,13 +159,14 @@ void	ft_export(t_env_list **ms_export, char **cmd)
 	else if (!ft_strchr(cmd[1], '='))
 		if (ft_find_variable(*ms_export, str,cmd[1], 1) == 0)
 			ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, FALSE));
+	
 }
 
 void	ft_print_expo(t_env_list *ms_export, char *cmd)
 {
 	t_env_list *tmp;
+
  	tmp = ms_export;
-	//puts("print expo");
 	while (!ft_strcmp(cmd, "export") && tmp)
 	{
 		printf("declare -x ");

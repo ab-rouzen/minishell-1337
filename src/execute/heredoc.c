@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 20:52:33 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/23 12:02:48 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 /* Creates the file "fname" and append input to it */
 /*untill delim is encountered */
 
+
 static int	create_file(char *fname, char *delim)
 {
 	char	*line;
@@ -88,11 +89,22 @@ static int	create_file(char *fname, char *delim)
 	if (filedes < 0)
 		return (filedes);
 	//printf("look for delim[%s]\n", delim);
+		ft_sig_handler(HEREDOC);
 	while (TRUE)
 	{
 		line = readline("> ");
+		if (g_data.close_hdc == 1)
+		{
+			puts ("rah dkhlna");
+			printf(" ==>%d\n", g_data.close_hdc);
+			// g_data.close_hdc = 0;
+			close(filedes);
+			break ;
+		}
+		//printf("close_hdc = [%d]\n", g_data.close_hdc);
 		if (ft_strcmp(line, delim) == 0 || line == NULL)
 		{
+			puts ("delim found");
 			close(filedes);
 			break ;
 		}
@@ -103,7 +115,7 @@ static int	create_file(char *fname, char *delim)
 	}
 	filedes = open(fpath, O_RDONLY);
 	unlink(fpath);
-	//ft_printf("hdoc fd -> %d\n", filedes);
+	//printf("hdoc fd -> %d\n", filedes);
 	return (filedes);
 }
 
@@ -154,4 +166,5 @@ char	*hdoc_var_expand(char *line)
 	join_token(head, TOK_NULL);
 	free(line);
 	return (((t_token*)head->content)->val);
-}
+}//  export LDFLAGS="-L/Users/imittous/.brew/opt/readline/lib"
+  //export CPPFLAGS="-I/Users/imittous/.brew/opt/readline/include"

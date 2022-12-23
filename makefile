@@ -1,7 +1,7 @@
-a.PHONY: all re clean fclean
+.PHONY: all re clean fclean
 
 NAME = minishell
-CC = gcc
+CC = cc
 M_INCL_DIR = src/include/
 M_SRC_PRIME_DIR = src/
 M_SRC_PARSE_DIR = src/parse/
@@ -13,19 +13,19 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 				parser_redirection quoting garbage_collector \
 				utils_cmd_construct utils_environ
 M_SRC_EXEC_NAME = execution_utils mini_shell heredoc utils \
-				execute redirection heredoc_utils
+				execute redirection heredoc_utils 
 
-M_SRC_PRIME_NAME = init main  #exec_main 
+M_SRC_PRIME_NAME = init main  signals #exec_main 
 M_INCLUDE_NAME = lexer minishell parser quoting execution
 L_READ_LINE = -lreadline 
 BUILD_DIR = build/
 M_SRC_DIR  = src/
-LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a $(LIB_PRINTF)libftprintf.a
+LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a
 LIB_FT = lib/libft/
 LIB_GNL = lib/get_next_line/
 LIB_PRINTF = lib/printf/
 LFLAGS = -L/Users/${USER}/.brew/opt/readline/lib
-IFLAGS = -I/Users/${USER}/.brew/opt/readline/include
+IFLAGS = -I/Users/${USER}/.brew/opt/readline/include/readline
 
 # Header files
 M_INCUDE = $(addsuffix .h, $(M_INCLUDE_NAME))
@@ -39,8 +39,8 @@ M_SRC_PATH = $(M_SRC_PARSE_PATH) $(M_SRC_PRIME_PATH) $(M_SRC_EXEC_PATH)
 M_SRC_NAME = $(M_SRC_PARSE_NAME) $(M_SRC_PRIME_NAME) $(M_SRC_EXEC_NAME)
 M_SRC = $(addsuffix .c, $(M_SRC_PATH))
 
-LFLAGS = -L/Users/imittous/.brew/opt/readline/lib
-IFLAGS = -I/Users/imittous/.brew/opt/readline/include
+LFLAGS = -L/Users/imittous/.brew/Cellar/readline/8.2.1/lib
+IFLAGS = -I/Users/imittous/.brew/Cellar/readline/8.2.1/include
 
 # Object files
 M_OBJ = $(M_SRC:%=$(BUILD_DIR)%.o)
@@ -52,11 +52,11 @@ all : $(NAME)
 $(NAME) : $(M_OBJ) $(M_INCL_PATH) 
 	make bonus -C $(LIB_FT)
 	make bonus -C $(LIB_GNL)
-	$(CC) $(LDFLAGS) $(FALGS) $(LFLAGS) $(L_READ_LINE) $(M_OBJ) $(LIBS) -o $(NAME)
+	$(CC) $(LDFLAGS) $(FALGS) $(LFLAGS)  $(M_OBJ) $(LIBS) -o $(NAME) -lreadline
 
 $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
 	@mkdir -p $(dir $@)
-	$(CC) $(FALGS) -c $< -o $@
+	$(CC) $(FALGS) $(IFLAGS) -c $< -o $@
 
 clean : 
 	@make clean -C $(LIB_FT)
@@ -69,6 +69,5 @@ fclean : clean
 	@make fclean -C $(LIB_GNL)
 	@make fclean -C $(LIB_PRINTF)
 	rm -rf $(NAME)
-a : all
 
 re : fclean all

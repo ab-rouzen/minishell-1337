@@ -6,4 +6,4 @@
 	url = git@github.com:ab-rouzen/arouzen_GNL.git
 [submodule "lib/printf"]
 	path = lib/printf
-	url = git@github.com:ab-rouzen/ft_printf.git
+	url = git@github.com:ab-rouzen/printf.git

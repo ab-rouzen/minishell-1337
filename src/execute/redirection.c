@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:41:33 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 15:01:17 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/23 00:01:19 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	set_redirection(t_list *redir_lst)
 			return (FALSE);
 		redir_lst = redir_lst->next;
 	}
-	ft_printf("count: %d\n", index);
+	//printf("count: %d\n", index);
 	duplicate_redir_fd(fd_in, fd_out);
 	return (TRUE);
 }
@@ -76,6 +76,7 @@ void	duplicate_redir_fd(int fd_input, int fd_output)
 {
 	printf("input: %d, duped to %d\n", fd_input, dup2(fd_input, STDIN_FILENO));
 	printf("output: %d, duped to %d\n", fd_output, dup2(fd_output, STDOUT_FILENO));
+	printf("\n\n");
 }
 
 /*closes heredoc file descriptors opened for the argument command*/

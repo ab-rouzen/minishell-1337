@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 22:30:06 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/23 11:41:04 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@
 # define FALSE 0
 # define FREE_ALL 0
 # define FD_ERROR -1
+# define MAIN 'm'
+# define HEREDOC 'h'
+# define SHELL 's'
+
 # include "../../lib/libft/libft.h"
 # include "../../lib/get_next_line/get_next_line_bonus.h"
-# include "../../lib/printf/ft_printf_bonus.h"
+//# include "../../lib/printf/printf_bonus.h"
 # include "assert.h"
 # include "lexer.h"
 # include "parser.h"
@@ -33,10 +37,12 @@
 # include <sys/stat.h>
 # include <sys/errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+// # include "/Users/imittous/.brew/opt/readline/include/readline/readline.h"
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <unistd.h>
+#include <stdbool.h>
 
 enum			e_token
 {
@@ -60,6 +66,7 @@ typedef struct s_shell
 	t_env_list	*env_lst;
 	int			**fd_heredoc;
 	int			hdoc_cmd_no;
+	int		close_hdc;
 }				t_shell;
 
 typedef struct s_token_lst

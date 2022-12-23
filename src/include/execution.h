@@ -34,14 +34,14 @@ int				set_redirection(t_list *redir_lst);
 void			duplicate_redir_fd(int fd_input, int fd_output);
 
 /*************************   signals  ***************************/
-void			handler(int a);
+void    ft_sig_handler(char location);
 
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
 int				get_cmd_path(t_list *cmd_lst);
 int				check_cmd(t_bool status, t_list **cmd);
 int				(*init_pipe(t_list *cmd_lst))[2];
-int				ft_builtin(t_list	*tmp, t_env_list *ms_export);
+int				ft_builtin(t_list	*tmp);
 int				fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2]);
 char			**to_env(char *cmd_name);
 
