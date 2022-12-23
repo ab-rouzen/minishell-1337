@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/23 16:40:02 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/23 23:11:12 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,4 +157,22 @@ char	*hdoc_var_expand(char *line)
 	if (head == NULL)
 		return (ft_strdup_alloca("\0", malloca));
 	return (((t_token*)head->content)->val);
+}
+
+/*closes heredoc file descriptors opened for the argument command*/
+void	close_hdoc_fd(t_list *cmd)
+{
+	int			i;
+	t_list		*redir_lst;
+
+	i = 0;
+	//printf("hdoc[%p]\n", cmd);
+	redir_lst = ((t_cmd_lst*)cmd->content)->redir_lst;
+	//printf("var[%s]\n", redir_lst);
+	while (redir_lst)
+	{
+		if (((t_redir_list*)redir_lst->content)->tok == TOK_HEREDOC)
+			close(g_data.fd_heredoc[g_data.hdoc_cmd_no][i++]);
+		redir_lst = redir_lst->next;
+	}
 }

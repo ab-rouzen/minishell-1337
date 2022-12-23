@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:00:47 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/19 21:41:58 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/23 21:59:55 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	init_shell(char **environ, t_list *cmd_lst)
 {
-	g_data.env_lst = ft_env(environ);
+	g_data.hdoc_cmd_no = 0;
 }
