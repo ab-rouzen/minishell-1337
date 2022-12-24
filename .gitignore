@@ -1,2 +1,8 @@
 .vscode
 build
+parsing_tuts
+minishell
+lib
+.out
+*/*.o
+minishell.dSYM

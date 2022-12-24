@@ -1,0 +1,2 @@
+This will be written to output.txt
+This will be written to standard output

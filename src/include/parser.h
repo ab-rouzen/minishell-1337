@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 09:47:40 by arouzen           #+#    #+#             */
-/*   Updated: 2022/10/16 14:58:59 by arouzen          ###   ########.fr       */
+/*   Created: 2022/11/16 12:02:39 by arouzen           #+#    #+#             */
+/*   Updated: 2022/12/04 19:47:48 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
-# define SHELL_NAME "minishell$ "
-# define TRUE 1
-# define FALSe 0
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include "lib/libft/libft.h"
+#ifndef PARSER_H
+# define PARSER_H
+# include "minishell.h"
 
-typedef int bool;
+int	parse_line(t_list *tok_l);
+int	match_word(t_list *tok_l);
+int	match_redirect_sym(t_list *tok_l);
+int	match_redirection(t_list *tok_l);
+int	match_redi_list(t_list *tok_l);
+int	l_match(int tab[], int cases);
+int	match_command(t_list *tok_l);
+int	match_pipeline(t_list *tok_l);
+int	match_pipe_sym(t_list *tok_l);
 
 #endif

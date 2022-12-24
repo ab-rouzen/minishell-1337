@@ -1,0 +1,70 @@
+Done:      ✅
+Half Done: ⏲
+Not-yet:   ❌
+
+==> builtin cmd::
+
+◦ echo // echo -n : ✅
+◦ pwd : ✅
+◦ cd : => still :cd(no arg) // "modifying env" ✅
+{
+	"modifying env" ✅
+	cd ~
+}
+◦ env      with no options or arguments ⏲
+{
+	=> copy the env in linked list✅
+		creat linked list with 3 node: 1-variable, 2-value, 3-next;✅
+
+	=> print the content✅
+	=> update the PWD="/...." each time we change directorie
+	=> update the SHLVL=".." each time we change directorie
+	
+}
+◦ export  ⏲ with no options
+{
+	print the env with "declare -x " at begining;✅
+	export with arg :
+	{
+		(eg1: [arg=valu || arg=  ]===> added in export with "double_qu"  && env with not)✅
+		(eg2: [arg ] that===>added in export only && dosent change the value)✅
+		(eg3: [arg=hello=jjjj] == arg="hello=jjjj" ===> added in export with "double_qu" && env with not)✅
+		(eg4: [arg1=hello => arg1=world] ===>arg1=world)✅
+		(eg5: [arg2=hello => ar2+=world ====> arg2=helloworld] )⏲
+		(eg5: [arg2='|=======|' ====> arg2="======="] )⏲
+	}
+}
+◦ unset   ❌ with no options
+◦ exit    ❌ with no options
+
+
+
+
+var=val ==> nod1=var nod2=val
+
+
+c       |c         	|.    
+c=      |c=""      	|c=       
+c=valu  |c="valu"  	|c=value           
+c+=value|c="oldnew"	| ==
+c       |		   	|
+c       |		   	|
+c       |		   	|
+
+
+◦ c+=hello  and c dosenot exist add c as new variable
+◦ str[0] must be alphabitiq only.
+
+
+
+
+
+; char word[] = abcdef;  
+; int idxToDel = 2; 
+; memmove(&word[idxToDel], &word[idxToDel + 1], strlen(word) - idxToDel);
+
+
+
+
+loop for list of exportl
+enter nuul lie
