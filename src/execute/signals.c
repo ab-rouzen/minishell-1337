@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "../include/minishell.h"
 
 void	ft_main_handler(int a)
 {

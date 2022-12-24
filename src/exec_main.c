@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 11:11:12 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/12 21:05:10 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/24 12:45:58 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,90 +29,39 @@ void	handler(int a)
 	}
 }
 
-int main(int ac, char **av, char **env)
+t_shell	g_data;
+
+int	main(int argc, char *argv[], char **environ)
 {
-	
-	char	*str;
-	char	**cmd;
-	char	**cmd_path;
-	int		check;
-	int		i;
-	t_env_list *ms_export;
-	pid_t				pid;
-	struct sigaction	chanel;
-
-(void)ac;
-(void)av;
-
-	chanel.sa_flags = SA_SIGINFO;
-	chanel.sa_sigaction = &handler;
-
-	ms_export = ft_env(env);
-	while (ms_export)
+	char	*line;
+	t_list	*cmd_lst = NULL;
+	rl_catch_signals = 0;
+	rl_point = 0;
+	(void)argv;
+	(void)argc;
+	while (TRUE)
 	{
-		if (!ft_strcmp(ms_export->variable, "PATH"))
+		ft_sig_handler(MAIN);
+		malloca(FREE_ALL);
+		init_shell(environ, cmd_lst); // enter the shell with empty env -i ./minishell
+		line = readline(SHELL_PROMPT);
+		
+		if (!line)
 		{
-			cmd_path = ft_split(ms_export->value, ':');
-			break ;
-		}
-		ms_export = ms_export->next;
-	}
-	check = 0;
-	while (1) 
-	{
-		//signal(EOF, &handler);
-		printf("\033[0;36m");
-		str = readline("mini_shell=>");
-		printf("\033[0m"); 
-		if (str && *str)
-			add_history(str);
-		cmd = ft_split(str, ' ');
-
-		signal(SIGINT, &handler);
-		signal(SIGQUIT, &handler);
-		if (!str)
-		{
-			printf ("exit");
+			printf("minishell$ exit");
 			exit(0);
 		}
-
-		if (!ft_strcmp(cmd[0], "echo"))
-			ft_echo(cmd);
-		else if (!ft_strcmp(cmd[0], "cd"))
-			ft_cd(cmd, ms_export);
-		else if (!ft_strcmp(cmd[0], "pwd"))
-			ft_pwd();
-		else if (!ft_strcmp(cmd[0], "export") && !cmd[1])
-			ft_print_expo(ms_export, cmd[0]);
-		else if (!ft_strcmp(cmd[0], "export"))
-			ft_export(&ms_export, cmd);
-		else if (!ft_strcmp(cmd[0], "env"))
-			ft_print_expo(ms_export, cmd[0]);
-		else if (!ft_strcmp(cmd[0], "unset"))
-			ft_unset(&ms_export, cmd[1]);
-		else if (!ft_strcmp(cmd[0], "exit"))
-		{
-			ft_exit();
-			exit (1);
-		}
+		if (line && *line)
+			add_history(line);
+		cmd_lst = parse(line);
+		// // print_token(line);
+		// // print_test(cmd_lst);
+		g_data.fd_heredoc = here_doc(cmd_lst);
+		if (*line && ft_check_builtin(((t_cmd_lst *)cmd_lst->content)->cmd_name))
+			ft_builtin(cmd_lst);
 		else
-		{
-			i = 0;
-			cmd[0] = ft_strjoin("/", cmd[0]);
-			while (cmd_path[i])
-			{
-				if (access(ft_strjoin(cmd_path[i], cmd[0]), F_OK) == 0)
-				{
-					char *argvv[] = {ft_strjoin(cmd_path[i], cmd[0]), NULL};
-					if (fork() == 0)
-						execve(ft_strjoin(cmd_path[i], cmd[0]), argvv, env);
-					waitpid(0, NULL, 0);
-				}
-				i++;
-			}
-		}
-
-		
-	}
-	return 0;
+			execute(cmd_lst);
+		free(line);
+	}		
+	return (0);
 }
