@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 13:08:56 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/24 15:35:02 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,20 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	{
 		//ft_printf("in STDOUT\n");
 		//printf("pipe write end :%d\n", w = dup2(pipe[0][1], STDOUT_FILENO));
-		dup2(pipe[0][1], STDOUT_FILENO);
-		close(pipe[0][1]);
+		(dup2(pipe[0][1], STDOUT_FILENO), close(pipe[0][1]));
 	}
 	if (set_redirection(((t_cmd_lst*)cmd->content)->redir_lst) == FALSE)
 		exit(EXIT_FAILURE);
-	check_cmd(get_cmd_path(cmd), &cmd);
-	cmd_path = ((t_cmd_lst*)cmd->content)->cmd_name;
-	execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, to_env(((t_cmd_lst*)cmd->content)->cmd_name)); // needs env lst function to char**
-	//perror("dumm");
+	if (ft_check_builtin(((t_cmd_lst *)cmd->content)->cmd_name))
+		ft_builtin(cmd);
+	else
+	{
+		check_cmd(get_cmd_path(cmd), &cmd);
+		cmd_path = ((t_cmd_lst*)cmd->content)->cmd_name;
+		printf("this is execve [%s]\n", cmd_path);
+		execve(cmd_path, ((t_cmd_lst*)cmd->content)->cmd_args, to_env(((t_cmd_lst*)cmd->content)->cmd_name)); // needs env lst function to char**
+	}
+	perror("dumm");
 	exit(EXIT_FAILURE);
 }
 

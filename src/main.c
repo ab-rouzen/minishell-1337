@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 13:10:30 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/24 15:04:00 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	main(int argc, char *argv[], char **environ)
 	char	*line;
 	t_list	*cmd_lst;
 
+	rl_catch_signals = 0;
+	rl_point = 0;
 	(void)argv;
 	(void)argc;
 	// signal(SIGINT, &handler);
@@ -29,6 +31,7 @@ int	main(int argc, char *argv[], char **environ)
 	g_data.env_lst = ft_env(environ);
 	while (TRUE)
 	{
+		ft_sig_handler(MAIN);
 		malloca(FREE_ALL);
 		init_shell(environ, cmd_lst);
 		line = readline(SHELL_PROMPT);
@@ -40,7 +43,7 @@ int	main(int argc, char *argv[], char **environ)
 			// print_token(line);
 			// print_test(cmd_lst);
 			g_data.fd_heredoc = here_doc(cmd_lst);
-			execute(cmd_lst);
+				execute(cmd_lst);
 		}
 		free(line);
 	}		

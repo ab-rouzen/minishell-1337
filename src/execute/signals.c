@@ -4,7 +4,7 @@ void	ft_main_handler(int a)
 {
 	if (a == SIGINT)
 	{
-		printf ("hnaaaa\n");
+		// printf ("hnaaaa\n");
 		printf("\n"); // Move to a new line
     	rl_on_new_line(); // Regenerate the prompt on a newline
 		rl_replace_line("", 0);

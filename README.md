@@ -1,1 +1,1 @@
-ksfnsnf
+A small shell that imitates the behaviour of GNU Bash.
