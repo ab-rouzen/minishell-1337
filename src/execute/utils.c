@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 22:33:54 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/24 13:09:52 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,27 @@ int	get_cmd_path(t_list *cmd_lst)
 {
 	int		i;
 	char	**path;
+	char	*cmd_name;
 	char	*tmp;
 
 	path = ft_split(get_path(), ':');
 	i = 0;
-	if (access(((t_cmd_lst*)cmd_lst->content)->cmd_name, F_OK) == 0)
+	cmd_name = ((t_cmd_lst*)cmd_lst->content)->cmd_name;
+	if (access(cmd_name, F_OK) == 0)
 		return (TRUE);
-	while (path[i])
-	{
-		tmp = ft_strjoin_alloca(path[i], "/", malloca);
-		tmp = ft_strjoin_alloca(tmp, ((t_cmd_lst*)cmd_lst\
-		->content)->cmd_name, malloca);
-		if (access(tmp, F_OK) == 0)
+	if (cmd_name && *cmd_name)
+		while (path[i])
 		{
-			((t_cmd_lst*)cmd_lst->content)->cmd_name = tmp;
-			return (free(path), TRUE);
+			tmp = ft_strjoin_alloca(path[i], "/", malloca);
+			tmp = ft_strjoin_alloca(tmp, cmd_name, malloca);
+			if (access(tmp, F_OK) == 0)
+			{
+				((t_cmd_lst*)cmd_lst->content)->cmd_name = tmp;
+				//printf("accessed here: %s\n", tmp);
+				return (free(path), TRUE);
+			}
+			i++;
 		}
-		i++;
-	}
-	//((t_cmd_lst*)cmd_lst->content)->cmd_name = NULL;
 	return (free(path), FALSE);
 }
 
@@ -69,11 +71,11 @@ int	check_cmd(t_bool status, t_list **cmd_lst)
 	cmd = (t_cmd_lst*)(*cmd_lst)->content;
 	if (status == FALSE)
 	{
-		*cmd_lst = (*cmd_lst)->next;
-		if (get_redir_lst_heredoc_num(cmd->redir_lst))
-				g_data.hdoc_cmd_no++;
+		//*cmd_lst = (*cmd_lst)->next;
+		// if (get_redir_lst_heredoc_num(cmd->redir_lst))
+		// 	g_data.hdoc_cmd_no++;
 		if (cmd->cmd_name == NULL)
-			return (status);
+			return (FALSE);
 		printf("%s: %s: command not found\n", SHELL_NAME, cmd->cmd_name);
 		return (status);
 	}

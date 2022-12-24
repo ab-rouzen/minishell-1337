@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 22:30:52 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/24 13:04:37 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ t_list	*parse(char *line)
 
 	tok_l = lexer(line);
 	if (!unquote(&tok_l))
-		printf("Quote parse error\n");
+	{
+		printf("Syntax error\n");
+		return (NULL);
+	}
+	//printf("Quote parse error\n");
 	join_adjacent_token(&tok_l, TOK_WORD);
 	delete_element(&tok_l, TOK_WHITESPACE);
-	if (ft_lstsize(tok_l) == match_pipeline(tok_l))
-		//printf("All matched: SUCCESS\n");
-	// else
-	// printf("Parse error: FAILURE\n");
+	if (ft_lstsize(tok_l) != match_pipeline(tok_l))
+	{
+		printf("Syntax error\n");
+		return (NULL);
+	}
 	return (to_cmdline_lst(tok_l));
 }
 

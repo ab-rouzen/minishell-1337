@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/23 15:41:35 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/24 13:09:12 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	**here_doc(t_list *cmd_lst)
 	int		**hdoc_fdes;
 	char	***delim;
 	char	cmd_hdoc_num;
-
 
 	if (get_heredoc_cmd_num(cmd_lst) == 0)
 		return (NULL);	
@@ -88,7 +87,7 @@ static int	create_file(char *fname, char *delim)
 	ft_strlcpy(fpath, "/tmp/.", 100);
 	ft_strlcat(fpath, fname, 100);
 	//printf("creating fle [%s]\n", fpath);
-	filedes = p_open(fpath, O_CREAT | O_WRONLY | O_APPEND | O_EXCL, S_IWUSR|S_IRUSR);
+	filedes = open(fpath, O_CREAT | O_WRONLY | O_APPEND | O_EXCL, S_IWUSR|S_IRUSR);
 	//printf("file fd = [%d]\n", filedes);
 	if (filedes < 0)
 		return (filedes);
@@ -111,7 +110,7 @@ static int	create_file(char *fname, char *delim)
 			break ;
 		}
 		line = hdoc_var_expand(line);
-		//printf("strcmp[%d]\n", ft_strcmp(line, delim));
+		printf("line after expand [%s]\n", line);
 		write(filedes, line, ft_strlen(line));
 		write(filedes, "\n", 1);
 	}
@@ -152,21 +151,42 @@ char	***get_heredoc_delim(t_list *cmd_lst)
 /*expands environement variables in the argument line*/
 char	*hdoc_var_expand(char *line)
 {
-	t_list	*tok_lst;
+	t_list	**tok_lst;
 	t_list	*head;
 
 	if (line == NULL || *line == '\0')
 		return (line);
-	tok_lst = lexer(line);
-	head = tok_lst;
-	while (tok_lst)
+	head = lexer(line);
+	tok_lst = &head;
+	while (*tok_lst)
 	{
-		expand_env_var(&tok_lst);
-		tok_lst = tok_lst->next;
+		expand_env_var(tok_lst);
+		if (*tok_lst == NULL)
+			break ;
+		tok_lst = &(*tok_lst)->next;
 	}
-	//printf("var[%s]\n", ((t_token*)head->content)->val);
+	//printf("var[%s]\n", (head));
 	join_token(head, TOK_NULL);
 	free(line);
+	if (head == NULL)
+		return (ft_strdup_alloca("\0", malloca));
 	return (((t_token*)head->content)->val);
-}//  export LDFLAGS="-L/Users/imittous/.brew/opt/readline/lib"
-  //export CPPFLAGS="-I/Users/imittous/.brew/opt/readline/include"
+}
+
+/*closes heredoc file descriptors opened for the argument command*/
+void	close_hdoc_fd(t_list *cmd)
+{
+	int			i;
+	t_list		*redir_lst;
+
+	i = 0;
+	//printf("hdoc[%p]\n", cmd);
+	redir_lst = ((t_cmd_lst*)cmd->content)->redir_lst;
+	//printf("var[%s]\n", redir_lst);
+	while (redir_lst)
+	{
+		if (((t_redir_list*)redir_lst->content)->tok == TOK_HEREDOC)
+			close(g_data.fd_heredoc[g_data.hdoc_cmd_no][i++]);
+		redir_lst = redir_lst->next;
+	}
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:41:33 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/23 00:01:19 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/24 13:09:40 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,30 +67,15 @@ int	set_redirection(t_list *redir_lst)
 			return (FALSE);
 		redir_lst = redir_lst->next;
 	}
-	//printf("count: %d\n", index);
+	//ft_printf("count: %d\n", index);
 	duplicate_redir_fd(fd_in, fd_out);
 	return (TRUE);
 }
 
 void	duplicate_redir_fd(int fd_input, int fd_output)
 {
-	printf("input: %d, duped to %d\n", fd_input, dup2(fd_input, STDIN_FILENO));
-	printf("output: %d, duped to %d\n", fd_output, dup2(fd_output, STDOUT_FILENO));
-	printf("\n\n");
-}
-
-/*closes heredoc file descriptors opened for the argument command*/
-void	close_hdoc_fd(t_list *cmd)
-{
-	int			i;
-	t_list		*redir_lst;
-
-	i = 0;
-	redir_lst = ((t_cmd_lst*)cmd->content)->redir_lst;
-	while (redir_lst)
-	{
-		if (((t_redir_list*)redir_lst->content)->tok == TOK_HEREDOC)
-			close(g_data.fd_heredoc[g_data.hdoc_cmd_no][i++]);
-		redir_lst = redir_lst->next;
-	}
+	//printf("input: %d, duped to %d\n", fd_input, dup2(fd_input, STDIN_FILENO));
+	//printf("output: %d, duped to %d\n", fd_output, dup2(fd_output, STDOUT_FILENO));
+	dup2(fd_input, STDIN_FILENO);
+	dup2(fd_output, STDOUT_FILENO);
 }
