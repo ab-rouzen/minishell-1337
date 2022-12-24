@@ -6,7 +6,7 @@ M_INCL_DIR = src/include/
 M_SRC_PRIME_DIR = src/
 M_SRC_PARSE_DIR = src/parse/
 M_SRC_EXEC_DIR = src/execute/
-FALGS = $(CPPFLAGS) -Wall -Wextra #-g -fsanitize=address
+FALGS = $(CPPFLAGS) -Wall -Wextra -fsanitize=address
 M_SRC_PARSE_NAME = lexer lexer_2 \
 				lexer_redirection utils utils_parser utils_quotes \
 				utils_tokenizer parser parser_pipe \
@@ -57,15 +57,15 @@ $(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
 	$(CC) $(FALGS) $(IFLAGS) -c $< -o $@
 
 clean : 
-	@make clean -C $(LIB_FT)
-	@make clean -C $(LIB_GNL)
-	@make clean -C $(LIB_PRINTF)
+# @make clean -C $(LIB_FT)
+# @make clean -C $(LIB_GNL)
+# @make clean -C $(LIB_PRINTF)
 	rm -rf $(BUILD_DIR)
 
 fclean : clean
-	@make fclean -C $(LIB_FT)
-	@make fclean -C $(LIB_GNL)
-	@make fclean -C $(LIB_PRINTF)
+# @make fclean -C $(LIB_FT)
+# @make fclean -C $(LIB_GNL)
+# @make fclean -C $(LIB_PRINTF)
 	rm -rf $(NAME)
 
 re : fclean all

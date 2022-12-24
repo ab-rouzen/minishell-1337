@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/23 11:41:04 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:01:42 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,13 @@ typedef struct s_redir_list
 	char			*file;
 }					t_redir_list;
 
-typedef struct s_cmd_ls
+typedef struct s_cmd_lst
 {
 	char		*cmd_name;
 	char		**cmd_args;
 	t_list		*redir_lst;
+	int			fd_in;
+	int			fd_out;
 }				t_cmd_lst;
 
 typedef int		t_bool;

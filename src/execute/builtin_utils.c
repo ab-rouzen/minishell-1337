@@ -6,15 +6,18 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 12:43:40 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/24 17:28:10 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 
-int	ft_check_builtin(t_list	*cmd_name)
+int	ft_check_builtin(t_list	*cmd_lst)
 {
+	char	*cmd_name;
+
+	cmd_name = ((t_cmd_lst*)cmd_lst->content)->cmd_name;
 	if (!ft_strcmp(cmd_name, "echo") || !ft_strcmp(cmd_name, "cd") ||
 		!ft_strcmp(cmd_name, "pwd") || !ft_strcmp(cmd_name, "export") ||
 		!ft_strcmp(cmd_name, "env") || !ft_strcmp(cmd_name, "unset") ||

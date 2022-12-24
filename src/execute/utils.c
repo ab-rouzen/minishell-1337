@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 13:09:52 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/24 17:02:56 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,13 @@ int	ft_envlstsize(t_env_list *lst)
 	return (i);
 }
 
-char **to_env(char *cmd_name)
+char **to_env(void)
 {
 	int 		i;
 	t_env_list	*env_lst;
 	char		**env;
 	int			size;
-	char		**tmp;
+	char		*tmp;
 
 	env_lst = g_data.env_lst;
 	size = ft_envlstsize(env_lst) + 1;

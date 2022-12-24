@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cmd_construct.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 20:40:59 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/02 21:25:01 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/24 16:03:24 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ t_list	*new_cmd_lst(char *cmd_name, char **cmd_args, t_list *redir_lst)
 	cmd_lst->cmd_args = cmd_args;
 	cmd_lst->cmd_name = cmd_name;
 	cmd_lst->redir_lst = redir_lst;
+	cmd_lst->fd_in = STDIN_FILENO;
+	cmd_lst->fd_out = STDOUT_FILENO;
 	return (ft_lstnew_alloca(cmd_lst, malloca));
 }
 

@@ -9,13 +9,9 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }					t_env_list;
 
-void			ft_echo(char **cmd);
-void			ft_cd(char *cmd, t_env_list *ms_list);
-void			ft_pwd();
 t_env_list		*ft_lstlast1(t_env_list *lst);
 void			ft_lstadd_back1(t_env_list **lst, t_env_list *new);
 t_env_list		*ft_lstnew1(void **content, t_bool exported);
-t_env_list  	*ft_env(char **env);
 char			**ft_split_export(char *str);
 
 /*************************   heredoc  ***************************/
@@ -30,11 +26,22 @@ void			close_hdoc_fd(t_list *cmd);
 char			*hdoc_var_expand(char *line);
 
 /*************************   redirection  ***************************/
-int				set_redirection(t_list *redir_lst);
-void			duplicate_redir_fd(int fd_input, int fd_output);
+int				set_redirection(t_list *cmd_lst);
+void			duplicate_redir_fd(t_list *cmd);
+
+/*************************   builtins  ***************************/
+int				ft_builtin(t_list	*tmp);
+int				ft_check_builtin(t_list	*cmd_lst);
+t_env_list		*ft_env(char **env);
+void			ft_echo(char **cmd);
+void			ft_cd(char *cmd, t_env_list *ms_list);
+void			ft_pwd();
+void			ft_unset(t_env_list **ms_list, char *cmd);
+void			ft_print_expo(t_env_list *ms_export, char *cmd);
+void			ft_export(t_env_list **ms_export, char **cmd);
 
 /*************************   signals  ***************************/
-void    ft_sig_handler(char location);
+void			 ft_sig_handler(char location);
 
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
@@ -43,6 +50,6 @@ int				check_cmd(t_bool status, t_list **cmd);
 int				(*init_pipe(t_list *cmd_lst))[2];
 int				ft_builtin(t_list	*tmp);
 int				fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2]);
-char			**to_env(char *cmd_name);
+char			**to_env(void);
 
 #endif
