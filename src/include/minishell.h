@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 16:01:42 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/25 16:01:00 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 # define MINISHELL_H
 # define SHELL_PROMPT "minishell$ "
 # define SHELL_NAME "minishell"
+# define CMD_NOT_FOUND "command not found"
+# define CMD_PERM "permission denied"
+# define CMD_IS_DIR "is a directory"
 # define TRUE 1
 # define FALSE 0
 # define FREE_ALL 0
 # define FD_ERROR -1
 # define MAIN 'm'
+# define TTOKEN(x) ((t_token*)(x)->content)
 # define HEREDOC 'h'
 # define SHELL 's'
 
@@ -37,6 +41,7 @@
 # include <sys/stat.h>
 # include <sys/errno.h>
 # include <fcntl.h>
+# include <dirent.h>
 // # include "/Users/imittous/.brew/opt/readline/include/readline/readline.h"
 # include <stdio.h>
 # include <readline/readline.h>
@@ -126,5 +131,6 @@ char			*ft_strjoin_alloca(char const *s1, char const *s2, void*(alloc)(size_t));
 void			heredoc_no_expand(t_list *tok_l);
 void			init_shell(char **environ, t_list *cmd_lst);
 void			free_split(char **str);
+void			print_error(char *cmd_name, char *msg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 15:04:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/25 23:27:39 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char *argv[], char **environ)
 	// signal(SIGINT, &handler);
 	// signal(SIGQUIT, &handler);
 	g_data.env_lst = ft_env(environ);
+	g_data.exit_status = 0;
 	while (TRUE)
 	{
 		ft_sig_handler(MAIN);
@@ -43,12 +44,12 @@ int	main(int argc, char *argv[], char **environ)
 			// print_token(line);
 			// print_test(cmd_lst);
 			g_data.fd_heredoc = here_doc(cmd_lst);
-				execute(cmd_lst);
+			execute(cmd_lst);
 		}
 		free(line);
 	}		
 	return (0);
-}      
+}
 
 void	print_test(t_list *tmp)
 {
