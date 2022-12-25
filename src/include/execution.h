@@ -34,7 +34,7 @@ int				ft_builtin(t_list	*tmp);
 int				ft_check_builtin(t_list	*cmd_lst);
 t_env_list		*ft_env(char **env);
 void			ft_unset(t_env_list **ms_list, char *cmd);
-void			ft_print_expo(t_env_list *ms_export, char *cmd);
+void			ft_print_expo(t_env_list *ms_export, char *cmd, t_list *cmd_list);
 void			ft_export(t_env_list **ms_export, char **cmd);
 
 /*************************   signals  ***************************/
