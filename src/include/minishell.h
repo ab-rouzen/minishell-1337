@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 16:01:42 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/24 20:41:38 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 # include <sys/stat.h>
 # include <sys/errno.h>
 # include <fcntl.h>
-// # include "/Users/imittous/.brew/opt/readline/include/readline/readline.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -66,7 +65,7 @@ typedef struct s_shell
 	t_env_list	*env_lst;
 	int			**fd_heredoc;
 	int			hdoc_cmd_no;
-	int		close_hdc;
+	int			close_hdc;
 }				t_shell;
 
 typedef struct s_token_lst

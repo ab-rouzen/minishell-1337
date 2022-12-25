@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 17:34:44 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/24 21:10:23 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
 	//if (check_cmd(get_cmd_path(cmd), &cmd) == TRUE)
 	//{
 	if (ft_check_builtin(cmd))
-		ft_builtin(cmd);
+		printf ("%d\n", ft_builtin(cmd));
 	else
 	{
 		childpid = fork();

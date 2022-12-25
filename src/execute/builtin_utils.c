@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 17:28:10 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/25 05:48:43 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,28 @@ int	ft_check_builtin(t_list	*cmd_lst)
 	return (0);
 }
 
-int	ft_builtin(t_list	*tmp)
+int	ft_builtin(t_list	*cmd)
 {
 	char	*cmd_name;
 
-	cmd_name = ((t_cmd_lst*)tmp->content)->cmd_name;
+	cmd_name = ((t_cmd_lst*)cmd->content)->cmd_name;
 	if (!ft_strcmp(cmd_name, "echo"))
-		ft_echo(((t_cmd_lst*)tmp->content)->cmd_args);
-	if (!ft_strcmp(cmd_name, "cd"))
-		ft_cd(((t_cmd_lst*)tmp->content)->cmd_args[1], g_data.env_lst);
-	else if (!ft_strcmp(cmd_name, "pwd"))
-		ft_pwd();
+		return(ft_echo(((t_cmd_lst*)cmd->content)->cmd_args, cmd));
+	else if (!ft_strcmp(cmd_name, "cd"))
+		return (ft_cd(((t_cmd_lst*)cmd->content)->cmd_args[1], g_data.env_lst, cmd));
 	else if (!ft_strcmp(cmd_name, "export"))
 	{
-		if (((t_cmd_lst*)tmp->content)->cmd_args[1])
-			ft_export(&g_data.env_lst, ((t_cmd_lst*)tmp->content)->cmd_args);
+		if (((t_cmd_lst*)cmd->content)->cmd_args[1])
+			ft_export(&g_data.env_lst, ((t_cmd_lst*)cmd->content)->cmd_args);
 		else
 			ft_print_expo(g_data.env_lst, cmd_name);
 	}
+	else if (!ft_strcmp(cmd_name, "pwd"))
+		return (ft_pwd(cmd));
 	else if (!ft_strcmp(cmd_name, "env"))
 		ft_print_expo(g_data.env_lst, cmd_name);
 	else if (!ft_strcmp(cmd_name, "unset"))
-		ft_unset(&g_data.env_lst, ((t_cmd_lst*)tmp->content)->cmd_name);
+		ft_unset(&g_data.env_lst, ((t_cmd_lst*)cmd->content)->cmd_name);
 	else if (!ft_strcmp(cmd_name, "exit"))
 	{
 		ft_exit();

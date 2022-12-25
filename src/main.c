@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 15:04:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/25 05:27:08 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	main(int argc, char *argv[], char **environ)
 	{
 		ft_sig_handler(MAIN);
 		malloca(FREE_ALL);
-		init_shell(environ, cmd_lst);
 		line = readline(SHELL_PROMPT);
 		if (line && *line)
 			add_history(line);
 		cmd_lst = parse(line);
+		init_shell(environ, cmd_lst);
 		if (cmd_lst)
 		{
 			// print_token(line);
