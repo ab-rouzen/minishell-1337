@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/12/26 20:38:43 by imittous         ###   ########.fr       */
+=======
+/*   Updated: 2022/12/26 12:33:37 by arouzen          ###   ########.fr       */
+>>>>>>> 472d0a91ef960b140e9ad74e00720169d35d6bb6
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +21,8 @@ int	ft_check_builtin(t_list	*cmd_lst)
 {
 	char	*cmd_name;
 
+	if (cmd_lst == NULL)
+		return (FALSE);
 	cmd_name = ((t_cmd_lst*)cmd_lst->content)->cmd_name;
 	if (!ft_strcmp(cmd_name, "echo") || !ft_strcmp(cmd_name, "cd") ||
 		!ft_strcmp(cmd_name, "pwd") || !ft_strcmp(cmd_name, "export") ||
@@ -55,4 +61,18 @@ int	ft_builtin(t_list	*cmd)
 		ft_exit();
 		exit (0);
 	}
+	return (1);
+}
+
+int	builtin_cmd_only(t_list *cmd)
+{
+	if (cmd && ft_check_builtin(cmd) && cmd->next == NULL)
+	{	
+		if (set_redirection(cmd) == FALSE)
+			return (TRUE);
+		g_data.exit_status = ft_builtin(cmd);
+		close_io_fd(cmd);
+		return (TRUE);
+	}
+	return (FALSE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 03:00:21 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/26 12:34:34 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,29 @@ int	main(int argc, char *argv[], char **environ)
 	// signal(SIGINT, &handler);
 	// signal(SIGQUIT, &handler);
 	g_data.env_lst = ft_env(environ);
+	g_data.exit_status = 0;
 	while (TRUE)
 	{
-		ft_sig_handler(MAIN);
 		malloca(FREE_ALL);
+		ft_sig_handler(MAIN);
+		init_shell(environ, cmd_lst);
 		line = readline(SHELL_PROMPT);
 		if (!line)
 			exit(0) ;
 		if (line && *line)
 			add_history(line);
 		cmd_lst = parse(line);
-		init_shell(environ, cmd_lst);
 		if (cmd_lst)
 		{
 			// print_token(line);
 			// print_test(cmd_lst);
 			g_data.fd_heredoc = here_doc(cmd_lst);
-				execute(cmd_lst);
+			execute(cmd_lst);
 		}
 		free(line);
 	}		
 	return (0);
-}      
+}
 
 void	print_test(t_list *tmp)
 {
