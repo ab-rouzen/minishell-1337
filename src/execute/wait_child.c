@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 10:11:47 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 10:20:30 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 12:39:10 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	child_exit_stat(char *cmd_name, int stat_loc)
 	else if (WIFSIGNALED(stat_loc))
 	{
 		tmp = ft_itoa(WTERMSIG(stat_loc));
-		print_error(cmd_name, ft_strjoin_alloca(": received signal ", tmp, malloca));
+		print_error(cmd_name, ft_strjoin_alloca(": received signal ", tmp, malloca), 1);
 		free(tmp);
 	}
 	while(waitpid(-1, &stat_loc, WUNTRACED) > 0)
