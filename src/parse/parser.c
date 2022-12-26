@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 12:53:51 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 11:12:24 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*parse(char *line)
 	tok_l = lexer(line);
 	if (!unquote(&tok_l))
 	{
-		printf("Syntax error\n");
+		print_error(SYNX_ERR, QOT_ERR, 1);
 		return (NULL);
 	}
 	//printf("Quote parse error\n");
@@ -27,7 +27,13 @@ t_list	*parse(char *line)
 	delete_element(&tok_l, TOK_WHITESPACE);
 	if (ft_lstsize(tok_l) != match_pipeline(tok_l))
 	{
-		printf("Syntax error\n");
+		//printf("Syntax error\n");
+		//printf("lst size[%d]\n", ft_lstsize(tok_l));
+		int n = match_pipeline(tok_l);
+		//t_list *lst = get_nlst(tok_l, n);
+		print_error(SYNX_ERR, UNX_TKN, 0);
+		ft_putendl_fd(TTOKEN(get_nlst(tok_l, n))->val, STDERR_FILENO);
+		//printf("%s\n", TTOKEN(lst)->val);
 		return (NULL);
 	}
 	return (to_cmdline_lst(tok_l));

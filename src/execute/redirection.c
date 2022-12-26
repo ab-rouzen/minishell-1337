@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:41:33 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 23:18:23 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 10:35:08 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	set_redirection(t_list *cmd_lst)
 	index = 0;
 	while (redir_lst)
 	{
-		redir_node = (t_redir_list*)cmd->redir_lst->content;
+		redir_node = (t_redir_list*)redir_lst->content;
 		if (redir_node->tok == TOK_REDI_I)
 			set_redir_fd(&cmd->fd_in, 0, open_file(redir_node->file, O_RDONLY, 0));
 		else if (redir_node->tok == TOK_REDI_O)

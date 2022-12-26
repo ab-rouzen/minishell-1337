@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 23:14:23 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 11:15:45 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ int	check_cmd(t_list *cmd)
 		return (FALSE);
 	get_cmd_path(cmd);
 	if (access(TCMD(cmd)->cmd_name, F_OK))
-		return (print_error(TCMD(cmd)->cmd_name, CMD_NOT_FOUND), FALSE);
+		return (print_error(TCMD(cmd)->cmd_name, CMD_NOT_FOUND, 1), FALSE);
 	if (is_dir(TCMD(cmd)->cmd_name))
-		return (print_error(TCMD(cmd)->cmd_name, CMD_IS_DIR), FALSE);
+		return (print_error(TCMD(cmd)->cmd_name, CMD_IS_DIR, 1), FALSE);
 	if (access(TCMD(cmd)->cmd_name, F_OK|X_OK))
-		return(print_error(TCMD(cmd)->cmd_name, CMD_PERM), FALSE);
+		return(print_error(TCMD(cmd)->cmd_name, CMD_PERM, 1), FALSE);
 	return (TRUE);
 }
 
@@ -114,33 +114,16 @@ char **to_env(void)
 	return (env);
 }
 
-void	child_exit_stat(char *cmd_name, int stat_loc)
-{
-	char	*tmp;
-
-	if (WIFEXITED(stat_loc))
-	{
-		//printf("old exit status %d\n", g_data.exit_status);
-		g_data.exit_status = WEXITSTATUS(stat_loc);
-		//printf("exited with %d\n", g_data.exit_status);
-	}
-	else if (WIFSIGNALED(stat_loc))
-	{
-		tmp = ft_itoa(WTERMSIG(stat_loc));
-		print_error(cmd_name, ft_strjoin_alloca(": received signal ", tmp, malloca));
-		free(tmp);
-	}
-	while(waitpid(-1, &stat_loc, WUNTRACED) > 0)
-		;
-}
-
-void	print_error(char *cmd_name, char *msg)
+/*prints error into STDERR [SH: 'cmd_name': 'msg']*/
+void	print_error(char *cmd_name, char *msg, t_bool new_line)
 {
 	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(cmd_name, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(msg, STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	if (new_line)
+		ft_putstr_fd("\n", STDERR_FILENO);	
 }
 
 t_bool	is_dir(char *name)

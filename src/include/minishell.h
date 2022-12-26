@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 16:01:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 11:09:27 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # define CMD_NOT_FOUND "command not found"
 # define CMD_PERM "permission denied"
 # define CMD_IS_DIR "is a directory"
+# define SYNX_ERR "Syntax error"
+# define QOT_ERR "Quote"
+# define UNX_TKN "Unexpected token near "
 # define TRUE 1
 # define FALSE 0
 # define FREE_ALL 0
@@ -131,6 +134,7 @@ char			*ft_strjoin_alloca(char const *s1, char const *s2, void*(alloc)(size_t));
 void			heredoc_no_expand(t_list *tok_l);
 void			init_shell(char **environ, t_list *cmd_lst);
 void			free_split(char **str);
-void			print_error(char *cmd_name, char *msg);
+void			print_error(char *cmd_name, char *msg, t_bool new_line);
+t_list			*get_n_lst(t_list *lst, int n);
 
 #endif

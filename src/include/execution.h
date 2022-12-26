@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 22:29:55 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 10:20:56 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ int				fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2]);
 char			**to_env(void);
 void			child_exit_stat(char *cmd_name, int stat_loc);
 t_bool			is_dir(char *name);
+void			wait_child(int pid, t_list *cmd);
 
 #endif

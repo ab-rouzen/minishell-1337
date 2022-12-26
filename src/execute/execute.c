@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 23:23:11 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 10:30:57 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2]);
 int	execute(t_list *cmd_lst)
 {
 	int			childpid;
-	int			stat_loc;
 	int			(*piper)[2];
 	int			i;
 	t_list		*prev;
@@ -26,6 +25,7 @@ int	execute(t_list *cmd_lst)
 		return (TRUE);
 	piper = init_pipe(cmd_lst);
 	i = 0;
+	prev = NULL;
 	while (cmd_lst)
 	{
 		prev = cmd_lst;
@@ -37,8 +37,7 @@ int	execute(t_list *cmd_lst)
 		i++;
 		cmd_lst = cmd_lst->next;
 	}
-	if (waitpid(childpid, &stat_loc, WUNTRACED) != -1)
-		child_exit_stat(TCMD(prev)->cmd_name, stat_loc);
+	wait_child(childpid, prev);
 	return (0);
 }
 
