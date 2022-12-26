@@ -121,28 +121,15 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 			if (str[0][ft_strlen(str[0]) - 1] == '+')
 			{
 				if (ft_find_variable(*ms_export, str,cmd[i], 0) == 0)
-				{
-					puts ("1 here");
 					ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
-				}
 			}
 			else
-			{
 				if (ft_find_variable(*ms_export, str,cmd[i], 1) == 0)
-				{
-					puts ("2 here");
 					ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
-				}
-			}
 		}
 		else if (!ft_strchr(cmd[i], '='))
-		{
 			if (ft_find_variable(*ms_export, str,cmd[i], 1) == 0)
-			{
-				puts ("3 here");
 				ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, FALSE));
-			}
-		}
 	}
 	return (0);
 }
