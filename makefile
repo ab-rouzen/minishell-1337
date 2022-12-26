@@ -14,7 +14,7 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 				utils_cmd_construct utils_environ
 M_SRC_EXEC_NAME = execution_utils mini_shell heredoc utils \
 				execute redirection heredoc_utils signals \
-				builtin_utils 1_builtin_utils 2_builtin_utils \
+				builtin_utils 1_builtin_utils 2_builtin_utils 3_builtin_utils \
 
 M_SRC_PRIME_NAME = init main #exec_main 
 M_INCLUDE_NAME = lexer minishell parser quoting execution

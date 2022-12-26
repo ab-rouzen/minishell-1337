@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 22:26:55 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/26 05:25:51 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ int	ft_builtin(t_list	*cmd)
 	else if (!ft_strcmp(cmd_name, "export"))
 	{
 		if (((t_cmd_lst*)cmd->content)->cmd_args[1])
-			ft_export(&g_data.env_lst, ((t_cmd_lst*)cmd->content)->cmd_args);
+			return (ft_export(&g_data.env_lst, ((t_cmd_lst*)cmd->content)->cmd_args));
 		else
-			ft_print_expo(g_data.env_lst, cmd_name, cmd);
+			return (ft_print_expo(g_data.env_lst, cmd_name, cmd));
 	}
 	else if (!ft_strcmp(cmd_name, "pwd"))
 		return (ft_pwd(cmd));
 	else if (!ft_strcmp(cmd_name, "env"))
-		ft_print_expo(g_data.env_lst, cmd_name, cmd);
+		return (ft_print_expo(g_data.env_lst, cmd_name, cmd));
 	else if (!ft_strcmp(cmd_name, "unset"))
-		ft_unset(&g_data.env_lst, ((t_cmd_lst*)cmd->content)->cmd_name);
+		return (ft_unset(&g_data.env_lst, ((t_cmd_lst*)cmd->content)->cmd_args));
 	else if (!ft_strcmp(cmd_name, "exit"))
 	{
 		ft_exit();
-		exit (1);
+		exit (0);
 	}
 }

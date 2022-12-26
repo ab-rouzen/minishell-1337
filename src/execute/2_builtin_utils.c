@@ -73,3 +73,63 @@ int	ft_cd(char *cmd, t_env_list *ms_list, t_list *cmd_list)
 	}
 	return (ft_cd_norm_1(cmd, ms_list, cwd));
 }
+
+
+int	ft_unset(t_env_list **ms_list, char **cmd)
+{
+	t_env_list	*prev;
+	t_env_list	*tmp;
+	int			i;
+
+	i = 0;
+	prev = NULL;
+	while (cmd[++i])
+	{
+		ms_list = &(*ms_list);
+		while (*ms_list)
+		{
+			if (!ft_strcmp((*ms_list)->variable, cmd[i]))
+			{
+				tmp = *ms_list;
+				if (prev == NULL)
+					*ms_list = (*ms_list)->next;
+				else
+					prev->next = (*ms_list)->next;
+				free (tmp);
+				break ;
+			}
+			prev = *ms_list;
+			ms_list = &(*ms_list)->next;
+		}
+	}
+	return (0);
+}
+
+int	ft_export(t_env_list **ms_export, char **cmd)
+{
+	char **str;
+	int i;
+
+	i = 0;
+	while (cmd[++i])
+	{
+		str = ft_split_export(cmd[i]);
+		if (ft_check_variable(str, cmd[i]))
+			return (1);
+		if (ft_strchr(cmd[i], '='))
+		{
+			if (str[0][ft_strlen(str[0]) - 1] == '+')
+			{
+				if (ft_find_variable(*ms_export, str,cmd[i], 0) == 0)
+					ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
+			}
+			else
+				if (ft_find_variable(*ms_export, str,cmd[i], 1) == 0)
+					ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
+		}
+		else if (!ft_strchr(cmd[i], '='))
+			if (ft_find_variable(*ms_export, str,cmd[i], 1) == 0)
+				ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, FALSE));
+	}
+	return (0);
+}
