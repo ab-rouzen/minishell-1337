@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 13:09:12 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/25 20:27:50 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	**here_doc(t_list *cmd_lst)
 	delim = get_heredoc_delim(cmd_lst);
 	while (cmd_lst && hdoc_fdes)
 	{
-		cmd_hdoc_num = get_redir_lst_heredoc_num(\
-		((t_cmd_lst*)cmd_lst->content)->redir_lst);
+		cmd_hdoc_num = get_redir_lst_heredoc_num(TCMD(cmd_lst)->redir_lst);
 		if (cmd_hdoc_num == 0)
 		{
 			cmd_lst = cmd_lst->next;
@@ -54,7 +53,7 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 
 	i = 0;
 	hdoc_fdes = malloca(size * sizeof(int));
-	//printf("hdoc size = [%d]\n", size);
+	printf("hdoc size = [%d]\n", size);
 	while (i < size)
 	{
 		tmp_id = ft_itoa(hdoc_id++);
@@ -62,6 +61,7 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 		if (tmp_fd > 0)
 		{
 			hdoc_fdes[i] = tmp_fd;
+			printf("new fd = [%d] index[%d]\n", hdoc_fdes[i], i);
 			i++;
 		}
 		free(tmp_id);
@@ -70,14 +70,14 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 }
 
 
-/* Creates the file "fname" and append input to it */
-/*untill delim is encountered */
 
 void	*ft_awaiting_read(void)
 {
 	
 }
 
+/* Creates the file "fname" and append input to it */
+/*untill delim is encountered */
 static int	create_file(char *fname, char *delim)
 {
 	char	*line;
@@ -92,16 +92,16 @@ static int	create_file(char *fname, char *delim)
 	if (filedes < 0)
 		return (filedes);
 	//printf("look for delim[%s]\n", delim);
-	rl_event_hook = ft_awaiting_read;
-	ft_sig_handler(HEREDOC);
+	//rl_event_hook = ft_awaiting_read;
+	//ft_sig_handler(HEREDOC);
 	while (TRUE)
 	{
 		line = readline("> ");
-		if (g_data.close_hdc == 1)
-		{
-			close(filedes);
-			break ;
-		}
+		// if (g_data.close_hdc == 1)
+		// {
+		// 	close(filedes);
+		// 	break ;
+		// }
 		//printf("close_hdc = [%d]\n", g_data.close_hdc);
 		if (ft_strcmp(line, delim) == 0 || line == NULL)
 		{
@@ -116,7 +116,7 @@ static int	create_file(char *fname, char *delim)
 	}
 	filedes = open(fpath, O_RDONLY);
 	unlink(fpath);
-	//printf("hdoc fd -> %d\n", filedes);
+	printf("hdoc fd -> %d\n", filedes);
 	return (filedes);
 }
 

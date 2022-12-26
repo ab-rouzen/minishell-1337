@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/24 17:02:56 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 11:15:45 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	get_cmd_path(t_list *cmd_lst)
 	path = ft_split(get_path(), ':');
 	i = 0;
 	cmd_name = ((t_cmd_lst*)cmd_lst->content)->cmd_name;
-	if (access(cmd_name, F_OK) == 0)
-		return (TRUE);
 	if (cmd_name && *cmd_name)
 		while (path[i])
 		{
@@ -55,7 +53,7 @@ int	get_cmd_path(t_list *cmd_lst)
 			tmp = ft_strjoin_alloca(tmp, cmd_name, malloca);
 			if (access(tmp, F_OK) == 0)
 			{
-				((t_cmd_lst*)cmd_lst->content)->cmd_name = tmp;
+				TCMD(cmd_lst)->cmd_name = tmp;
 				//printf("accessed here: %s\n", tmp);
 				return (free(path), TRUE);
 			}
@@ -64,23 +62,18 @@ int	get_cmd_path(t_list *cmd_lst)
 	return (free(path), FALSE);
 }
 
-int	check_cmd(t_bool status, t_list **cmd_lst)
+int	check_cmd(t_list *cmd)
 {
-	t_cmd_lst	*cmd;
-
-	cmd = (t_cmd_lst*)(*cmd_lst)->content;
-	if (status == FALSE)
-	{
-		//*cmd_lst = (*cmd_lst)->next;
-		// if (get_redir_lst_heredoc_num(cmd->redir_lst))
-		// 	g_data.hdoc_cmd_no++;
-		if (cmd->cmd_name == NULL)
-			return (FALSE);
-		printf("%s: %s: command not found\n", SHELL_NAME, cmd->cmd_name);
-		return (status);
-	}
-	return (status);
-	//continue ;
+	if (TCMD(cmd)->cmd_name == NULL)
+		return (FALSE);
+	get_cmd_path(cmd);
+	if (access(TCMD(cmd)->cmd_name, F_OK))
+		return (print_error(TCMD(cmd)->cmd_name, CMD_NOT_FOUND, 1), FALSE);
+	if (is_dir(TCMD(cmd)->cmd_name))
+		return (print_error(TCMD(cmd)->cmd_name, CMD_IS_DIR, 1), FALSE);
+	if (access(TCMD(cmd)->cmd_name, F_OK|X_OK))
+		return(print_error(TCMD(cmd)->cmd_name, CMD_PERM, 1), FALSE);
+	return (TRUE);
 }
 
 int	ft_envlstsize(t_env_list *lst)
@@ -114,10 +107,29 @@ char **to_env(void)
 	{
 		tmp = ft_strjoin_alloca(env_lst->variable, "=", malloca);
 		env[i] = ft_strjoin_alloca(tmp, env_lst->value, malloca);
-		//printf("env[%s]\n", env[i]);
 		i++;
 		env_lst = env_lst->next;
 	}
 	env[i] = NULL;
 	return (env);
+}
+
+/*prints error into STDERR [SH: 'cmd_name': 'msg']*/
+void	print_error(char *cmd_name, char *msg, t_bool new_line)
+{
+	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(cmd_name, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	if (new_line)
+		ft_putstr_fd("\n", STDERR_FILENO);	
+}
+
+t_bool	is_dir(char *name)
+{
+	struct stat	f_stat;
+	
+	stat(name, &f_stat);
+	return (!S_ISREG(f_stat.st_mode));
 }
