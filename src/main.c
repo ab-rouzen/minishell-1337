@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 12:34:34 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 15:27:40 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	main(int argc, char *argv[], char **environ)
 		init_shell(environ, cmd_lst);
 		line = readline(SHELL_PROMPT);
 		if (!line)
-			exit(0) ;
-		if (line && *line)
+			exit(0);
+		if (*line)
 			add_history(line);
 		cmd_lst = parse(line);
 		if (cmd_lst)

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 12:38:05 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 15:25:34 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ char			**to_env(void);
 void			child_exit_stat(char *cmd_name, int stat_loc);
 t_bool			is_dir(char *name);
 void			wait_child(int pid, t_list *cmd);
+int				ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i);
+int				builtin_cmd_only(t_list *cmd);
 
 #endif
