@@ -6,12 +6,16 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 15:25:34 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 23:05:04 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
+# include "./minishell.h"
+# define F_RED_O O_CREAT | O_TRUNC | O_WRONLY
+# define F_RED_OA O_CREAT | O_APPEND | O_WRONLY
+# define F_PERM  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 
 typedef struct s_env_list
 {
@@ -42,7 +46,7 @@ char			*hdoc_var_expand(char *line);
 
 int				set_redirection(t_list *cmd_lst);
 void			duplicate_redir_fd(t_list *cmd);
-void			set_redir_fd(int *fd, int io, int new_fd);
+void			set_redir_fd(t_list *cmd, enum e_token tok, char *file);
 void			close_io_fd(t_list *cmd);
 
 /*************************   pipe  ***************************/

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:33:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/22 18:21:45 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 21:20:27 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ void	join_adjacent_token(t_list **tok_l, enum e_token tok)
 	head = *tok_l;
 	while (*tok_l)
 	{
-		if (((t_token *)(*tok_l)->content)->tkn == tok)
+		if (TTOKEN(*tok_l)->tkn == tok)
 		{
-			if ((*tok_l)->next
-				&& ((t_token *)(*tok_l)->next->content)->tkn == tok)
+			if ((*tok_l)->next && TTOKEN(*tok_l)->tkn == tok)
 			{
-				((t_token *)(*tok_l)->content)->val = \
-				ft_strjoin_alloca(((t_token *)(*tok_l)->content)->val, \
-				((t_token *)(*tok_l)->next->content)->val, malloca);
+				TTOKEN(*tok_l)->val = \
+				ft_strjoin_alloca(TTOKEN(*tok_l)->val, \
+				TTOKEN((*tok_l)->next)->val, malloca);
 				(*tok_l)->next = (*tok_l)->next->next;
 				continue ;
 			}
@@ -44,20 +43,17 @@ void	join_token(t_list *start, enum e_token tok_stop)
 	i = 0;
 	if (start == NULL)
 		return ;
-	//tmp = start->next;
 	val = NULL;
-	if (((t_token *)start->content)->tkn != tok_stop)
+	if (TTOKEN(start)->tkn != tok_stop)
 	{
-		val = ft_strdup_alloca(((t_token *)start->content)->val, malloca);
-		//start = start->next;
-		while (start->next && ((t_token *)start->next->content)->tkn != tok_stop)
+		val = ft_strdup_alloca(TTOKEN(start)->val, malloca);
+		while (start->next && TTOKEN(start->next)->tkn != tok_stop)
 		{
-			val = ft_strjoin_alloca(val, ((t_token *)start->next->content)->val, \
-			malloca);
+			val = ft_strjoin_alloca(val, TTOKEN(start->next)->val, malloca);
 			start->next = start->next->next;
 		}
-		((t_token *)start->content)->val = val;
+		TTOKEN(start)->val = val;
 		return ;
 	}
-	((t_token *)start->content)->val = ft_strdup_alloca("\0", malloca);
+	TTOKEN(start)->val = ft_strdup_alloca("\0", malloca);
 }

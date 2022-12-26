@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:41:33 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 10:35:08 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 22:56:48 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	open_file_redir_in(char *file)
 {
-	int fd_in;
+	int	fd_in;
 
 	fd_in = open(file, O_RDONLY);
 	if (fd_in == -1)
@@ -27,7 +27,7 @@ int	open_file_redir_in(char *file)
 
 int	open_file(char *file, int oflag, int perm)
 {
-	int fd_in;
+	int	fd_in;
 
 	fd_in = open(file, oflag, perm);
 	if (fd_in == -1)
@@ -43,29 +43,23 @@ int	open_file(char *file, int oflag, int perm)
 int	set_redirection(t_list *cmd_lst)
 {
 	int				index;
-	t_redir_list	*redir_node;
 	t_cmd_lst		*cmd;
 	t_list			*redir_lst;
 
-	cmd = (t_cmd_lst*)cmd_lst->content;
+	cmd = (t_cmd_lst *)cmd_lst->content;
 	redir_lst = cmd->redir_lst;
 	index = 0;
 	while (redir_lst)
 	{
-		redir_node = (t_redir_list*)redir_lst->content;
-		if (redir_node->tok == TOK_REDI_I)
-			set_redir_fd(&cmd->fd_in, 0, open_file(redir_node->file, O_RDONLY, 0));
-		else if (redir_node->tok == TOK_REDI_O)
-			set_redir_fd(&cmd->fd_out, 1, open_file(redir_node->file, O_CREAT|O_TRUNC|O_WRONLY, \
-			S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH));
-		else if (redir_node->tok == TOK_REDI_O_APP)
-			set_redir_fd(&cmd->fd_out, 1, open_file(redir_node->file, O_CREAT|O_APPEND|O_WRONLY, \
-			S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH));
-		else if (redir_node->tok == TOK_HEREDOC)
-		{
-			printf("hdoc: cmdno[%d] fd[%d] --- \n", g_data.hdoc_cmd_no, g_data.fd_heredoc[g_data.hdoc_cmd_no][index]);
-			set_redir_fd(&cmd->fd_in, 0, g_data.fd_heredoc[g_data.hdoc_cmd_no][index++]);
-		}
+		if (TRDIR(redir_lst)->tok == TOK_REDI_I)
+			set_redir_fd(cmd, TOK_REDI_I, TRDIR(redir_lst)->file);
+		else if (TRDIR(redir_lst)->tok == TOK_REDI_O)
+			set_redir_fd(cmd, TOK_REDI_O, TRDIR(redir_lst)->file);
+		else if (TRDIR(redir_lst)->tok == TOK_REDI_O_APP)
+			set_redir_fd(cmd, TOK_REDI_O_APP, TRDIR(redir_lst)->file);
+		else if (TRDIR(redir_lst)->tok == TOK_HEREDOC)
+			set_redir_fd(&cmd->fd_in, 0, g_data.fd_heredoc \
+			[g_data.hdoc_cmd_no][index++]);
 		if (cmd->fd_in == FD_ERROR || cmd->fd_out == FD_ERROR)
 			return (FALSE);
 		redir_lst = redir_lst->next;
@@ -74,22 +68,25 @@ int	set_redirection(t_list *cmd_lst)
 }
 
 /*sets argument fd to new_fd and closes fd if non STD*/
-void	set_redir_fd(int *fd, int io, int new_fd)
+void	set_redir_fd(t_list *cmd, enum e_token tok, char *file)
 {
-	if (io == STDIN_FILENO)
+	if (tok == TOK_REDI_I)
 	{
-		if (*fd != STDIN_FILENO)
+		if (TCMD(cmd)->fd_in != STDIN_FILENO)
 		{
-			printf("%d input closed\n", *fd);
-			close(*fd);
+			//printf("%d input closed\n", *fd);
+			close(TCMD(cmd)->fd_in);
 		}
-		*fd = new_fd;
+		TCMD(cmd)->fd_in = open_file(file, O_RDONLY, 0);
 	}
-	else if (io == STDOUT_FILENO)
+	else if (tok == TOK_REDI_O_APP || tok == TOK_REDI_O)
 	{
-		if (*fd != STDOUT_FILENO)
-			close(*fd);
-		*fd = new_fd;
+		if (TCMD(cmd)->fd_out != STDOUT_FILENO)
+			close(TCMD(cmd)->fd_out);
+		if (tok == TOK_REDI_O_APP)
+			TCMD(cmd)->fd_out = open_file(file, F_RED_OA, F_PERM);
+		else
+			TCMD(cmd)->fd_out = open_file(file, F_RED_O, F_PERM);	
 	}
 }
 
@@ -111,8 +108,6 @@ void	close_io_fd(t_list *cmd)
 /*uses dup2 to duplicate command fd std io into the new assigned io*/
 void	duplicate_redir_fd(t_list *cmd_node)
 {
-	// printf("input: %d, duped to %d\n",TCMD(cmd_node)->fd_in , dup2(TCMD(cmd_node)->fd_in, STDIN_FILENO));
-	// printf("output: %d, duped to %d\n", TCMD(cmd_node)->fd_out, dup2(TCMD(cmd_node)->fd_out, STDOUT_FILENO));
 	dup2(TCMD(cmd_node)->fd_in, STDIN_FILENO);
 	dup2(TCMD(cmd_node)->fd_out, STDOUT_FILENO);
 }

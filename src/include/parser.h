@@ -6,13 +6,13 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:02:39 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 12:45:35 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 22:46:05 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-# define TCMD(x) ((t_cmd_lst*)(x)->content)
+# define TCMD(x) ((t_cmd_lst *)(x)->content)
 # include "minishell.h"
 
 int	parse_line(t_list *tok_l);

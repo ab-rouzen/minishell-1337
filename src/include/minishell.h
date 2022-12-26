@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 12:38:26 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/26 22:54:24 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define FREE_ALL 0
 # define FD_ERROR -1
 # define MAIN 'm'
-# define TTOKEN(x) ((t_token*)(x)->content)
+# define TTOKEN(x) ((t_token *)(x)->content)
+# define TRDIR(x) ((t_redir_list *)(x)->content)
 # define HEREDOC 'h'
 # define SHELL 's'
 
@@ -52,7 +53,7 @@
 # include <unistd.h>
 #include <stdbool.h>
 
-enum			e_token
+enum	e_token
 {
 	TOK_WORD,
 	TOK_WHITESPACE,
@@ -66,7 +67,7 @@ enum			e_token
 	TOK_DQUOTE,
 	TOK_DOLLAR,
 	TOK_NULL
-};
+}		e_token;
 
 typedef struct s_shell
 {
@@ -75,6 +76,7 @@ typedef struct s_shell
 	int			**fd_heredoc;
 	int			hdoc_cmd_no;
 	int			close_hdc;
+	t_bool		exec;
 }				t_shell;
 
 typedef struct s_token_lst
@@ -132,9 +134,10 @@ t_list			*create_cmd_node(t_list *tok_l, char **cmd_words, \
 t_list			*get_nlst(t_list *lst, int n);
 char			*ft_strjoin_alloca(char const *s1, char const *s2, void*(alloc)(size_t));
 void			heredoc_no_expand(t_list *tok_l);
-void			init_shell(char **environ, t_list *cmd_lst);
+void			init_shell(char **environ);
 void			free_split(char **str);
 void			print_error(char *cmd_name, char *msg, t_bool new_line);
 t_list			*get_n_lst(t_list *lst, int n);
+void			reset_vars(void);
 
 #endif
