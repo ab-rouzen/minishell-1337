@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 05:21:41 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/26 21:16:10 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	ft_find_variable_norm(t_env_list *ms_list, char **str, char *cmd) // free
 {
 	if (!ft_strchr(cmd, '='))
 	{
+		
 		while (ms_list)
 		{
 
@@ -105,6 +106,7 @@ int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i) // free
 				}
 				else
 				{
+					ms_list->exported = TRUE;
 					ms_list->value = ft_strdup(ft_strjoin(ms_list->value, str[1]));
 					return (1);
 				}
