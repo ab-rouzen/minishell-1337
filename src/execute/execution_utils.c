@@ -34,7 +34,10 @@ t_env_list	*ft_lstnew1(void **content, t_bool exported)
 		new_elem->variable = ft_strdup(content[0]);
 		if (content[1] == NULL)
 			content[1] = ft_strdup("");
-		new_elem->value = ft_strdup(content[1]);
+		if (!ft_strcmp(content[0], "SHLVL"))
+			new_elem->value = ft_itoa(ft_atoi(content[1]) + 1);
+		else
+			new_elem->value = ft_strdup(content[1]);
 		new_elem->exported = exported;
 		new_elem->next = NULL;
 	}

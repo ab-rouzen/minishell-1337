@@ -8,7 +8,7 @@ M_INCL_M = $(addprefix $(M_INCL_DIR), $(M_INCL_NAME))
 M_SRC_PRIME_DIR = src/
 M_SRC_PARSE_DIR = src/parse/
 M_SRC_EXEC_DIR = src/execute/
-FALGS = $(CPPFLAGS) -Wall -Wextra #-fsanitize=address
+FALGS = $(CPPFLAGS) -Wall -Wextra -fsanitize=address
 M_SRC_PARSE_NAME = lexer lexer_2 \
 				lexer_redirection utils utils_parser utils_quotes \
 				utils_tokenizer parser parser_pipe \

@@ -40,8 +40,6 @@ int	ft_find_oldpwd(char cwd[255], t_env_list *tmp, t_list *cmd_list)
 		{
 			ft_putstr_fd(ms_list->value, ((t_cmd_lst *)cmd_list->content)->\
 				fd_out);
-			ft_putstr_fd(ms_list->value, ((t_cmd_lst *)cmd_list->content)->\
-			fd_out);
 			ft_putstr_fd("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
 			chdir(ms_list->value);
 			ft_update_export(ms_list, cwd);
