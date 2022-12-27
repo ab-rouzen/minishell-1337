@@ -49,5 +49,5 @@ void	ft_sig_handler(char location)
 
 void	*ft_awaiting_read(void)
 {
-	return ;
+	return NULL;
 }

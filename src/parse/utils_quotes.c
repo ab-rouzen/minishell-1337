@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:33:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 21:20:27 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 11:58:26 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	join_adjacent_token(t_list **tok_l, enum e_token tok)
 	{
 		if (TTOKEN(*tok_l)->tkn == tok)
 		{
-			if ((*tok_l)->next && TTOKEN(*tok_l)->tkn == tok)
+			if ((*tok_l)->next && TTOKEN((*tok_l)->next)->tkn == tok)
 			{
 				TTOKEN(*tok_l)->val = \
 				ft_strjoin_alloca(TTOKEN(*tok_l)->val, \

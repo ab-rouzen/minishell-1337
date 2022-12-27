@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 23:05:04 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 13:36:17 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # define F_RED_OA O_CREAT | O_APPEND | O_WRONLY
 # define F_PERM  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 
-typedef struct s_env_list
-{
-	void				*variable;
-	void				*value;
-	t_bool				exported;
-	struct s_env_list	*next;
-}					t_env_list;
+// typedef struct s_env_list
+// {
+// 	void				*variable;
+// 	void				*value;
+// 	t_bool				exported;
+// 	struct s_env_list	*next;
+// }					t_env_list;
 
 t_env_list		*ft_lstlast1(t_env_list *lst);
 void			ft_lstadd_back1(t_env_list **lst, t_env_list *new);
@@ -46,7 +46,7 @@ char			*hdoc_var_expand(char *line);
 
 int				set_redirection(t_list *cmd_lst);
 void			duplicate_redir_fd(t_list *cmd);
-void			set_redir_fd(t_list *cmd, enum e_token tok, char *file);
+void			set_redir_fd(t_cmd_lst *cmd, enum e_token tok, char *file);
 void			close_io_fd(t_list *cmd);
 
 /*************************   pipe  ***************************/

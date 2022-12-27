@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:16:38 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/02 21:25:13 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 11:47:51 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_list	*new_token_lst(enum e_token token, char *line, int n_char)
 {
 	t_token	*new_tkn_lst;
 
+	//printf("called for [%d]\n", token);
 	new_tkn_lst = malloca(sizeof(t_token));
 	if (new_tkn_lst == NULL)
 		return (NULL);
