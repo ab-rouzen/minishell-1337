@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:00:47 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 21:45:29 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/27 22:12:28 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ void	init_shell(char **environ)
 	rl_catch_signals = 0;
 	rl_point = 0;
 	if (!environ[0])
-	{
-		printf("envi %s\n", environ[1]);
 		g_data.env_lst = ft_env(ft_initiate_env_lst(environ));
-	}
 	else
 		g_data.env_lst = ft_env(environ);
 	g_data.exit_status = 0;

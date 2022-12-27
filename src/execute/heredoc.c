@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 14:52:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 22:31:45 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	**here_doc(t_list *cmd_lst)
 	hdoc_fdes = allocate_hdoc_fd(cmd_lst);
 	i = 0;
 	delim = get_heredoc_delim(cmd_lst);
-	ft_sig_handler(HEREDOC);
 	while (cmd_lst && hdoc_fdes)
 	{
 		cmd_hdoc_num = \
@@ -87,11 +86,22 @@ static int	create_file(char *fname, char *delim)
 	S_IWUSR | S_IRUSR);
 	if (filedes < 0)
 		return (filedes);
+	rl_event_hook = ft_awaiting_read();
 	while (TRUE)
 	{
+		ft_sig_handler(HEREDOC);
 		line = readline("> ");
-		if (g_data.close_hdc == TRUE)
+		if (g_data.close_hdc == 1)
+		{
+			close(filedes);
+			break ;
+		}
+		if (g_data.close_hdc == 1)
+		{
+			printf("dkhlna\n");
+			break ;
 			return (close(filedes), -1);
+		}
 		if (ft_strcmp(line, delim) == 0 || line == NULL)
 			break ;
 		line = hdoc_var_expand(line);
