@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:33:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 13:59:18 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 17:50:39 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	join_token(t_list *start, enum e_token tok_stop)
 	char	*val;
 
 	i = 0;
+	(void)(tmp);
 	if (start == NULL)
 		return ;
 	val = NULL;

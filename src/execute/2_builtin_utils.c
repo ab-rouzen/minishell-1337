@@ -38,6 +38,13 @@ int	ft_find_oldpwd(char cwd[255], t_env_list *tmp, t_list *cmd_list)
 	{
 		if (!ft_strcmp(ms_list->variable, "OLDPWD"))
 		{
+			// if (!ft_strcmp(ms_list->variable, " "))
+			// {
+			// 	print_error("cd", "OLDPWD not set", 1);
+			// 	return (1);
+			// }
+			ft_putstr_fd(ms_list->value, ((t_cmd_lst *)cmd_list->content)->\
+				fd_out);
 			ft_putstr_fd(ms_list->value, ((t_cmd_lst *)cmd_list->content)->\
 			fd_out);
 			ft_putstr_fd("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);

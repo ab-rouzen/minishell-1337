@@ -55,6 +55,11 @@ t_env_list	*ft_env(char **env)
 	{
 		str = ft_split(env[i], '=');
 		ft_lstadd_back1(&elem, ft_lstnew1((void **)str, TRUE));
+		// if (str[0] && str[1])
+			// free_word(str);
+			free_split(str);
+		// else if (str[0])
+		// 	free(str[0]);
 		i++;
 	}
 	return (elem);

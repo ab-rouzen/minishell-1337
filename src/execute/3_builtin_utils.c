@@ -84,7 +84,7 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 	{
 		str = ft_split_export(cmd[i]);
 		if (ft_check_variable(str, cmd[i]))
-			return (1, free_word(str));
+			return (free_word(str), 1);
 		if (ft_strchr(cmd[i], '='))
 		{
 			if (str[0][ft_strlen(str[0]) - 1] == '+')
@@ -100,5 +100,5 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 			if (ft_find_variable(*ms_export, str, cmd[i], 1) == 0)
 				ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, FALSE));
 	}
-	return (0, free_word(str));
+	return (free_word(str), 0);
 }
