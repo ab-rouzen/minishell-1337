@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:35:28 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 13:55:13 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:26:42 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	expand_env_var(t_list **tok_l)
 	heredoc_no_expand(*tok_l);
 	if (*tok_l && ((t_token *)(*tok_l)->content)->tkn == TOK_DOLLAR)
 	{
-		if ((*tok_l)->next && ((t_token *)((*tok_l)->next->content))->tkn == TOK_WORD)
+		if ((*tok_l)->next && \
+		((t_token *)((*tok_l)->next->content))->tkn == TOK_WORD)
 		{
 			tmp = (*tok_l)->next->next;
 			((t_token *)(*tok_l)->content)->val = \

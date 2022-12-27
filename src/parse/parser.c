@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 13:46:32 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:26:22 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_list	*parse(char *line)
 		print_error(SYNX_ERR, QOT_ERR, 1);
 		return (NULL);
 	}
-	//printf("token [%d]--> val[%s]\n", TTOKEN(tok_l)->tkn, TTOKEN(tok_l)->val);
 	join_adjacent_token(&tok_l, TOK_WORD);
 	delete_element(&tok_l, TOK_WHITESPACE);
 	matched = match_pipeline(tok_l);

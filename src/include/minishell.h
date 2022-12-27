@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 14:34:48 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:10:56 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,10 @@
 # define FREE_ALL 0
 # define FD_ERROR -1
 # define MAIN 'm'
-//# define TTOKEN(x) ((t_token *)(x)->content)
-//# define TRDIR(x) ((t_redir_list *)(x)->content)
 # define HEREDOC 'h'
 # define SHELL 's'
 # include "../../lib/libft/libft.h"
 # include "../../lib/get_next_line/get_next_line_bonus.h"
-//# include "../../lib/printf/printf_bonus.h"
 # include "./types.h"
 # include "assert.h"
 # include "lexer.h"
@@ -46,63 +43,11 @@
 # include <sys/errno.h>
 # include <fcntl.h>
 # include <dirent.h>
-// # include "/Users/imittous/.brew/opt/readline/include/readline/readline.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
 # include <stdbool.h>
-
-// enum	e_token
-// {
-// 	TOK_WORD,
-// 	TOK_WHITESPACE,
-// 	TOK_PIPE,
-// 	TOK_REDI_I,
-// 	TOK_REDI_O,
-// 	TOK_REDI_O_APP,
-// 	TOK_HEREDOC,
-// 	TOK_QUOTE,
-// 	TOK_SQUOTE,
-// 	TOK_DQUOTE,
-// 	TOK_DOLLAR,
-// 	TOK_NULL
-// };
-
-// typedef struct s_shell
-// {
-// 	int			exit_status;
-// 	t_env_list	*env_lst;
-// 	int			**fd_heredoc;
-// 	int			hdoc_cmd_no;
-// 	int			close_hdc;
-// 	t_bool		exec;
-// }				t_shell;
-
-// typedef struct s_token_lst
-// {
-// 	enum e_token	tkn;
-// 	int				n_char;
-// 	int				index;
-// 	char			*val;
-// }					t_token;
-
-// typedef struct s_redir_list
-// {
-// 	enum e_token	tok;
-// 	char			*file;
-// }					t_redir_list;
-
-// typedef struct s_cmd_lst
-// {
-// 	char		*cmd_name;
-// 	char		**cmd_args;
-// 	t_list		*redir_lst;
-// 	int			fd_in;
-// 	int			fd_out;
-// }				t_cmd_lst;
-
-// typedef int		t_bool;
 
 extern t_shell	g_data;
 

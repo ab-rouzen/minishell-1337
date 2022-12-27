@@ -6,24 +6,16 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:06:24 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:25:21 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 # include "./minishell.h"
-# define F_RED_O O_CREAT | O_TRUNC | O_WRONLY
-# define F_RED_OA O_CREAT | O_APPEND | O_WRONLY
-# define F_PERM  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
-
-// typedef struct s_env_list
-// {
-// 	void				*variable;
-// 	void				*value;
-// 	t_bool				exported;
-// 	struct s_env_list	*next;
-// }					t_env_list;
+# define F_RED_O "O_CREAT | O_TRUNC | O_WRONLY"
+# define F_RED_OA "O_CREAT | O_APPEND | O_WRONLY"
+# define F_PERM  "S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH"
 
 t_env_list		*ft_lstlast1(t_env_list *lst);
 void			ft_lstadd_back1(t_env_list **lst, t_env_list *new);
@@ -51,7 +43,7 @@ void			close_io_fd(t_cmd_lst *cmd);
 
 /*************************   pipe  ***************************/
 
-int				(*init_pipe(t_list *cmd_lst))[2];
+void				init_pipe(t_list *cmd_lst, int (**piper)[2]);
 void			dup_pipe(int fd_in, int fd_out);
 
 
@@ -67,7 +59,6 @@ int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
 int				get_cmd_path(t_cmd_lst *cmd);
 int				check_cmd(t_cmd_lst *cmd);
-int				(*init_pipe(t_list *cmd_lst))[2];
 int				ft_builtin(t_list	*tmp);
 int				fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2]);
 char			**to_env(void);
