@@ -26,7 +26,9 @@ void	ft_lstadd_back1(t_env_list **lst, t_env_list *new)
 t_env_list	*ft_lstnew1(void **content, t_bool exported)
 {
 	t_env_list	*new_elem;
-	if (!(new_elem = malloc(sizeof(t_env_list))))
+
+	new_elem = malloc(sizeof(t_env_list));
+	if (!new_elem)
 		return (NULL);
 	if (content != NULL)
 	{
@@ -50,13 +52,11 @@ t_env_list	*ft_env(char **env)
 	elem = NULL;
 	i = 0;
 	if (!env)
-	{
 		elem = ft_lstnew1((void **)str, TRUE);
-	}
 	while (env[i])
 	{
 		str = ft_split(env[i], '=');
-		ft_lstadd_back1(&elem, ft_lstnew1((void **)str, TRUE)); 
+		ft_lstadd_back1(&elem, ft_lstnew1((void **)str, TRUE));
 		i++;
 	}
 	return (elem);

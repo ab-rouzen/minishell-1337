@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:22:07 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:57:08 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 
 void	init_pipe(t_list *cmd_lst, int (**piper)[2])
 {
-	;
 	int	size;
 
 	size = ft_lstsize(cmd_lst);

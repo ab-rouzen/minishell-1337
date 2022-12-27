@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:07:17 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:56:28 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,31 @@ int	ft_check_builtin(t_list	*cmd_lst)
 
 	if (cmd_lst == NULL)
 		return (FALSE);
-	cmd_name = ((t_cmd_lst*)cmd_lst->content)->cmd_name;
-	if (!ft_strcmp(cmd_name, "echo") || !ft_strcmp(cmd_name, "cd") ||
-		!ft_strcmp(cmd_name, "pwd") || !ft_strcmp(cmd_name, "export") ||
-		!ft_strcmp(cmd_name, "env") || !ft_strcmp(cmd_name, "unset") ||
-		!ft_strcmp(cmd_name, "exit"))
+	cmd_name = ((t_cmd_lst *)cmd_lst->content)->cmd_name;
+	if (!ft_strcmp(cmd_name, "echo") || !ft_strcmp(cmd_name, "cd")
+		|| !ft_strcmp(cmd_name, "pwd") || !ft_strcmp(cmd_name, "export")
+		|| !ft_strcmp(cmd_name, "env") || !ft_strcmp(cmd_name, "unset")
+		|| !ft_strcmp(cmd_name, "exit"))
 	{
-		return (1);	
+		return (1);
 	}
 	return (0);
 }
 
-int ft_builtin_norm1(t_list *cmd)
+int	ft_builtin_norm1(t_list *cmd)
 {
 	char	*cmd_name;
 
-	cmd_name = ((t_cmd_lst*)cmd->content)->cmd_name;
+	cmd_name = ((t_cmd_lst *)cmd->content)->cmd_name;
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (ft_pwd(cmd));
 	else if (!ft_strcmp(cmd_name, "env"))
 		return (ft_env(g_data.env_lst));
 	else if (!ft_strcmp(cmd_name, "unset"))
-		return (ft_unset(&g_data.env_lst, ((t_cmd_lst*)cmd->content)->\
+		return (ft_unset(&g_data.env_lst, ((t_cmd_lst *)cmd->content)->\
 			cmd_args));
 	else if (!ft_strcmp(cmd_name, "exit"))
-		return (ft_exit(((t_cmd_lst*)cmd->content)->cmd_args, cmd));
+		return (ft_exit(((t_cmd_lst *)cmd->content)->cmd_args, cmd));
 	return (0);
 }
 
@@ -51,17 +51,17 @@ int	ft_builtin(t_list	*cmd)
 {
 	char	*cmd_name;
 
-	cmd_name = ((t_cmd_lst*)cmd->content)->cmd_name;
+	cmd_name = ((t_cmd_lst *)cmd->content)->cmd_name;
 	if (!ft_strcmp(cmd_name, "echo"))
-		return (ft_echo(((t_cmd_lst*)cmd->content)->cmd_args, cmd));
+		return (ft_echo(((t_cmd_lst *)cmd->content)->cmd_args, cmd));
 	else if (!ft_strcmp(cmd_name, "cd"))
-		return (ft_cd(((t_cmd_lst*)cmd->content)->cmd_args[1], 
-			g_data.env_lst, cmd));
+		return (ft_cd(((t_cmd_lst *)cmd->content)->cmd_args[1],
+				g_data.env_lst, cmd));
 	else if (!ft_strcmp(cmd_name, "export"))
 	{
-		if (((t_cmd_lst*)cmd->content)->cmd_args[1])
+		if (((t_cmd_lst *)cmd->content)->cmd_args[1])
 			return (ft_export(&g_data.env_lst,
-				((t_cmd_lst*)cmd->content)->cmd_args));
+					((t_cmd_lst *)cmd->content)->cmd_args));
 		else
 			return (ft_print_expo(g_data.env_lst, cmd_name, cmd));
 	}

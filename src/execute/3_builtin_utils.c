@@ -48,14 +48,14 @@ char	**free_word(char **s)
 
 int	ft_check_variable(char **str, char *cmd)
 {
-	int i;
+	int	i;
 
-    i = 0;
+	i = 0;
 	if (ft_isalpha(str[0][0]))
 	{
 		while (str[0][++i])
 		{
-			if (!ft_isalnum_minishell(str[0][i])) // modify in isalnum by adding +
+			if (!ft_isalnum_minishell(str[0][i]))
 			{
 				ft_putstr_fd("`", 2);
 				ft_putstr_fd(cmd, 2);
@@ -89,15 +89,15 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 		{
 			if (str[0][ft_strlen(str[0]) - 1] == '+')
 			{
-				if (ft_find_variable(*ms_export, str,cmd[i], 0) == 0)
+				if (ft_find_variable(*ms_export, str, cmd[i], 0) == 0)
 					ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
 			}
 			else
-				if (ft_find_variable(*ms_export, str,cmd[i], 1) == 0)
+				if (ft_find_variable(*ms_export, str, cmd[i], 1) == 0)
 					ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
 		}
 		else if (!ft_strchr(cmd[i], '='))
-			if (ft_find_variable(*ms_export, str,cmd[i], 1) == 0)
+			if (ft_find_variable(*ms_export, str, cmd[i], 1) == 0)
 				ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, FALSE));
 	}
 	return (0, free_word(str));
