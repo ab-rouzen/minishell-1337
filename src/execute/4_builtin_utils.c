@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:54:24 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/27 17:47:35 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,11 @@ int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i)
 	return (0);
 }
 
-int	ft_unset(t_env_list **ms_list, char **cmd)
+int	ft_unset(t_env_list **ms_list, char **cmd, int i)
 {
 	t_env_list	*prev;
 	t_env_list	*tmp;
-	int			i;
 
-	i = 0;
 	prev = NULL;
 	while (cmd[++i])
 	{

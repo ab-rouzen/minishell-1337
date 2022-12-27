@@ -6,12 +6,11 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:56:28 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/27 22:09:04 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 int	ft_check_builtin(t_list	*cmd_lst)
 {
@@ -33,15 +32,17 @@ int	ft_check_builtin(t_list	*cmd_lst)
 int	ft_builtin_norm1(t_list *cmd)
 {
 	char	*cmd_name;
+	int		i;
 
+	i = 0;
 	cmd_name = ((t_cmd_lst *)cmd->content)->cmd_name;
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (ft_pwd(cmd));
 	else if (!ft_strcmp(cmd_name, "env"))
-		return (ft_env(g_data.env_lst));
+		return (ft_print_expo(g_data.env_lst, cmd_name, cmd));
 	else if (!ft_strcmp(cmd_name, "unset"))
 		return (ft_unset(&g_data.env_lst, ((t_cmd_lst *)cmd->content)->\
-			cmd_args));
+			cmd_args, i));
 	else if (!ft_strcmp(cmd_name, "exit"))
 		return (ft_exit(((t_cmd_lst *)cmd->content)->cmd_args, cmd));
 	return (0);
@@ -77,6 +78,7 @@ int	builtin_cmd_only(t_list *cmd)
 		if (set_redirection(cmd->content) == FALSE)
 			return (TRUE);
 		g_data.exit_status = ft_builtin(cmd);
+		printf("exit status: %d", g_data.exit_status);
 		close_io_fd(cmd->content);
 		return (TRUE);
 	}
