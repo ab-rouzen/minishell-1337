@@ -12,9 +12,9 @@ M_SRC_PARSE_NAME = lexer lexer_2 \
 				utils_tokenizer parser parser_pipe \
 				parser_redirection quoting garbage_collector \
 				utils_cmd_construct utils_environ
-M_SRC_EXEC_NAME = execution_utils mini_shell heredoc utils \
+M_SRC_EXEC_NAME = execution_utils heredoc utils \
 				execute redirection heredoc_utils signals \
-				builtin_utils 1_builtin_utils 2_builtin_utils 3_builtin_utils \
+				builtin_utils 1_builtin_utils 2_builtin_utils 3_builtin_utils 4_builtin_utils \
 				wait_child
 
 M_SRC_PRIME_NAME = init main #exec_main 
