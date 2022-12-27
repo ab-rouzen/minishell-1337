@@ -25,12 +25,12 @@ char	**ft_split_export(char *str)
 	while (str[++i])
 		if (str[i] != '=')
 			x++;
-		else
-		{
-			expo[0] = ft_substr(str, 0, x);
-			expo[1] = ft_substr(str, x+1, ft_strlen(&str[i]));
-			return (expo);
-		}
+	else
+	{
+		expo[0] = ft_substr(str, 0, x);
+		expo[1] = ft_substr(str, x + 1, ft_strlen(&str[i]));
+		return (expo);
+	}
 	expo[0] = ft_substr(str, 0, x);
 	return (expo);
 }

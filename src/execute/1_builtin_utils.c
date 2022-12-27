@@ -58,11 +58,13 @@ void	ft_print_expo_norm(t_env_list *tmp, char *cmd, t_list *cmd_list)
 {
 	while (!ft_strcmp(cmd, "env") && tmp)
 	{
-		if(tmp->exported == TRUE)
+		if (tmp->exported == TRUE)
 		{
-			ft_putstr_fd (tmp->variable, ((t_cmd_lst *)cmd_list->content)->fd_out);
+			ft_putstr_fd (tmp->variable, ((t_cmd_lst *)cmd_list->content)->\
+				fd_out);
 			ft_putstr_fd ("=", ((t_cmd_lst *)cmd_list->content)->fd_out);
-			ft_putstr_fd (tmp->value , ((t_cmd_lst *)cmd_list->content)->fd_out);
+			ft_putstr_fd (tmp->value , ((t_cmd_lst *)cmd_list->content)->\
+				fd_out);
 			ft_putstr_fd ("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
 		}
 		tmp = tmp->next;
@@ -74,18 +76,22 @@ int	ft_print_expo(t_env_list *tmp, char *cmd, t_list *cmd_list)
 	while (!ft_strcmp(cmd, "export") && tmp)
 	{
 		ft_putstr_fd ("declare -x ", ((t_cmd_lst *)cmd_list->content)->fd_out);
-		if(tmp->exported == TRUE)
+		if (tmp->exported == TRUE)
 		{
-			ft_putstr_fd (tmp->variable, ((t_cmd_lst *)cmd_list->content)->fd_out);
+			ft_putstr_fd (tmp->variable, ((t_cmd_lst *)cmd_list->content)->\
+			fd_out);
 			ft_putstr_fd ("=\"", ((t_cmd_lst *)cmd_list->content)->fd_out);
-			ft_putstr_fd (tmp->value , ((t_cmd_lst *)cmd_list->content)->fd_out);
+			ft_putstr_fd (tmp->value, ((t_cmd_lst *)cmd_list->content)->\
+			fd_out);
 			ft_putstr_fd ("\"\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
 		}
 		else
 		{	
-			ft_putstr_fd (tmp->variable, ((t_cmd_lst *)cmd_list->content)->fd_out);
-			ft_putstr_fd (tmp->value , ((t_cmd_lst *)cmd_list->content)->fd_out);
-			ft_putstr_fd ("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);	
+			ft_putstr_fd (tmp->variable, ((t_cmd_lst *)cmd_list->content)->\
+			fd_out);
+			ft_putstr_fd (tmp->value, ((t_cmd_lst *)cmd_list->content)->\
+			fd_out);
+			ft_putstr_fd ("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
 		}
 		tmp = tmp->next;
 	}
