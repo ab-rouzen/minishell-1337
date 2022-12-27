@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 20:40:34 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 23:03:43 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	**here_doc(t_list *cmd_lst)
 	hdoc_fdes = allocate_hdoc_fd(cmd_lst);
 	i = 0;
 	delim = get_heredoc_delim(cmd_lst);
-	ft_sig_handler(HEREDOC);
 	while (cmd_lst && hdoc_fdes)
 	{
 		cmd_hdoc_num = \
@@ -87,11 +86,22 @@ static int	create_file(char *fname, char *delim)
 	S_IWUSR | S_IRUSR);
 	if (filedes < 0)
 		return (filedes);
+	rl_event_hook = ft_awaiting_read();
 	while (TRUE)
 	{
+		ft_sig_handler(HEREDOC);
 		line = readline("> ");
-		if (g_data.close_hdc == TRUE)
+		if (g_data.close_hdc == 1)
+		{
+			close(filedes);
+			break ;
+		}
+		if (g_data.close_hdc == 1)
+		{
+			printf("dkhlna\n");
+			break ;
 			return (close(filedes), -1);
+		}
 		printf("delime = |%s|\n", delim);
 		if (ft_strcmp(line, delim) == 0 || line == NULL)
 			break ;
