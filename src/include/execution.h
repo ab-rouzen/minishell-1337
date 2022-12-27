@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 13:36:17 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:39:42 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ char			*hdoc_var_expand(char *line);
 
 /*************************   redirection  ***************************/
 
-int				set_redirection(t_list *cmd_lst);
-void			duplicate_redir_fd(t_list *cmd);
+int				set_redirection(t_cmd_lst *cmd);
+void			duplicate_redir_fd(t_cmd_lst *cmd);
 void			set_redir_fd(t_cmd_lst *cmd, enum e_token tok, char *file);
-void			close_io_fd(t_list *cmd);
+void			close_io_fd(t_cmd_lst *cmd);
 
 /*************************   pipe  ***************************/
 
@@ -79,8 +79,8 @@ int				ft_export(t_env_list **ms_export, char **cmd);
 void			ft_sig_handler(char location);
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
-int				get_cmd_path(t_list *cmd_lst);
-int				check_cmd(t_list *cmd);
+int				get_cmd_path(t_cmd_lst *cmd);
+int				check_cmd(t_cmd_lst *cmd);
 int				(*init_pipe(t_list *cmd_lst))[2];
 int				ft_builtin(t_list	*tmp);
 int				fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2]);

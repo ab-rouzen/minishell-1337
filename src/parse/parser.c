@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 12:01:28 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 13:46:32 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ t_list	*parse(char *line)
 	if (ft_lstsize(tok_l) != matched)
 	{
 		print_error(SYNX_ERR, UNX_TKN, 0);
-		ft_putendl_fd(TTOKEN(get_nlst(tok_l, matched))->val, STDERR_FILENO);
+		ft_putendl_fd(((t_token *)(get_nlst(tok_l, \
+		matched)->content))->val, STDERR_FILENO);
 		return (NULL);
 	}
 	return (to_cmdline_lst(tok_l));

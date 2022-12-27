@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 22:48:13 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:15:41 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ int	p_open(char *file, int flags, int perm)
 	return (filedes);
 }
 
-int	check_cmd(t_list *cmd)
+int	check_cmd(t_cmd_lst *cmd)
 {
-	if (TCMD(cmd)->cmd_name == NULL)
+	if (cmd->cmd_name == NULL)
 		return (FALSE);
 	get_cmd_path(cmd);
-	if (access(TCMD(cmd)->cmd_name, F_OK))
-		return (print_error(TCMD(cmd)->cmd_name, CMD_NOT_FOUND, 1), FALSE);
-	if (is_dir(TCMD(cmd)->cmd_name))
-		return (print_error(TCMD(cmd)->cmd_name, CMD_IS_DIR, 1), FALSE);
-	if (access(TCMD(cmd)->cmd_name, F_OK | X_OK))
-		return (print_error(TCMD(cmd)->cmd_name, CMD_PERM, 1), FALSE);
+	if (access(cmd->cmd_name, F_OK))
+		return (print_error(cmd->cmd_name, CMD_NOT_FOUND, 1), FALSE);
+	if (is_dir(cmd->cmd_name))
+		return (print_error(cmd->cmd_name, CMD_IS_DIR, 1), FALSE);
+	if (access(cmd->cmd_name, F_OK | X_OK))
+		return (print_error(cmd->cmd_name, CMD_PERM, 1), FALSE);
 	return (TRUE);
 }
 

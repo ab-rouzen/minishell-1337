@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 22:37:44 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:52:00 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	**here_doc(t_list *cmd_lst)
 	ft_sig_handler(HEREDOC);
 	while (cmd_lst && hdoc_fdes)
 	{
-		cmd_hdoc_num = get_redir_lst_heredoc_num(TCMD(cmd_lst)->redir_lst);
+		cmd_hdoc_num = \
+		get_redir_lst_heredoc_num(((t_cmd_lst *)cmd_lst->content)->redir_lst);
 		if (cmd_hdoc_num == 0)
 		{
 			cmd_lst = cmd_lst->next;
@@ -82,8 +83,8 @@ static int	create_file(char *fname, char *delim)
 
 	ft_strlcpy(fpath, "/tmp/.", 100);
 	ft_strlcat(fpath, fname, 100);
-	filedes = open(fpath, O_CREAT | O_WRONLY | O_APPEND \
-	| O_EXCL, S_IWUSR | S_IRUSR);
+	filedes = open(fpath, O_CREAT | O_WRONLY | O_APPEND | O_EXCL, \
+	S_IWUSR | S_IRUSR);
 	if (filedes < 0)
 		return (filedes);
 	while (TRUE)
@@ -94,14 +95,11 @@ static int	create_file(char *fname, char *delim)
 		if (ft_strcmp(line, delim) == 0 || line == NULL)
 			break ;
 		line = hdoc_var_expand(line);
-		printf("line after expand [%s]\n", line);
 		ft_putendl_fd(line, filedes);
 	}
 	close(filedes);
 	filedes = open(fpath, O_RDONLY);
-	unlink(fpath);
-	printf("hdoc fd -> %d\n", filedes);
-	return (filedes);
+	return (unlink(fpath), filedes);
 }
 
 /*expands environement variables in the argument line*/

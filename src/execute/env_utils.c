@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 22:42:00 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 22:48:16 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:19:09 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*get_path(void)
 	return (NULL);
 }
 
-int	get_cmd_path(t_list *cmd_lst)
+int	get_cmd_path(t_cmd_lst *cmd)
 {
 	int		i;
 	char	**path;
@@ -73,7 +73,7 @@ int	get_cmd_path(t_list *cmd_lst)
 
 	path = ft_split(get_path(), ':');
 	i = 0;
-	cmd_name = ((t_cmd_lst *)cmd_lst->content)->cmd_name;
+	cmd_name = cmd->cmd_name;
 	if (cmd_name && *cmd_name)
 	{
 		while (path[i])
@@ -82,7 +82,7 @@ int	get_cmd_path(t_list *cmd_lst)
 			tmp = ft_strjoin_alloca(tmp, cmd_name, malloca);
 			if (access(tmp, F_OK) == 0)
 			{
-				TCMD(cmd_lst)->cmd_name = tmp;
+				cmd->cmd_name = tmp;
 				return (free(path), TRUE);
 			}
 			i++;

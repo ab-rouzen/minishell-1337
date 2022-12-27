@@ -3,6 +3,8 @@
 NAME = minishell
 CC = cc
 M_INCL_DIR = src/include/
+M_INCL_NAME = execution.h lexer.h parser.h quoting.h types.h
+M_INCL_M = $(addprefix $(M_INCL_DIR), $(M_INCL_NAME))
 M_SRC_PRIME_DIR = src/
 M_SRC_PARSE_DIR = src/parse/
 M_SRC_EXEC_DIR = src/execute/
@@ -48,12 +50,12 @@ M_OBJ = $(M_SRC:%=$(BUILD_DIR)%.o)
 all : $(NAME)
 	@echo everything is in order...
 
-$(NAME) : $(M_OBJ) $(M_INCL_PATH) 
+$(NAME) : $(M_OBJ) $(M_INCL_M) 
 	make bonus -C $(LIB_FT)
 	make bonus -C $(LIB_GNL)
 	$(CC) $(LDFLAGS) $(FALGS) $(LFLAGS)  $(M_OBJ) $(LIBS) -o $(NAME) -lreadline
 
-$(BUILD_DIR)%.c.o : %.c $(M_INCL_PATH)
+$(BUILD_DIR)%.c.o : %.c $(M_INCL_M)
 	@mkdir -p $(dir $@)
 	$(CC) $(FALGS) $(IFLAGS) -c $< -o $@
 

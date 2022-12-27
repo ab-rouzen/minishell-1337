@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 12:43:24 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:34:48 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define FREE_ALL 0
 # define FD_ERROR -1
 # define MAIN 'm'
-# define TTOKEN(x) ((t_token *)(x)->content)
-# define TRDIR(x) ((t_redir_list *)(x)->content)
+//# define TTOKEN(x) ((t_token *)(x)->content)
+//# define TRDIR(x) ((t_redir_list *)(x)->content)
 # define HEREDOC 'h'
 # define SHELL 's'
 # include "../../lib/libft/libft.h"

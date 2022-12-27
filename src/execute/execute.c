@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 21:35:25 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:17:35 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	if (cmd->next)
 		close(pipe[0][0]);
 	dup_pipe(fd_in, pipe[0][1]);
-	if (set_redirection(cmd) == FALSE)
+	if (set_redirection(cmd->content) == FALSE)
 		exit(EXIT_FAILURE);
 	if (ft_check_builtin(cmd))
 		exit(ft_builtin(cmd));
 	duplicate_redir_fd(cmd);
-	if (check_cmd(cmd) == FALSE)
+	if (check_cmd(cmd->content) == FALSE)
 		exit(EXIT_FAILURE);
-	cmd_path = TCMD(cmd)->cmd_name;
+	cmd_path = ((t_cmd_lst *)cmd->content)->cmd_name;
 	//printf("this is execve [%s]\n", cmd_path);
-	execve(cmd_path, TCMD(cmd)->cmd_args, to_env());
+	execve(cmd_path, ((t_cmd_lst *)cmd->content)->cmd_args, to_env());
 	perror("dumm");
 	exit(EXIT_FAILURE);
 }
@@ -84,7 +84,7 @@ int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
 	if (childpid == 0)
 		exec_child(cmd, fd_in, pipe_fd);
 	close_hdoc_fd(cmd);
-	if (get_redir_lst_heredoc_num(TCMD(cmd)->redir_lst))
+	if (get_redir_lst_heredoc_num(((t_cmd_lst *)cmd->content)->redir_lst))
 		g_data.hdoc_cmd_no++;
 	if (cmd->next)
 		close(pipe_fd[0][1]);
