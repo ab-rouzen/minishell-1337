@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4_builtin_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:07:04 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:54:24 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int	ft_unset(t_env_list **ms_list, char **cmd)
 
 int	ft_exit()
 {
-	
+	exit(0);
 	return (0);
 }

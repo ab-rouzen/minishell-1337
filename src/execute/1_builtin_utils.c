@@ -63,7 +63,7 @@ void	ft_print_expo_norm(t_env_list *tmp, char *cmd, t_list *cmd_list)
 			ft_putstr_fd (tmp->variable, ((t_cmd_lst *)cmd_list->content)->\
 				fd_out);
 			ft_putstr_fd ("=", ((t_cmd_lst *)cmd_list->content)->fd_out);
-			ft_putstr_fd (tmp->value , ((t_cmd_lst *)cmd_list->content)->\
+			ft_putstr_fd (tmp->value, ((t_cmd_lst *)cmd_list->content)->\
 				fd_out);
 			ft_putstr_fd ("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
 		}
