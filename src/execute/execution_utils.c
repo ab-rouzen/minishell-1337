@@ -1,4 +1,3 @@
-
 #include "../include/minishell.h"
 
 t_env_list	*ft_lstlast1(t_env_list *lst)
@@ -33,7 +32,6 @@ t_env_list	*ft_lstnew1(void **content, t_bool exported)
 	if (content != NULL)
 	{
 		new_elem->variable = ft_strdup(content[0]);
-
 		if (content[1] == NULL)
 			content[1] = ft_strdup("");
 		new_elem->value = ft_strdup(content[1]);
@@ -42,12 +40,12 @@ t_env_list	*ft_lstnew1(void **content, t_bool exported)
 	}
 	return (new_elem);
 }
+
 t_env_list	*ft_env(char **env)
 {
-	int i;
-	char **str = NULL;
+	int			i;
+	char		**str;
 	t_env_list	*elem;
-	
 
 	elem = NULL;
 	i = 0;

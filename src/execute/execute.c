@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:57:08 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/27 18:06:40 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	if (check_cmd(cmd->content) == FALSE)
 		exit(EXIT_FAILURE);
 	cmd_path = ((t_cmd_lst *)cmd->content)->cmd_name;
-	//printf("this is execve [%s]\n", cmd_path);
 	execve(cmd_path, ((t_cmd_lst *)cmd->content)->cmd_args, to_env());
-	perror("dumm");
+	print_error("Execve", "Failed", 1);
 	exit(EXIT_FAILURE);
 }
 
@@ -63,12 +62,10 @@ void	init_pipe(t_list *cmd_lst, int (**piper)[2])
 	int	size;
 
 	size = ft_lstsize(cmd_lst);
-	//printf("sz is %d\n", size);
 	*piper = malloca(sizeof(int [size + 1][2]));
 	(*piper)[0][0] = 0;
 	(*piper)[size][1] = 1;
 	(*piper)[size][0] = 0;
-	//printf("pipe is %d\n", piper[size - 1][0]);
 }
 
 int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
@@ -77,15 +74,20 @@ int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
 
 	childpid = -1;
 	if (cmd->next)
-		pipe(pipe_fd[0]);
+		if (pipe(pipe_fd[0]) < 0)
+			err_exit(EXIT_FAILURE, "Pipe failed");
 	childpid = fork();
 	if (childpid == 0)
 		exec_child(cmd, fd_in, pipe_fd);
+	else if (childpid < 0)
+			err_exit(EXIT_FAILURE, "Fork failed");
 	close_hdoc_fd(cmd);
 	if (get_redir_lst_heredoc_num(((t_cmd_lst *)cmd->content)->redir_lst))
 		g_data.hdoc_cmd_no++;
 	if (cmd->next)
 		close(pipe_fd[0][1]);
+	if (fd_in != STDIN_FILENO)
+		close (fd_in);
 	return (childpid);
 }
 
@@ -98,6 +100,7 @@ void	dup_pipe(int fd_in, int fd_out)
 	}
 	if (fd_out != STDOUT_FILENO)
 	{
-		(dup2(fd_out, STDOUT_FILENO), close(fd_out));
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
 	}
 }

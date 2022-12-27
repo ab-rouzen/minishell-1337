@@ -61,8 +61,7 @@ char	*ft_find_home(t_env_list *tmp, t_list *cmd_list)
 			return (ms_list->value);
 		ms_list = ms_list->next;
 	}
-	ft_putstr_fd("minishell$: cd: HOME not set\n",
-		((t_cmd_lst *)cmd_list->content)->fd_out);
+	print_error("cd", "HOME not set", 1);
 	return (NULL);
 }
 
@@ -85,7 +84,7 @@ int	ft_cd(char *cmd, t_env_list *ms_list, t_list *cmd_list)
 			return (0);
 		else
 		{
-			ft_putstr_fd("mini_shell: cd: OLDPWD not set\n", 2);
+			print_error("cmd", "OLDPWD not set", 1);
 			return (1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:10:56 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 17:11:50 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void			free_split(char **str);
 void			print_error(char *cmd_name, char *msg, t_bool new_line);
 t_list			*get_n_lst(t_list *lst, int n);
 void			reset_vars(void);
+void			err_exit(int exit_status, char *err_msg);
 
 #endif

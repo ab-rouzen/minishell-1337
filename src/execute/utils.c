@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 14:15:41 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 18:12:59 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,10 @@ t_bool	is_dir(char *name)
 
 	stat(name, &f_stat);
 	return (!S_ISREG(f_stat.st_mode));
+}
+
+void	err_exit(int exit_status, char *err_msg)
+{
+	ft_putendl_fd(err_msg, STDERR_FILENO);
+	exit(exit_status);
 }
