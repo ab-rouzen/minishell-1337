@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:35:28 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/25 00:00:57 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 13:55:13 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,20 @@ void	expand_env_var(t_list **tok_l)
 	t_list	*tmp;
 
 	heredoc_no_expand(*tok_l);
-	if (*tok_l && TTOKEN(*tok_l)->tkn == TOK_DOLLAR)
+	if (*tok_l && ((t_token *)(*tok_l)->content)->tkn == TOK_DOLLAR)
 	{
-		if ((*tok_l)->next && TTOKEN((*tok_l)->next)->tkn == TOK_WORD)
+		if ((*tok_l)->next && ((t_token *)((*tok_l)->next->content))->tkn == TOK_WORD)
 		{
 			tmp = (*tok_l)->next->next;
-			//if (ft_strcmp(TTOKEN(*tok_l)->val, "?") != 0)
-				TTOKEN(*tok_l)->val = get_env_val(TTOKEN((*tok_l)->next)->val);
+			((t_token *)(*tok_l)->content)->val = \
+			get_env_val(((t_token *)((*tok_l)->next->content))->val);
 			(*tok_l)->next = tmp;
-			TTOKEN(*tok_l)->tkn = TOK_WORD;
-			if (TTOKEN(*tok_l)->val == NULL)
+			((t_token *)(*tok_l)->content)->tkn = TOK_WORD;
+			if (((t_token *)(*tok_l)->content)->val == NULL)
 				*tok_l = (*tok_l)->next;
-			//else
-			//	TTOKEN(*tok_l)->val = ft_itoa(g_data.exit_status);
-			//if (TTOKEN(*tok_l)->val);
 		}
 		else
-			TTOKEN(*tok_l)->tkn = TOK_WORD;
+			((t_token *)(*tok_l)->content)->tkn = TOK_WORD;
 	}
 }
 
@@ -62,7 +59,7 @@ char	*get_env_val(char *var)
 	return (NULL);
 }
 
-char *join_strings(char **str)
+char	*join_strings(char **str)
 {
 	int		i;
 	char	*buf;

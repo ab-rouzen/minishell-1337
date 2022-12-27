@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 12:34:34 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 12:01:45 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,27 @@ int	main(int argc, char *argv[], char **environ)
 	char	*line;
 	t_list	*cmd_lst;
 
-	rl_catch_signals = 0;
-	rl_point = 0;
+
 	(void)argv;
 	(void)argc;
-	// signal(SIGINT, &handler);
-	// signal(SIGQUIT, &handler);
-	g_data.env_lst = ft_env(environ);
-	g_data.exit_status = 0;
+	init_shell(environ);
 	while (TRUE)
 	{
-		malloca(FREE_ALL);
+		reset_vars();
 		ft_sig_handler(MAIN);
-		init_shell(environ, cmd_lst);
+		malloca(FREE_ALL);
 		line = readline(SHELL_PROMPT);
 		if (!line)
-			exit(0) ;
-		if (line && *line)
+			exit(0);
+		if (*line)
 			add_history(line);
 		cmd_lst = parse(line);
-		if (cmd_lst)
-		{
-			// print_token(line);
-			// print_test(cmd_lst);
-			g_data.fd_heredoc = here_doc(cmd_lst);
+		// print_token(line);
+		// print_test(cmd_lst);
+		if (cmd_lst && g_data.close_hdc == FALSE)
 			execute(cmd_lst);
-		}
 		free(line);
-	}		
+	}
 	return (0);
 }
 

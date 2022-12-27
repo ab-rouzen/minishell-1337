@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 15:54:15 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/27 16:07:17 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ int	builtin_cmd_only(t_list *cmd)
 {
 	if (cmd && ft_check_builtin(cmd) && cmd->next == NULL)
 	{
-		if (set_redirection(cmd) == FALSE)
+		if (set_redirection(cmd->content) == FALSE)
 			return (TRUE);
 		g_data.exit_status = ft_builtin(cmd);
-		close_io_fd(cmd);
+		close_io_fd(cmd->content);
 		return (TRUE);
 	}
 	return (FALSE);

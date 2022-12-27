@@ -3,23 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 03:03:08 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/27 16:06:24 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
+# include "./minishell.h"
+# define F_RED_O O_CREAT | O_TRUNC | O_WRONLY
+# define F_RED_OA O_CREAT | O_APPEND | O_WRONLY
+# define F_PERM  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 
-typedef struct s_env_list
-{
-	void				*variable;
-	void				*value;
-	t_bool				exported;
-	struct s_env_list	*next;
-}					t_env_list;
+// typedef struct s_env_list
+// {
+// 	void				*variable;
+// 	void				*value;
+// 	t_bool				exported;
+// 	struct s_env_list	*next;
+// }					t_env_list;
 
 t_env_list		*ft_lstlast1(t_env_list *lst);
 void			ft_lstadd_back1(t_env_list **lst, t_env_list *new);
@@ -40,10 +44,10 @@ char			*hdoc_var_expand(char *line);
 
 /*************************   redirection  ***************************/
 
-int				set_redirection(t_list *cmd_lst);
-void			duplicate_redir_fd(t_list *cmd);
-void			set_redir_fd(int *fd, int io, int new_fd);
-void			close_io_fd(t_list *cmd);
+int				set_redirection(t_cmd_lst *cmd);
+void			duplicate_redir_fd(t_cmd_lst *cmd);
+void			set_redir_fd(t_cmd_lst *cmd, enum e_token tok, char *file);
+void			close_io_fd(t_cmd_lst *cmd);
 
 /*************************   pipe  ***************************/
 
@@ -61,8 +65,8 @@ t_env_list		*ft_env(char **env);
 void			ft_sig_handler(char location);
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
-int				get_cmd_path(t_list *cmd_lst);
-int				check_cmd(t_list *cmd);
+int				get_cmd_path(t_cmd_lst *cmd);
+int				check_cmd(t_cmd_lst *cmd);
 int				(*init_pipe(t_list *cmd_lst))[2];
 int				ft_builtin(t_list	*tmp);
 int				fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2]);
@@ -70,7 +74,7 @@ char			**to_env(void);
 void			child_exit_stat(char *cmd_name, int stat_loc);
 t_bool			is_dir(char *name);
 void			wait_child(int pid, t_list *cmd);
-char		**free_word(char **s);
+char			**free_word(char **s);
 
 
 
