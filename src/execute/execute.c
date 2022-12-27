@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 14:17:35 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:22:07 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execute(t_list *cmd_lst)
 	if (builtin_cmd_only(cmd_lst))
 		return (TRUE);
 	i = 0;
-	piper = init_pipe(cmd_lst);
+	init_pipe(cmd_lst, &piper);
 	while (cmd_lst)
 	{
 		childpid = fork_cmd(cmd_lst, piper[i][0], &piper[i + 1]);
@@ -48,7 +48,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 		exit(EXIT_FAILURE);
 	if (ft_check_builtin(cmd))
 		exit(ft_builtin(cmd));
-	duplicate_redir_fd(cmd);
+	duplicate_redir_fd(cmd->content);
 	if (check_cmd(cmd->content) == FALSE)
 		exit(EXIT_FAILURE);
 	cmd_path = ((t_cmd_lst *)cmd->content)->cmd_name;
@@ -58,19 +58,18 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	exit(EXIT_FAILURE);
 }
 
-int	(*init_pipe(t_list *cmd_lst))[2]
+void	init_pipe(t_list *cmd_lst, int (**piper)[2])
 {
-	int	(*piper)[2];
+	;
 	int	size;
 
 	size = ft_lstsize(cmd_lst);
 	//printf("sz is %d\n", size);
-	piper = malloca(sizeof(int [size + 1][2]));
-	piper[0][0] = 0;
-	piper[size][1] = 1;
-	piper[size][0] = 0;
+	*piper = malloca(sizeof(int [size + 1][2]));
+	(*piper)[0][0] = 0;
+	(*piper)[size][1] = 1;
+	(*piper)[size][0] = 0;
 	//printf("pipe is %d\n", piper[size - 1][0]);
-	return (piper);
 }
 
 int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
