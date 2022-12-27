@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 22:42:00 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 14:19:09 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 22:23:51 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	get_cmd_path(t_cmd_lst *cmd)
 	path = ft_split(get_path(), ':');
 	i = 0;
 	cmd_name = cmd->cmd_name;
-	if (cmd_name && *cmd_name)
+	if (path && cmd_name && *cmd_name)
 	{
 		while (path[i])
 		{
@@ -88,5 +88,5 @@ int	get_cmd_path(t_cmd_lst *cmd)
 			i++;
 		}
 	}
-	return (free(path), FALSE);
+	return (free_split(path), FALSE);
 }

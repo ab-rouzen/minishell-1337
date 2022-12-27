@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:56:28 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/27 21:01:10 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_builtin_norm1(t_list *cmd)
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (ft_pwd(cmd));
 	else if (!ft_strcmp(cmd_name, "env"))
-		return (ft_env(g_data.env_lst));
+		return (ft_print_expo(g_data.env_lst, cmd_name, cmd));
 	else if (!ft_strcmp(cmd_name, "unset"))
 		return (ft_unset(&g_data.env_lst, ((t_cmd_lst *)cmd->content)->\
 			cmd_args));

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:41:33 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 18:13:25 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 22:45:18 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void	set_redir_fd(t_cmd_lst *cmd, enum e_token tok, char *file)
 		if (cmd->fd_out != STDOUT_FILENO)
 			close(cmd->fd_out);
 		if (tok == TOK_REDI_O_APP)
-			cmd->fd_out = open_file(file, F_RED_OA, F_PERM);
+			cmd->fd_out = open_file(file, O_CREAT | O_APPEND | O_WRONLY, \
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		else
 		{
-			cmd->fd_out = open_file(file, O_CREAT | O_TRUNC | O_WRONLY, F_PERM);
+			cmd->fd_out = open_file(file, O_CREAT | O_TRUNC | O_WRONLY, \
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		}
 	}
 }

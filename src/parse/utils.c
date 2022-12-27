@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/26 10:50:55 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/27 22:15:42 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,17 @@ void	heredoc_no_expand(t_list *tok_l)
 	{
 		while (tok_l)
 		{
-			if (tok_l->next && ((t_token *)(tok_l->next->content))->tkn \
-				== TOK_WHITESPACE)
+			if (tok_l->next && \
+			(((t_token *)(tok_l->next->content))->tkn == TOK_WHITESPACE || \
+			((t_token *)(tok_l->next->content))->tkn == TOK_DQUOTE || \
+			((t_token *)(tok_l->next->content))->tkn == TOK_SQUOTE || \
+			((t_token *)(tok_l->next->content))->tkn == TOK_WORD))
 			{
 				tok_l = tok_l->next;
 				continue ;
 			}
-			if (tok_l->next && ((t_token *)(tok_l->next->content))->tkn \
-				== TOK_DOLLAR)
+			if (tok_l->next && \
+			((t_token *)(tok_l->next->content))->tkn == TOK_DOLLAR)
 				((t_token *)(tok_l->next->content))->tkn = TOK_WORD;
 			break ;
 		}
