@@ -100,6 +100,7 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 		else if (!ft_strchr(cmd[i], '='))
 			if (ft_find_variable(*ms_export, str, cmd[i], 1) == 0)
 				ft_lstadd_back1(ms_export, ft_lstnew1(str, FALSE));
+		free_split(str);
 	}
-	return (free_split(str), 0);
+	return (0);
 }

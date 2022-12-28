@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 22:57:26 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 00:26:55 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	ft_check_builtin(t_list	*cmd_lst)
 int	ft_builtin_norm1(t_list *cmd)
 {
 	char	*cmd_name;
-	int		i;
 
-	i = 0;
 	cmd_name = ((t_cmd_lst *)cmd->content)->cmd_name;
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (ft_pwd(cmd, g_data.env_lst));
@@ -42,7 +40,7 @@ int	ft_builtin_norm1(t_list *cmd)
 		return (ft_print_expo(g_data.env_lst, cmd_name, cmd));
 	else if (!ft_strcmp(cmd_name, "unset"))
 		return (ft_unset(&g_data.env_lst, ((t_cmd_lst *)cmd->content)->\
-			cmd_args, i));
+			cmd_args, 0));
 	else if (!ft_strcmp(cmd_name, "exit"))
 		return (ft_exit(cmd));
 	return (0);

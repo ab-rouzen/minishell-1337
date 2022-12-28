@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 22:58:38 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 00:25:08 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int				ft_find_variable(\
 				t_env_list *ms_list, char **str, char *cmd, int i);
 int				ft_unset(t_env_list **ms_list, char **cmd, int i);
 int				ft_exit(t_list *cmd_list);
+void			free_env_node(t_env_list *node);
+
 /*####################      4_builtin_utils.c      ####################*/
 
 /*####################      4_builtin_utils.c      ####################*/
