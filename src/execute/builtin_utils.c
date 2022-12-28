@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 22:48:26 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 13:25:56 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	builtin_cmd_only(t_list *cmd)
 		if (set_redirection(cmd->content) == FALSE)
 			return (TRUE);
 		g_data.exit_status = ft_builtin(cmd);
-		printf("exit status: %d", g_data.exit_status);
+		//printf("exit status: %d", g_data.exit_status);
 		close_io_fd(cmd->content);
 		return (TRUE);
 	}

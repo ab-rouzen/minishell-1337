@@ -2,7 +2,7 @@
 build
 parsing_tuts
 minishell
-lib
 .out
+notes
 */*.o
 minishell.dSYM

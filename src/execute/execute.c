@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 18:06:40 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 11:45:44 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	execute(t_list *cmd_lst)
 	int			(*piper)[2];
 
 	g_data.exec = TRUE;
-	g_data.fd_heredoc = here_doc(cmd_lst);
 	if (builtin_cmd_only(cmd_lst))
 		return (TRUE);
 	i = 0;

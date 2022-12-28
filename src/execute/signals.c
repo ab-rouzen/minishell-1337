@@ -27,8 +27,9 @@ void	ft_herdoc_handler(int a)
 	{
 		rl_done = 1;
 		printf("\n");
-		rl_on_new_line();
+		//rl_on_new_line();
 		g_data.close_hdc = 1;
+		//rl_redisplay();
 	}
 }
 

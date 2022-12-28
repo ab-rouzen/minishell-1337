@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 23:03:43 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 13:48:02 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	**here_doc(t_list *cmd_lst)
 	hdoc_fdes = allocate_hdoc_fd(cmd_lst);
 	i = 0;
 	delim = get_heredoc_delim(cmd_lst);
+	ft_sig_handler(HEREDOC);
 	while (cmd_lst && hdoc_fdes)
 	{
 		cmd_hdoc_num = \
@@ -54,7 +55,6 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 
 	i = 0;
 	hdoc_fdes = malloca(size * sizeof(int));
-	printf("hdoc size = [%d]\n", size);
 	while (i < size)
 	{
 		tmp_id = ft_itoa(hdoc_id++);
@@ -62,11 +62,7 @@ int	*create_cmd_heredoc(int size, char **delim, int hdoc_id)
 		if (g_data.close_hdc == TRUE)
 			return (NULL);
 		if (tmp_fd > 0)
-		{
-			hdoc_fdes[i] = tmp_fd;
-			printf("new fd = [%d] index[%d]\n", hdoc_fdes[i], i);
-			i++;
-		}
+			hdoc_fdes[i++] = tmp_fd;
 		free(tmp_id);
 	}
 	return (hdoc_fdes);
@@ -86,27 +82,17 @@ static int	create_file(char *fname, char *delim)
 	S_IWUSR | S_IRUSR);
 	if (filedes < 0)
 		return (filedes);
-	rl_event_hook = ft_awaiting_read();
+	//rl_event_hook = ft_awaiting_read();
 	while (TRUE)
 	{
-		ft_sig_handler(HEREDOC);
 		line = readline("> ");
 		if (g_data.close_hdc == 1)
-		{
-			close(filedes);
-			break ;
-		}
-		if (g_data.close_hdc == 1)
-		{
-			printf("dkhlna\n");
-			break ;
-			return (close(filedes), -1);
-		}
-		printf("delime = |%s|\n", delim);
-		if (ft_strcmp(line, delim) == 0 || line == NULL)
+			return (close(filedes), unlink(fpath), -1);
+		//printf("delime = |%s|\n", delim);
+		if (line == NULL || ft_strcmp(line, delim) == 0)
 			break ;
 		line = hdoc_var_expand(line);
-		printf("line = |%s|\n", line);
+		//printf("line = |%s|\n", line);
 		ft_putendl_fd(line, filedes);
 	}
 	close(filedes);

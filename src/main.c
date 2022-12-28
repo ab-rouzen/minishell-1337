@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 22:48:41 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 13:53:10 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ int	main(int argc, char *argv[], char **environ)
 		line = readline(SHELL_PROMPT);
 		if (!line)
 			exit(0);
-		if (*line)
-			add_history(line);
 		cmd_lst = parse(line);
 		// print_token(line);
 		// print_test(cmd_lst);
+		g_data.fd_heredoc = here_doc(cmd_lst);
 		if (cmd_lst && g_data.close_hdc == FALSE)
 			execute(cmd_lst);
 		free(line);

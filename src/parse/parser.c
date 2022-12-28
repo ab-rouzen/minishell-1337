@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 16:26:22 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 13:53:19 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ t_list	*parse(char *line)
 {
 	t_list	*tok_l;
 	int		matched;
+	t_list	*cmd_lst;
 
+	if (*line)
+		add_history(line);
 	tok_l = lexer(line);
 	if (!unquote(&tok_l))
 	{
@@ -26,14 +29,10 @@ t_list	*parse(char *line)
 	join_adjacent_token(&tok_l, TOK_WORD);
 	delete_element(&tok_l, TOK_WHITESPACE);
 	matched = match_pipeline(tok_l);
-	if (ft_lstsize(tok_l) != matched)
-	{
-		print_error(SYNX_ERR, UNX_TKN, 0);
-		ft_putendl_fd(((t_token *)(get_nlst(tok_l, \
-		matched)->content))->val, STDERR_FILENO);
-		return (NULL);
-	}
-	return (to_cmdline_lst(tok_l));
+	if (ft_lstsize(tok_l) != matched)	
+		return (syntax_err(tok_l, matched), NULL);
+	cmd_lst = to_cmdline_lst(tok_l);
+	return (cmd_lst);
 }
 
 void	match_command_rules(t_list *tok_l, int n_match[])

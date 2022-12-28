@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:24:06 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 22:48:35 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 00:17:40 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,11 @@ void	free_split(char **str)
 		i++;
 	}
 	free(str);
+}
+
+void	syntax_err(t_list *tok_l, int matched)
+{
+	print_error(SYNX_ERR, UNX_TKN, 0);
+	ft_putendl_fd(((t_token *)(get_nlst(tok_l, matched)->content))->val, \
+	STDERR_FILENO);	
 }

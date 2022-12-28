@@ -8,7 +8,7 @@ M_INCL_M = $(addprefix $(M_INCL_DIR), $(M_INCL_NAME))
 M_SRC_PRIME_DIR = src/
 M_SRC_PARSE_DIR = src/parse/
 M_SRC_EXEC_DIR = src/execute/
-FALGS = $(CPPFLAGS) -Wall -Wextra #-fsanitize=address
+FALGS = $(CPPFLAGS) -Wall -Wextra -fsanitize=address
 M_SRC_PARSE_NAME = lexer lexer_2 \
 				lexer_redirection utils utils_parser utils_quotes \
 				utils_tokenizer parser parser_pipe \
@@ -27,7 +27,6 @@ M_SRC_DIR  = src/
 LIBS = $(LIB_FT)libft.a $(LIB_GNL)libgnl.a
 LIB_FT = lib/libft/
 LIB_GNL = lib/get_next_line/
-LIB_PRINTF = lib/printf/
 LFLAGS = -L/Users/${USER}/.brew/Cellar/readline/8.2.1/lib
 IFLAGS = -I/Users/${USER}/.brew/Cellar/readline/8.2.1/include
 

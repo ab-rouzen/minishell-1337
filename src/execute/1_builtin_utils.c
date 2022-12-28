@@ -49,7 +49,7 @@ int	ft_pwd(t_list *cmd_list)
 	{
 		ft_putstr_fd (cwd, ((t_cmd_lst *)cmd_list->content)->fd_out);
 		ft_putstr_fd ("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
-		//print_error(cmd_list, 0);
+		//print_error("dom", "eas here",1);
 		return (0);
 	}
 	return (1);
