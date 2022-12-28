@@ -5,3 +5,9 @@ element to be allocated using malloca:
 *
 
 others:
+
+
+# cd : ..
+if (getcwd fail)
+    update_PWD BU join (..) && print error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+second time check if (ther is .. befor chdir work)

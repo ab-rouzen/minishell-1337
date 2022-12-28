@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 13:25:56 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 13:58:53 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_builtin_norm1(t_list *cmd)
 	i = 0;
 	cmd_name = ((t_cmd_lst *)cmd->content)->cmd_name;
 	if (!ft_strcmp(cmd_name, "pwd"))
-		return (ft_pwd(cmd));
+		return (ft_pwd(cmd, g_data.env_lst));
 	else if (!ft_strcmp(cmd_name, "env"))
 		return (ft_print_expo(g_data.env_lst, cmd_name, cmd));
 	else if (!ft_strcmp(cmd_name, "unset"))

@@ -41,19 +41,38 @@ int	ft_echo(char **cmd, t_list	*cmd_list)
 	return (ft_print_echo(cmd, i, check, cmd_list));
 }
 
-int	ft_pwd(t_list *cmd_list)
-{
-	char	cwd[255];
 
-	if (getcwd(cwd, sizeof(cwd)))
+int	ft_pwd(t_list *cmd_list, t_env_list *tmp)
+{
+	t_env_list	*ms_list;
+
+	ms_list = tmp;
+	while (ms_list)
 	{
-		ft_putstr_fd (cwd, ((t_cmd_lst *)cmd_list->content)->fd_out);
-		ft_putstr_fd ("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
-		//print_error("dom", "eas here",1);
-		return (0);
+		if (!ft_strcmp(ms_list->variable, "PWD"))
+		{
+			ft_putstr_fd(ms_list->value, ((t_cmd_lst *)cmd_list->content)->\
+				fd_out);
+			ft_putstr_fd("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
+			return (0);
+		}
+		ms_list = ms_list->next;
 	}
 	return (1);
 }
+
+// int	ft_pwd(t_list *cmd_list)
+// {
+// 	char	cwd[255];
+
+// 	if (getcwd(cwd, sizeof(cwd)))
+// 	{
+// 		ft_putstr_fd (cwd, ((t_cmd_lst *)cmd_list->content)->fd_out);
+// 		ft_putstr_fd ("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
+// 		return (0);
+// 	}
+// 	return (1);
+// }
 
 void	ft_print_expo_norm(t_env_list *tmp, char *cmd, t_list *cmd_list)
 {

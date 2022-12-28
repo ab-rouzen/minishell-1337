@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 13:20:05 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 13:57:45 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int				ft_builtin(t_list	*tmp);
 int				ft_check_builtin(t_list	*cmd_lst);
 t_env_list		*ft_env(char **env);
 int				builtin_cmd_only(t_list *cmd);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4dda8b5c7c5704a08ea1b4ffd2d6d9c968f605fa
 /*************************   signals  ***************************/
 
 void			ft_sig_handler(char location);
