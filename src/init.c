@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:00:47 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 10:58:47 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 18:27:53 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	**ft_initiate_env_lst(char	**env)
 
 void	init_shell(char **environ)
 {
+	char	cwd[255];
 	rl_catch_signals = 0;
 	rl_point = 0;
 	if (!environ[0])
@@ -33,6 +34,7 @@ void	init_shell(char **environ)
 	else
 		g_data.env_lst = ft_env(environ);
 	g_data.exit_status = 0;
+	g_data.pwd = getcwd(cwd, sizeof(cwd));
 }
 
 void	reset_vars(void)

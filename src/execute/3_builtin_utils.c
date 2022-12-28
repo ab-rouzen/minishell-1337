@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   3_builtin_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/28 22:15:24 by imittous          #+#    #+#             */
+/*   Updated: 2022/12/28 22:15:57 by imittous         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 int	ft_isalnum_minishell(int c)
@@ -27,7 +39,6 @@ char	**ft_split_export(char *str)
 			x++;
 	else
 	{
-
 		expo[0] = ft_substr(str, 0, x);
 		expo[1] = ft_substr(str, x + 1, ft_strlen(&str[i]));
 		return (expo);
@@ -73,9 +84,6 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 	while (cmd[++i])
 	{
 		str = ft_split_export(cmd[i]);
-		// printf("str[%s]\n", str[0]);
-		// printf("str[%s]\n", str[1]);
-		// printf("str[%s]\n", str[2]);
 		if (ft_check_variable(str, cmd[i]))
 			return (free_split(str), 1);
 		if (ft_strchr(cmd[i], '='))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:28:42 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 12:42:26 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 18:17:04 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ enum e_token
 
 typedef struct s_shell
 {
+	char		*pwd;
 	int			exit_status;
 	t_env_list	*env_lst;
 	int			**fd_heredoc;

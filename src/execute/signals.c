@@ -4,11 +4,10 @@ void	ft_main_handler(int a)
 {
 	if (a == SIGINT)
 	{
-		// printf ("hnaaaa\n");
-		printf("\n"); // Move to a new line
+		printf("\n");
 		if (!g_data.exec)
 		{
-			rl_on_new_line(); // Regenerate the prompt on a newline
+			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
 		}
@@ -43,16 +42,11 @@ void	ft_sig_handler(char location)
 	else if (location == HEREDOC)
 	{
 		signal(SIGINT, ft_herdoc_handler);
-		//signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
 
 int	ft_awaiting_read(void)
 {
-	// if (line == NULL)
-	// {
-	// 	// printf("exit\n");
-	// 	exit(0);
-	// }
 	return (0);
 }

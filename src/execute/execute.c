@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 11:45:44 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 22:16:16 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
 	if (childpid == 0)
 		exec_child(cmd, fd_in, pipe_fd);
 	else if (childpid < 0)
-			err_exit(EXIT_FAILURE, "Fork failed");
+		err_exit(EXIT_FAILURE, "Fork failed");
 	close_hdoc_fd(cmd);
 	if (get_redir_lst_heredoc_num(((t_cmd_lst *)cmd->content)->redir_lst))
 		g_data.hdoc_cmd_no++;

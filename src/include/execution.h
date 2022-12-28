@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 16:16:27 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 22:58:38 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "./minishell.h"
 # define EXIT_NF 127
 # define EXIT_PERM 126
+# define CD_ERROR "cd: error retrieving current directory: getcwd: \
+cannot access parent directories: No such file or directory\n"
 
 t_env_list		*ft_lstlast1(t_env_list *lst);
 void			ft_lstadd_back1(t_env_list **lst, t_env_list *new);
@@ -78,11 +80,11 @@ int				ft_print_expo(t_env_list *tmp, char *cmd, t_list *cmd_list);
 /*####################      1_builtin_utils.c      ####################*/
 
 /*####################      2_builtin_utils.c      ####################*/
-void			ft_update_export(t_env_list *ms_list, char *oldpwd);
+void			ft_update_export(t_env_list *ms_list, char *oldpwd, char *pwd);
 int				ft_cd_norm_1(char *cmd, t_env_list *ms_list, char cwd[255]);
 int				ft_find_oldpwd(\
 				char cwd[255], t_env_list *tmp, t_list *cmd_list);
-int				ft_cd(char *cmd, t_env_list *ms_list, t_list *cmd_list);
+int				ft_cd(char *cmd, t_env_list *ms_list);
 int				ft_unset(t_env_list **ms_list, char **cmd, int i);
 /*####################      2_builtin_utils.c      ####################*/
 
@@ -100,7 +102,13 @@ int				ft_find_variable_norm(\
 int				ft_find_variable(\
 				t_env_list *ms_list, char **str, char *cmd, int i);
 int				ft_unset(t_env_list **ms_list, char **cmd, int i);
-int				ft_exit(char **cmd, t_list *cmd_list);
+int				ft_exit(t_list *cmd_list);
 /*####################      4_builtin_utils.c      ####################*/
 
+/*####################      4_builtin_utils.c      ####################*/
+int				ft_update_export_norm_1(t_env_list *ms_list, char *oldpwd);
+int				ft_update_export_norm_2(t_env_list *ms_list, char *pwd);
+int				ft_serch_for_double_point(t_env_list *ms_list);
+char			*ft_find_home(t_env_list *tmp);
+/*####################      4_builtin_utils.c      ####################*/
 #endif
