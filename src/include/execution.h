@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 16:16:27 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 16:53:01 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int				ft_find_variable(\
 				t_env_list *ms_list, char **str, char *cmd, int i);
 int				ft_unset(t_env_list **ms_list, char **cmd, int i);
 int				ft_exit(char **cmd, t_list *cmd_list);
+void			free_env_node(t_env_list *node);
+
 /*####################      4_builtin_utils.c      ####################*/
 
 #endif

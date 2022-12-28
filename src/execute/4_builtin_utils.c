@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 16:43:47 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 17:04:17 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,17 @@ int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i)
 	return (0);
 }
 
-int	ft_unset(t_env_list **ms_list, char **cmd, int i)
+int	ft_unset(t_env_list **head, char **cmd, int i)
 {
 	t_env_list	*prev;
 	t_env_list	*tmp;
+	t_env_list	**ms_list;
+	
 
-	prev = NULL;
 	while (cmd[++i])
 	{
-		ms_list = &(*ms_list);
+		prev = NULL;
+		ms_list = head;
 		while (*ms_list)
 		{
 			if (!ft_strcmp((*ms_list)->variable, cmd[i]))
@@ -81,9 +83,9 @@ int	ft_unset(t_env_list **ms_list, char **cmd, int i)
 					*ms_list = (*ms_list)->next;
 				else
 					prev->next = (*ms_list)->next;
-				free (tmp);
+				free_env_node(tmp);
 				break ;
-			}
+			}\
 			prev = *ms_list;
 			ms_list = &(*ms_list)->next;
 		}
@@ -95,4 +97,11 @@ int	ft_exit()
 {
 	exit(0);
 	return (0);
+}
+
+void	free_env_node(t_env_list *node)
+{
+	free(node->value);
+	free(node->variable);
+	free(node);
 }
