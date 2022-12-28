@@ -21,29 +21,19 @@ char	**ft_split_export(char *str)
 	if (!expo)
 		return (NULL);
 	expo[2] = NULL;
-	expo[1] = ft_strdup("");
+	expo[1] = NULL;
 	while (str[++i])
 		if (str[i] != '=')
 			x++;
 	else
 	{
+
 		expo[0] = ft_substr(str, 0, x);
 		expo[1] = ft_substr(str, x + 1, ft_strlen(&str[i]));
 		return (expo);
 	}
 	expo[0] = ft_substr(str, 0, x);
 	return (expo);
-}
-
-char	**free_word(char **s)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i])
-		free(s[i]);
-	free (s);
-	return (NULL);
 }
 
 int	ft_check_variable(char **str, char *cmd)
@@ -84,7 +74,7 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 	{
 		str = ft_split_export(cmd[i]);
 		if (ft_check_variable(str, cmd[i]))
-			return (free_word(str), 1);
+			return (free_split(str), 1);
 		if (ft_strchr(cmd[i], '='))
 		{
 			if (str[0][ft_strlen(str[0]) - 1] == '+')
@@ -100,5 +90,5 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 			if (ft_find_variable(*ms_export, str, cmd[i], 1) == 0)
 				ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, FALSE));
 	}
-	return (free_word(str), 0);
+	return (free_split(str), 0);
 }

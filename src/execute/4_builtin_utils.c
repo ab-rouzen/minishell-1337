@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 17:47:35 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:57:14 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,25 @@
 
 int	ft_find_variable_norm(t_env_list *ms_list, char **str, char *cmd)
 {
+	char	*tmp;
+
 	if (!ft_strchr(cmd, '='))
 	{
 		while (ms_list)
 		{
 			if (!ft_strcmp(ms_list->variable, str[0]))
 			{
-				str[1] = ft_strdup(ms_list->value);
+				free (str[1]);
+				str[1] = ms_list->value;
 				return (1);
 			}
 			ms_list = ms_list->next;
 		}
 		ft_lstadd_back1(&ms_list, ft_lstnew1((void **)str, FALSE));
 	}
+	tmp = str[0];
 	str[0] = ft_strtrim(str[0], "+");
+	free(tmp);
 	return (0);
 }
 
@@ -48,8 +53,9 @@ int	ft_find_variable(t_env_list *ms_list, char **str, char *cmd, int i)
 			}
 			else if (ft_strcmp(ms_list->variable, str[0]) == 0 && !i)
 			{
+				free(ms_list->value);
 				ms_list->exported = TRUE;
-				ms_list->value = ft_strdup(ft_strjoin(ms_list->value, str[1]));
+				ms_list->value = ft_strjoin(ms_list->value, str[1]);
 				return (1);
 			}
 			ms_list = ms_list->next;

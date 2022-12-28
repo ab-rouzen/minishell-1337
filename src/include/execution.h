@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 13:57:45 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 14:14:34 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,6 @@ int				ft_builtin(t_list	*tmp);
 int				ft_check_builtin(t_list	*cmd_lst);
 t_env_list		*ft_env(char **env);
 int				builtin_cmd_only(t_list *cmd);
-<<<<<<< HEAD
-
-=======
->>>>>>> 4dda8b5c7c5704a08ea1b4ffd2d6d9c968f605fa
 /*************************   signals  ***************************/
 
 void			ft_sig_handler(char location);
@@ -75,7 +71,7 @@ char			**free_word(char **s);
 
 int				ft_print_echo(char **cmd, int i, int check, t_list *cmd_list);
 int				ft_echo(char **cmd, t_list *cmd_list);
-int				ft_pwd(t_list *cmd_list);
+int				ft_pwd(t_list *cmd_list, t_env_list *ms_list);
 void			ft_print_expo_norm(\
 				t_env_list *tmp, char *cmd, t_list *cmd_list);
 int				ft_print_expo(t_env_list *tmp, char *cmd, t_list *cmd_list);
