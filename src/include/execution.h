@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 14:14:34 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:16:27 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 t_env_list		*ft_lstlast1(t_env_list *lst);
 void			ft_lstadd_back1(t_env_list **lst, t_env_list *new);
-t_env_list		*ft_lstnew1(void **content, t_bool exported);
+t_env_list		*ft_lstnew1(char **content, t_bool exported);
 char			**ft_split_export(char *str);
 
 /*************************   heredoc  ***************************/

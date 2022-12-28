@@ -22,7 +22,7 @@ void	ft_lstadd_back1(t_env_list **lst, t_env_list *new)
 	}
 }
 
-t_env_list	*ft_lstnew1(void **content, t_bool exported)
+t_env_list	*ft_lstnew1(char **content, t_bool exported)
 {
 	t_env_list	*new_elem;
 
@@ -54,11 +54,11 @@ t_env_list	*ft_env(char **env)
 	str = NULL;
 	i = 0;
 	if (!env)
-		elem = ft_lstnew1((void **)str, TRUE);
+		elem = ft_lstnew1(str, TRUE);
 	while (env[i])
 	{
 		str = ft_split(env[i], '=');
-		ft_lstadd_back1(&elem, ft_lstnew1((void **)str, TRUE));
+		ft_lstadd_back1(&elem, ft_lstnew1(str, TRUE));
 		free_split(str);
 		i++;
 	}

@@ -41,7 +41,6 @@ int	ft_echo(char **cmd, t_list	*cmd_list)
 	return (ft_print_echo(cmd, i, check, cmd_list));
 }
 
-
 int	ft_pwd(t_list *cmd_list, t_env_list *tmp)
 {
 	t_env_list	*ms_list;

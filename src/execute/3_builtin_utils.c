@@ -14,7 +14,7 @@ char	**ft_split_export(char *str)
 	int		j;
 	int		x;
 
-	i = -1;
+	i = 0;
 	j = 0;
 	x = 0;
 	expo = malloc ((3) * sizeof(char *));
@@ -22,8 +22,8 @@ char	**ft_split_export(char *str)
 		return (NULL);
 	expo[2] = NULL;
 	expo[1] = NULL;
-	while (str[++i])
-		if (str[i] != '=')
+	while (str[i])
+		if (str[i++] != '=')
 			x++;
 	else
 	{
@@ -73,6 +73,9 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 	while (cmd[++i])
 	{
 		str = ft_split_export(cmd[i]);
+		// printf("str[%s]\n", str[0]);
+		// printf("str[%s]\n", str[1]);
+		// printf("str[%s]\n", str[2]);
 		if (ft_check_variable(str, cmd[i]))
 			return (free_split(str), 1);
 		if (ft_strchr(cmd[i], '='))
@@ -80,15 +83,15 @@ int	ft_export(t_env_list **ms_export, char **cmd)
 			if (str[0][ft_strlen(str[0]) - 1] == '+')
 			{
 				if (ft_find_variable(*ms_export, str, cmd[i], 0) == 0)
-					ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
+					ft_lstadd_back1(ms_export, ft_lstnew1(str, TRUE));
 			}
 			else
 				if (ft_find_variable(*ms_export, str, cmd[i], 1) == 0)
-					ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, TRUE));
+					ft_lstadd_back1(ms_export, ft_lstnew1(str, TRUE));
 		}
 		else if (!ft_strchr(cmd[i], '='))
 			if (ft_find_variable(*ms_export, str, cmd[i], 1) == 0)
-				ft_lstadd_back1(ms_export, ft_lstnew1((void **)str, FALSE));
+				ft_lstadd_back1(ms_export, ft_lstnew1(str, FALSE));
 	}
 	return (free_split(str), 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4_builtin_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 15:57:14 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:43:47 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ int	ft_find_variable_norm(t_env_list *ms_list, char **str, char *cmd)
 			if (!ft_strcmp(ms_list->variable, str[0]))
 			{
 				free (str[1]);
-				str[1] = ms_list->value;
+				str[1] = ft_strdup(ms_list->value);
 				return (1);
 			}
 			ms_list = ms_list->next;
 		}
-		ft_lstadd_back1(&ms_list, ft_lstnew1((void **)str, FALSE));
 	}
 	tmp = str[0];
 	str[0] = ft_strtrim(str[0], "+");
