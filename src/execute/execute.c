@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 11:45:44 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 23:09:47 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	if (check_cmd(cmd->content) == FALSE)
 		exit(EXIT_FAILURE);
 	cmd_path = ((t_cmd_lst *)cmd->content)->cmd_name;
+	printf("cmd:[%s]\n", cmd_path);
 	execve(cmd_path, ((t_cmd_lst *)cmd->content)->cmd_args, to_env());
 	print_error("Execve", "Failed", 1);
 	exit(EXIT_FAILURE);
@@ -76,6 +77,7 @@ int	fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2])
 		if (pipe(pipe_fd[0]) < 0)
 			err_exit(EXIT_FAILURE, "Pipe failed");
 	childpid = fork();
+	// exit(0);./
 	if (childpid == 0)
 		exec_child(cmd, fd_in, pipe_fd);
 	else if (childpid < 0)

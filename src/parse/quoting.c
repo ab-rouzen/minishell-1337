@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 13:53:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 19:57:48 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ int	unquote(t_list **tok_l)
 			if (dq_unquote(*tok_l) == FALSE)
 				return (FALSE);
 		}
-		else
-			expand_env_var(tok_l);
-		if (*tok_l)
-			tok_l = &(*tok_l)->next;
+		if (expand_env_var(tok_l))
+			if (*tok_l)
+				tok_l = &(*tok_l)->next;
 	}
 	return (TRUE);
 }

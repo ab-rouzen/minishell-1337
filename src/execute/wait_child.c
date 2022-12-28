@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 10:11:47 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 13:28:57 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 22:40:22 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	wait_child(int pid, t_list *cmd)
 {
 	int	stat_loc;
 
+	reset_signals();
 	if (cmd == NULL)
 		return ;
 	if (waitpid(pid, &stat_loc, WUNTRACED) != -1)
@@ -37,7 +38,17 @@ void	child_exit_stat(char *cmd_name, int stat_loc)
 		free(tmp);
 	}
 	else
+	{
 		g_data.exit_status = 128 + WTERMSIG(stat_loc);
+		printf("\n");
+		rl_on_new_line();
+	}
 	while (waitpid(-1, &stat_loc, WUNTRACED) > 0)
 		;
+}
+
+void	reset_signals()
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

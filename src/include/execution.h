@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 16:53:01 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 22:27:48 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int				*create_cmd_heredoc(int size, char **delim, int hdoc_id);
 void			insert_cmd_delim(t_list *redir_lst, char **cmd_delim);
 void			close_hdoc_fd(t_list *cmd);
 char			*hdoc_var_expand(char *line);
+int				set_var_to_word(t_list *lst);
+t_list			*skip_token(t_list *lst, enum e_token tok);
+t_list			*get_next_same_token(t_list *lst, enum e_token tok);
+t_list			*skip_token_group(t_list *lst, enum e_token tok);
+t_list			*skip_group_combo(t_list *lst);
 
 /*************************   redirection  ***************************/
 
@@ -55,6 +60,7 @@ int				builtin_cmd_only(t_list *cmd);
 /*************************   signals  ***************************/
 
 void			ft_sig_handler(char location);
+void			reset_signals();
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
 int				get_cmd_path(t_cmd_lst *cmd);

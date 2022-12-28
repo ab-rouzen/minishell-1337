@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 11:17:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 13:58:03 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/28 20:01:17 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	create_file(char *fname, char *delim)
 		line = readline("> ");
 		if (g_data.close_hdc == 1)
 			return (close(filedes), unlink(fpath), -1);
-		//printf("delime = |%s|\n", delim);
+		printf("delime = |%s|\n", delim);
 		if (line == NULL || ft_strcmp(line, delim) == 0)
 			break ;
 		line = hdoc_var_expand(line);

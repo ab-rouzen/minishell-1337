@@ -19,9 +19,11 @@ int	ft_cd_norm_1(char *cmd, t_env_list *ms_list, char cwd[255])
 {
 	if (((ft_strcmp(cmd, "~")) || (ft_strcmp(cmd, "~"))) && chdir(cmd) < 0)
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		
+		// ft_putstr_fd("minishell: cd: ", 2);
+		// ft_putstr_fd(cmd, 2);
+		// ft_putstr_fd(": No such file or directory\n", 2);
+		perror(cmd);
 		return (1);
 	}
 	else

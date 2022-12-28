@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 13:19:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 00:27:35 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,28 @@ int	p_open(char *file, int flags, int perm)
 
 int	check_cmd(t_cmd_lst *cmd)
 {
+	int err;
+
+	err = 0;
 	if (cmd->cmd_name == NULL)
 		return (FALSE);
-	get_cmd_path(cmd);
-	if (access(cmd->cmd_name, F_OK))
+	if (ft_strchr(cmd->cmd_name, '/') == NULL)
 	{
+		if (get_cmd_path(cmd) == FALSE)
+			err = 1;
+	}
+	if (!err && access(cmd->cmd_name, F_OK | X_OK) == 0)
+		return (TRUE);
+	else if (err == 0)
+		err = 2;
+	if (err == 1)
 		print_error(cmd->cmd_name, CMD_NOT_FOUND, 1);
-		exit (EXIT_NF);
-	}
-	if (is_dir(cmd->cmd_name))
+	else
 	{
-		print_error(cmd->cmd_name, CMD_IS_DIR, 1);
-		exit (EXIT_NF);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		perror(cmd->cmd_name);
 	}
-	if (access(cmd->cmd_name, F_OK | X_OK))
-	{
-		print_error(cmd->cmd_name, CMD_PERM, 1);
-		exit (EXIT_PERM);
-	}
-	return (TRUE);
+	return (FALSE);
 }
 
 /*prints error into STDERR [SH: 'cmd_name': 'msg']*/
