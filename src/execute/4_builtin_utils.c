@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 00:26:33 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:47:55 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,4 @@ int	ft_exit(t_list *cmd_lst)
 	}
 	exit(g_data.exit_status);
 	return (0);
-}
-
-void	free_env_node(t_env_list *node)
-{
-	free(node->value);
-	free(node->variable);
-	free(node);
 }

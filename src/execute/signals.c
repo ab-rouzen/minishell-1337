@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/29 13:38:22 by arouzen           #+#    #+#             */
+/*   Updated: 2022/12/29 13:38:23 by arouzen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	ft_main_handler(int a)
@@ -12,7 +24,6 @@ void	ft_main_handler(int a)
 			rl_redisplay();
 		}
 	}
-	//g_data.close_hdc = 	FALSE;
 	if (a == SIGQUIT)
 	{
 		rl_redisplay();
@@ -26,9 +37,7 @@ void	ft_herdoc_handler(int a)
 	{
 		rl_done = 1;
 		printf("\n");
-		//rl_on_new_line();
-		g_data.close_hdc = 1;
-		//rl_redisplay();
+		g_data.close_hdc = TRUE;
 	}
 }
 

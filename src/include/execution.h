@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 00:25:08 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:49:52 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int				*create_cmd_heredoc(int size, char **delim, int hdoc_id);
 void			insert_cmd_delim(t_list *redir_lst, char **cmd_delim);
 void			close_hdoc_fd(t_list *cmd);
 char			*hdoc_var_expand(char *line);
+int				set_var_to_word(t_list *lst);
+t_list			*skip_token(t_list *lst, enum e_token tok);
+t_list			*get_next_same_token(t_list *lst, enum e_token tok);
+t_list			*skip_token_group(t_list *lst, enum e_token tok);
+t_list			*skip_group_combo(t_list *lst);
 
 /*************************   redirection  ***************************/
 
@@ -57,10 +62,15 @@ int				builtin_cmd_only(t_list *cmd);
 /*************************   signals  ***************************/
 
 void			ft_sig_handler(char location);
+void			ignore_signals(void);
+void			reset_signals(void);
+
+/*************************   Utils  ***************************/
+
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
 int				get_cmd_path(t_cmd_lst *cmd);
-int				check_cmd(t_cmd_lst *cmd);
+void			check_cmd(t_cmd_lst *cmd);
 int				ft_builtin(t_list	*tmp);
 int				fork_cmd(t_list *cmd, int fd_in, int (*pipe_fd)[2]);
 char			**to_env(void);
@@ -68,6 +78,7 @@ void			child_exit_stat(char *cmd_name, int stat_loc);
 t_bool			is_dir(char *name);
 void			wait_child(int pid, t_list *cmd);
 char			**free_word(char **s);
+char			*display_prompt(void);
 
 /*####################      1_builtin_utils.c      ####################*/
 

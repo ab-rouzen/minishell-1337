@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 18:11:43 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/27 18:12:35 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 11:40:09 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,14 @@ void	close_io_fd(t_cmd_lst *cmd)
 	{
 		close(cmd->fd_out);
 	}
+}
+
+int	p_open(char *file, int flags, int perm)
+{
+	int	filedes;
+
+	filedes = open(file, flags, perm);
+	if (filedes == -1)
+		return (-1);
+	return (filedes);
 }

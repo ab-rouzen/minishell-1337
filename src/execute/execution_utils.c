@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:16:22 by imittous          #+#    #+#             */
-/*   Updated: 2022/12/29 03:30:03 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:17:45 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,31 @@ t_env_list	*ft_lstlast1(t_env_list *lst)
 
 void	ft_lstadd_back1(t_env_list **lst, t_env_list *new)
 {
-	t_env_list	*last;
+	t_env_list	*crawler;
+	t_env_list	*prev;
 
-	last = ft_lstlast1(*lst);
-	if (last && new)
-		last->next = new;
-	else
+	crawler = *lst;
+	while (crawler)
 	{
-		*lst = new;
+		prev = crawler;
+		crawler = crawler->next;
 	}
+	if (*lst)
+		(*prev).next = new;
+	else
+		*lst = new;
 }
 
 t_env_list	*ft_lstnew1(char **content, t_bool exported)
 {
 	t_env_list	*new_elem;
 
-	new_elem = malloc(sizeof(t_env_list));
-	if (!new_elem)
-		return (NULL);
+	new_elem = NULL;
 	if (content != NULL)
 	{
+		new_elem = malloc(sizeof(t_env_list));
+		if (!new_elem)
+			return (NULL);
 		new_elem->variable = ft_strdup(content[0]);
 		if (!ft_strcmp(content[0], "SHLVL"))
 			new_elem->value = ft_itoa(ft_atoi(content[1]) + 1);

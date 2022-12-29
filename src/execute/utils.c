@@ -3,46 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 13:19:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 14:40:39 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	p_open(char *file, int flags, int perm)
+void	check_cmd(t_cmd_lst *cmd)
 {
-	int	filedes;
+	int	err;
 
-	filedes = open(file, flags, perm);
-	if (filedes == -1)
-		return (-1);
-	return (filedes);
-}
-
-int	check_cmd(t_cmd_lst *cmd)
-{
+	err = 0;
 	if (cmd->cmd_name == NULL)
-		return (FALSE);
-	get_cmd_path(cmd);
-	if (access(cmd->cmd_name, F_OK))
+		exit(EXIT_SUCCESS);
+	if (ft_strchr(cmd->cmd_name, '/') == NULL)
+		if (get_cmd_path(cmd) == FALSE)
+			err = 1;
+	if (err == 0 && access(cmd->cmd_name, F_OK | X_OK) == 0)
 	{
-		print_error(cmd->cmd_name, CMD_NOT_FOUND, 1);
-		exit (EXIT_NF);
+		if (is_dir(cmd->cmd_name))
+			(print_error(cmd->cmd_name, CMD_IS_DIR, 1), exit(EXIT_PERM));
+		else
+			return ;
 	}
-	if (is_dir(cmd->cmd_name))
-	{
-		print_error(cmd->cmd_name, CMD_IS_DIR, 1);
-		exit (EXIT_NF);
-	}
-	if (access(cmd->cmd_name, F_OK | X_OK))
-	{
-		print_error(cmd->cmd_name, CMD_PERM, 1);
-		exit (EXIT_PERM);
-	}
-	return (TRUE);
+	else if (err == 0)
+		err = 2;
+	if (err == 1)
+		(print_error(cmd->cmd_name, CMD_NOT_FOUND, 1), exit(EXIT_NF));
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	perror(cmd->cmd_name);
+	if (errno == 2)
+		exit(EXIT_NF);
+	exit(EXIT_PERM);
 }
 
 /*prints error into STDERR [SH: 'cmd_name': 'msg']*/
@@ -62,11 +57,26 @@ t_bool	is_dir(char *name)
 	struct stat	f_stat;
 
 	stat(name, &f_stat);
-	return (!S_ISREG(f_stat.st_mode));
+	return (f_stat.st_mode & S_IFDIR);
 }
 
 void	err_exit(int exit_status, char *err_msg)
 {
 	ft_putendl_fd(err_msg, STDERR_FILENO);
 	exit(exit_status);
+}
+
+char	*display_prompt(void)
+{
+	char	*line;
+
+	line = readline(SHELL_PROMPT);
+	if (!line)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	if (*line)
+		add_history(line);
+	return (line);
 }

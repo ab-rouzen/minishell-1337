@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:15:19 by imittous          #+#    #+#             */
-/*   Updated: 2022/12/29 00:50:38 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:17:52 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	ft_update_export(t_env_list *ms_list, char *oldpwd, char *pwd)
 
 int	ft_cd_norm_1(char *cmd, t_env_list *ms_list, char cwd[255])
 {
-	puts("4");
 	if (chdir(cmd) < 0)
 	{
 		perror(cmd);

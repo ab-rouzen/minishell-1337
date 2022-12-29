@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 22:16:16 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 02:30:50 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 {
 	char	*cmd_path;
 
+	reset_signals();
 	if (cmd->next)
 		close(pipe[0][0]);
 	dup_pipe(fd_in, pipe[0][1]);
@@ -48,8 +49,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	if (ft_check_builtin(cmd))
 		exit(ft_builtin(cmd));
 	duplicate_redir_fd(cmd->content);
-	if (check_cmd(cmd->content) == FALSE)
-		exit(EXIT_FAILURE);
+	check_cmd(cmd->content);
 	cmd_path = ((t_cmd_lst *)cmd->content)->cmd_name;
 	execve(cmd_path, ((t_cmd_lst *)cmd->content)->cmd_args, to_env());
 	print_error("Execve", "Failed", 1);

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 12:05:08 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 13:44:16 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # define HEREDOC 'h'
 # define SHELL 's'
 # include "../../lib/libft/libft.h"
-# include "../../lib/get_next_line/get_next_line_bonus.h"
 # include "./types.h"
 # include "lexer.h"
 # include "parser.h"
@@ -57,7 +56,7 @@ void			delete_token(t_list *start, t_list *end);
 void			join_token(t_list *start, enum e_token tok_stop);
 void			*malloca(size_t size);
 void			mfree(t_list **node);
-void			expand_env_var(t_list **tok_l);
+int				expand_env_var(t_list **tok_l);
 char			*join_strings(char **str);
 char			*get_env_val(char *var);
 void			delete_element(t_list **tok_l, enum e_token token);
