@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:04:18 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 19:55:16 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 13:44:16 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # define HEREDOC 'h'
 # define SHELL 's'
 # include "../../lib/libft/libft.h"
-# include "../../lib/get_next_line/get_next_line_bonus.h"
 # include "./types.h"
 # include "lexer.h"
 # include "parser.h"
