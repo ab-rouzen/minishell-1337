@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:00:47 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 18:27:53 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 03:10:23 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	**ft_initiate_env_lst(char	**env)
 void	init_shell(char **environ)
 {
 	char	cwd[255];
+
 	rl_catch_signals = 0;
 	rl_point = 0;
 	if (!environ[0])

@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 01:21:27 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 02:30:50 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 	if (ft_check_builtin(cmd))
 		exit(ft_builtin(cmd));
 	duplicate_redir_fd(cmd->content);
-	if (check_cmd(cmd->content) == FALSE)
-		exit(EXIT_FAILURE);
+	check_cmd(cmd->content);
 	cmd_path = ((t_cmd_lst *)cmd->content)->cmd_name;
 	execve(cmd_path, ((t_cmd_lst *)cmd->content)->cmd_args, to_env());
 	print_error("Execve", "Failed", 1);
