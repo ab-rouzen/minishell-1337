@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:42:51 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 16:46:29 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 00:26:55 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_builtin_norm1(t_list *cmd)
 		return (ft_unset(&g_data.env_lst, ((t_cmd_lst *)cmd->content)->\
 			cmd_args, 0));
 	else if (!ft_strcmp(cmd_name, "exit"))
-		return (ft_exit(((t_cmd_lst *)cmd->content)->cmd_args, cmd));
+		return (ft_exit(cmd));
 	return (0);
 }
 
@@ -55,7 +55,7 @@ int	ft_builtin(t_list	*cmd)
 		return (ft_echo(((t_cmd_lst *)cmd->content)->cmd_args, cmd));
 	else if (!ft_strcmp(cmd_name, "cd"))
 		return (ft_cd(((t_cmd_lst *)cmd->content)->cmd_args[1],
-				g_data.env_lst, cmd));
+				g_data.env_lst));
 	else if (!ft_strcmp(cmd_name, "export"))
 	{
 		if (((t_cmd_lst *)cmd->content)->cmd_args[1])
@@ -76,7 +76,6 @@ int	builtin_cmd_only(t_list *cmd)
 		if (set_redirection(cmd->content) == FALSE)
 			return (TRUE);
 		g_data.exit_status = ft_builtin(cmd);
-		//printf("exit status: %d", g_data.exit_status);
 		close_io_fd(cmd->content);
 		return (TRUE);
 	}

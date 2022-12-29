@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   1_builtin_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/28 22:15:15 by imittous          #+#    #+#             */
+/*   Updated: 2022/12/28 22:15:16 by imittous         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 int	ft_print_echo(char **cmd, int i, int check, t_list *cmd_list)
@@ -50,7 +62,8 @@ int	ft_pwd(t_list *cmd_list, t_env_list *tmp)
 	{
 		if (!ft_strcmp(ms_list->variable, "PWD"))
 		{
-			ft_putstr_fd(ms_list->value, ((t_cmd_lst *)cmd_list->content)->\
+			g_data.pwd = ms_list->value;
+			ft_putstr_fd(g_data.pwd, ((t_cmd_lst *)cmd_list->content)->\
 				fd_out);
 			ft_putstr_fd("\n", ((t_cmd_lst *)cmd_list->content)->fd_out);
 			return (0);

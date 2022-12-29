@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4_builtin_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:07:48 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 17:04:17 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 00:26:33 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	ft_unset(t_env_list **head, char **cmd, int i)
 	t_env_list	*prev;
 	t_env_list	*tmp;
 	t_env_list	**ms_list;
-	
 
 	while (cmd[++i])
 	{
@@ -85,7 +84,7 @@ int	ft_unset(t_env_list **head, char **cmd, int i)
 					prev->next = (*ms_list)->next;
 				free_env_node(tmp);
 				break ;
-			}\
+			}
 			prev = *ms_list;
 			ms_list = &(*ms_list)->next;
 		}
@@ -93,9 +92,45 @@ int	ft_unset(t_env_list **head, char **cmd, int i)
 	return (0);
 }
 
-int	ft_exit()
+int	ft_check_is_num(char *cmd)
 {
-	exit(0);
+	int		i;
+
+	i = 0;
+	if (cmd[0] == '-' || cmd[0] == '+')
+		i++;
+	while (cmd[i])
+	{
+		if (!ft_isdigit(cmd[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_exit(t_list *cmd_lst)
+{
+	char	**cmd;
+
+	cmd = ((t_cmd_lst *)cmd_lst->content)->cmd_args;
+	if (cmd[1] && cmd[2])
+	{
+		ft_putstr_fd("exit: too many arguments\n", 2);
+		return (1);
+	}
+	if (cmd[1])
+	{
+		if (ft_check_is_num(cmd[1]))
+		{
+			ft_putstr_fd("miishell: exit: ", 2);
+			ft_putstr_fd(cmd[1], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
+			g_data.exit_status = 255;
+		}
+		else
+			g_data.exit_status = ft_atoi(cmd[1]);
+	}
+	exit(g_data.exit_status);
 	return (0);
 }
 

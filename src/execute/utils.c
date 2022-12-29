@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 00:27:35 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 01:02:15 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	p_open(char *file, int flags, int perm)
 
 int	check_cmd(t_cmd_lst *cmd)
 {
-	int err;
+	int	err;
 
 	err = 0;
 	if (cmd->cmd_name == NULL)

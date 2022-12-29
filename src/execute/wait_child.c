@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 10:11:47 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 22:40:22 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 00:50:30 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	child_exit_stat(char *cmd_name, int stat_loc)
 		;
 }
 
-void	reset_signals()
+void	reset_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
