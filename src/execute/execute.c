@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 18:38:21 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 01:04:09 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 01:21:27 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	exec_child(t_list *cmd, int fd_in, int (*pipe)[2])
 {
 	char	*cmd_path;
 
+	reset_signals();
 	if (cmd->next)
 		close(pipe[0][0]);
 	dup_pipe(fd_in, pipe[0][1]);

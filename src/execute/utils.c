@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 01:02:15 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 02:02:35 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int	check_cmd(t_cmd_lst *cmd)
 		if (get_cmd_path(cmd) == FALSE)
 			err = 1;
 	}
-	if (!err && access(cmd->cmd_name, F_OK | X_OK) == 0)
+	if (is_dir(cmd->cmd_name) == 1)
+		print_error(cmd->cmd_name, CMD_IS_DIR, 1);
+	if (err == 0 && access(cmd->cmd_name, F_OK | X_OK) == 0)
 		return (TRUE);
 	else if (err == 0)
 		err = 2;

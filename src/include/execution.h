@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 00:50:39 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 01:21:13 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int				builtin_cmd_only(t_list *cmd);
 /*************************   signals  ***************************/
 
 void			ft_sig_handler(char location);
+void			ignore_signals(void);
 void			reset_signals(void);
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
