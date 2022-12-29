@@ -6,7 +6,7 @@
 /*   By: imittous <imittous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:15:19 by imittous          #+#    #+#             */
-/*   Updated: 2022/12/28 22:19:09 by imittous         ###   ########.fr       */
+/*   Updated: 2022/12/29 00:50:38 by imittous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,12 @@ int	ft_cd_1(t_env_list *ms_list, char *cmd)
 
 	if (!getcwd(cwd, sizeof(cwd)) && !ft_strcmp(cmd, "."))
 	{
-		puts ("1");
 		printf (CD_ERROR);
 		ft_update_export(ms_list, cwd, cmd);
 		return (0);
 	}
 	else if (!ft_strcmp(cmd, "..") && !getcwd(cwd, sizeof(cwd)))
 	{
-		puts ("2");
 		if (!ft_serch_for_double_point(ms_list))
 			printf (CD_ERROR);
 		else
