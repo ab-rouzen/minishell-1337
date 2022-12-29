@@ -6,21 +6,11 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:35:05 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 03:11:01 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 13:38:35 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	p_open(char *file, int flags, int perm)
-{
-	int	filedes;
-
-	filedes = open(file, flags, perm);
-	if (filedes == -1)
-		return (-1);
-	return (filedes);
-}
 
 void	check_cmd(t_cmd_lst *cmd)
 {
@@ -74,4 +64,16 @@ void	err_exit(int exit_status, char *err_msg)
 {
 	ft_putendl_fd(err_msg, STDERR_FILENO);
 	exit(exit_status);
+}
+
+char	*display_prompt(void)
+{
+	char	*line;
+
+	line = readline(SHELL_PROMPT);
+	if (!line)
+		exit(0);
+	if (*line)
+		add_history(line);
+	return (line);
 }

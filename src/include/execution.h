@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:00:15 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 02:26:23 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 11:23:26 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ int				builtin_cmd_only(t_list *cmd);
 void			ft_sig_handler(char location);
 void			ignore_signals(void);
 void			reset_signals(void);
+
+/*************************   Utils  ***************************/
+
 int				execute(t_list *cmd_lst);
 int				p_open(char *file, int flags, int perm);
 int				get_cmd_path(t_cmd_lst *cmd);
@@ -75,6 +78,7 @@ void			child_exit_stat(char *cmd_name, int stat_loc);
 t_bool			is_dir(char *name);
 void			wait_child(int pid, t_list *cmd);
 char			**free_word(char **s);
+char			*display_prompt(void);
 
 /*####################      1_builtin_utils.c      ####################*/
 

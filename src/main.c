@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 09:46:10 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/29 00:50:57 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 13:40:48 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,9 @@ int	main(int argc, char *argv[], char **environ)
 		reset_vars();
 		ft_sig_handler(MAIN);
 		malloca(FREE_ALL);
-		line = readline(SHELL_PROMPT);
-		if (!line)
-			exit(0);
+		line = display_prompt();
+		reset_vars();
 		cmd_lst = parse(line);
-		// print_token(line);
-		// print_test(cmd_lst);
 		g_data.fd_heredoc = here_doc(cmd_lst);
 		if (cmd_lst && g_data.close_hdc == FALSE)
 			execute(cmd_lst);

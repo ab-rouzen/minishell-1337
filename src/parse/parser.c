@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:56:03 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 18:35:00 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 11:21:17 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ t_list	*parse(char *line)
 	int		matched;
 	t_list	*cmd_lst;
 
-	if (*line)
-		add_history(line);
 	tok_l = lexer(line);
 	if (!unquote(&tok_l))
 	{

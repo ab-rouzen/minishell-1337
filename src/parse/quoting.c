@@ -6,7 +6,7 @@
 /*   By: arouzen <arouzen@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:15:58 by arouzen           #+#    #+#             */
-/*   Updated: 2022/12/28 19:57:48 by arouzen          ###   ########.fr       */
+/*   Updated: 2022/12/29 12:03:01 by arouzen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	dq_unquote(t_list *tok_l)
 	while (*ltkn)
 	{
 		expand_env_var(ltkn);
+		if (*ltkn == NULL)
+			return (FALSE);
 		if (((t_token *)(*ltkn)->content)->tkn == TOK_DQUOTE)
 		{
 			tmp = (*ltkn)->next;
